@@ -14,17 +14,64 @@ import ButtonLogin from "../components/button-login.astro"
 	</head>
 	<body>
 		<!-- <ButtonLogin></ButtonLogin> -->
-		<div class="container bg-orange-600 m-auto">
-			<div class="sub-container bg-blue-600 w-max[1200px] h-20 flex items-center justify-center m-auto">
-				<div class="header w-full h-full flex m-auto">
-					<div class="container-logo w-[25%] bg-pink-400 h-full"></div>
-					<div class="container-items w-[75%] h-full bg-red-500"></div>
+		<div class="container bg-orange-600 mx-auto">
+			<div class="sub-container bg-blue-600  w-[1280px] w-max[1280px] flex items-center justify-center m-auto flex-col">
+				<div class="header w-full h-20 flex m-auto">
+					<div class="container-logo w-[25%] bg-[#B5D9EC] h-full">
+						<img src="../../public/logo.png" alt="" class="h-[280px] mt-[-100px]  ml-[25px]">
+					</div>
+					<div class="container-items w-[75%] h-full bg-[#B5D9EC] flex space-x-20 justify-center items-center">
+						<div class="items flex space-x-25 justify-end items-center bg-[#B5D9EC] w-[60%] ">
+							<span class="text-[#184D6D] flex flex-col items-center justify-center">Sobre
+								<span class="mt-[-8px]">Nosotros</span>
+							</span>
+							<span class="text-[#184D6D] flex flex-col items-center justify-center">Viaje
+								<span class="mt-[-8px]">del Saber</span>
+							</span>
+							<span class="text-[#184D6D] flex flex-col items-center justify-center">Elige tu
+								<span class="mt-[-8px]">Aventura</span>
+							</span>
+						</div>
+						<div class="login flex space-x-5 justify-center items-center bg-[#B5D9EC] w-[40%]">
+							<ButtonLogin>
+								<span class="text-[#FEFEE2]">Iniciar</span>
+								<span class="text-[#FEFEE2]">Sesión</span>
+							</ButtonLogin>
+							<ButtonLogin>
+								<span class="text-[#FEFEE2]">Crear</span>
+								<span class="text-[#FEFEE2]">Cuenta</span>
+							</ButtonLogin>
+						</div>
+					</div>
 				</div>
-				<p>
-					Explora, aprende y haz crecer tu jardín del conocimiento
-				</p>
+				<div class="content-info bg-purple-600 h-[650px] w-[1280px] w-max[1280px] flex flex-col items-center justify-center text-[#FFF4D9] font-bold">
+					<div class="montain bg-[#B5D9EC] h-[50%] w-full">
+						<p class="text-[44px] text-center w-[650px] ">
+							Explora, aprende y haz crecer tu jardín del conocimiento
+						</p>
+						<img src="../../public/mountain.png" alt="" class="h-[450px] w-[950px] mt-[-200px] ml-[340px]">
+						<img src="../../public/mountain-short.png" alt="" class="h-[350px] w-[450px] mt-[-360px]">
+					</div>
+					<div class="grass h-[50%] bg-[linear-gradient(to_bottom,#538802_0%,#305C1B_62%,#183D2D_100%)] w-full">
+						<img src="../../public/arbusto-flor.png" alt="" class="mt-[-60px] ml-[1140px] h-[90px]">
+						<img src="../../public/arbusto-1.png" alt="" class="h-[90px] mt-[-100px] ml-[200px]">
+						<img src="../../public/arbusto-2.png" alt="" class="h-[110px] mt-[-100px] ml-[300px]">
+						<img src="../../public/arbusto-3.png" alt="" class="h-[110px] mt-[-100px] ml-[400px]">
+						<img src="../../public/arbusto-4.png" alt="" class="h-[110px] mt-[-100px] ml-[1000px]">
+						<img src="../../public/arbusto-5.png" alt="" class="h-[110px] mt-[-100px] ml-[1080px]">
+					</div>
+				</div>
+			</div>
+			<div class="info w-[1280px] w-max-[1280px] h-[350px] bg-[#183D2D] mx-auto">
+
 			</div>
 		</div>
 		<slot />
 	</body>
 </html>
+
+<!-- <style>
+	.grass{
+		background-color: linear-gradient(#538802,#305C1B,#183D2D);
+	}
+</style> -->

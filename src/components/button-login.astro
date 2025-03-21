@@ -1,13 +1,11 @@
 ---
 import "../styles/global.css"
+const { isBlack = false } = Astro.props;
+const buttonClasses = isBlack
+  ? "flex flex-col items-center justify-center h-[50px] w-[100px] bg-[#184D6D] hover:bg-[#EF8535] transition-colors rounded-lg text-white text-[15px] cursor-pointer"
+  : "flex flex-col items-center justify-center h-[50px] w-[100px] bg-[#184D6D] hover:bg-[#EF8535] transition-colors rounded-lg text-[15px] cursor-";
 ---
 
-<div class="button bg-green-500">
-
+<div class={buttonClasses}>
+  <slot />
 </div>
-
-<style>
-    .button{
-        @apply w-[80px] h-[40px]
-    }
-</style>
