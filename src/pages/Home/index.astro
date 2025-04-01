@@ -1,5 +1,7 @@
 ---
 import "../../styles/global.css";
+import Menu from "../../components/Menu.astro";
+import Progress from "../../components/Progress.astro";
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -11,12 +13,12 @@ import "../../styles/global.css";
 <body>
     <div class="container">
         <div class="menu">
-            <!-- alexis -->
+            <Menu></Menu>
         </div>
         <div class="information">
             <div class="welcome">
                 <div class="child-image">
-                    <img src="../../../public/foto-ninio.jpg" alt="Logo">
+                    <img src="../../../public/logo-fondo.jpg" alt="Logo">
 
                 </div>
                 <h1>
@@ -27,35 +29,67 @@ import "../../styles/global.css";
                 </p>
             </div>
             <div class="advance-content">
-                <!-- Liceth -->
+                <Progress></Progress>
+                <Progress></Progress>
+                <Progress></Progress>
             </div>
         </div>
     </div>
 </body>
 <style>
-    .container{
-        @apply flex mx-auto h-screen bg-[#FFFFF0] w-screen
-    }
-    .menu{
-        @apply w-[301px] h-full 
-    }
-    .information{
-        @apply w-[calc(100vw-301px)] flex-col h-full flex items-center justify-center
-
-    }
-    .welcome{
-        @apply w-[100%] p-[10%] flex flex-col items-center justify-center text-[#333]
-    }
-    .child-image{
-        @apply w-[120px] h-[120px] flex flex-col rounded-full mb-[15px]
-    }
-    .child-image > img{
-        @apply w-[100%] h-[100%] rounded-full
-    }
-    .advance-content{
-        @apply w-[100%] p-[10%] flex flex-col items-center justify-center
+    html, body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden;
+        background-color: #FFFFF0;
+        /* @apply w-screen h-screen m-0 p-0 overflow-hidden; */
     }
 
+    .container {
+        @apply flex h-screen bg-[#FFFFF0] w-full;
+    }
+
+    .menu {
+        @apply w-[300px] h-full;
+    }
+
+    .information {
+        @apply w-[1500px] flex-col h-full flex items-center justify-center;
+}   
+
+
+    .welcome {
+        @apply w-full p-[10%] flex flex-col h-[50%] items-center justify-center text-[#333];
+    }
+
+    .welcome > h1{
+        font-size: 28px;
+        font-weight: 400
+    }
+
+    .welcome > p{
+        font-size: 34px;
+        margin-top: 15px;
+        font-weight: 700
+        margin-bottom: -24px;
+    }
+
+    .child-image {
+        @apply w-[200px] h-[200px] flex flex-col rounded-full mb-[15px];
+    }
+
+    .child-image > img {
+        @apply w-full h-full rounded-full;
+    }
+
+    .advance-content {
+        @apply w-full h-[50%] p-[10%] flex items-center justify-center space-x-[24px] mt-[-120px];
+    }
+
+
+    @media and Screen()
 
 
 

@@ -3,6 +3,7 @@ import "../styles/global.css"
 import ButtonLogin from "../components/button-login.astro"
 import Login from "../pages/Login/index.astro";
 import Progress from "../components/Progress.astro";
+import Home from "../pages/Home/index.astro";
 ---
 
 <!doctype html>
@@ -23,9 +24,11 @@ import Progress from "../components/Progress.astro";
 					</div>
 					<div class="container-items w-[75%] h-full bg-[#B5D9EC] flex space-x-20 justify-center items-center hover:cursor-p">
 						<div class="items flex space-x-25 justify-end items-center bg-[#B5D9EC] w-[60%] ">
-							<span class="text-[#184D6D] flex flex-col items-center justify-center hover:cursor-pointer">Sobre
-								<span class="mt-[-8px]">Nosotros</span>
-							</span>
+							<a href="/Home">
+								<span class="text-[#184D6D] flex flex-col items-center justify-center hover:cursor-pointer">Sobre
+									<span class="mt-[-8px]">Nosotros</span>
+								</span>
+							</a>
 							<span class="text-[#184D6D] flex flex-col items-center justify-center hover:cursor-pointer">Viaje
 								<span class="mt-[-8px]">del Saber</span>
 							</span>
