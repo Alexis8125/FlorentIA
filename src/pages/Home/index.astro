@@ -1,0 +1,63 @@
+---
+import "../../styles/global.css";
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <div class="menu">
+            <!-- alexis -->
+        </div>
+        <div class="information">
+            <div class="welcome">
+                <div class="child-image">
+                    <img src="../../../public/foto-ninio.jpg" alt="Logo">
+
+                </div>
+                <h1>
+                    !Bienvenido a FlorentIA¡
+                </h1>
+                <p>
+                    Tus Avances
+                </p>
+            </div>
+            <div class="advance-content">
+                <!-- Liceth -->
+            </div>
+        </div>
+    </div>
+</body>
+<style>
+    .container{
+        @apply flex mx-auto h-screen bg-[#FFFFF0] w-screen
+    }
+    .menu{
+        @apply w-[301px] h-full 
+    }
+    .information{
+        @apply w-[calc(100vw-301px)] flex-col h-full flex items-center justify-center
+
+    }
+    .welcome{
+        @apply w-[100%] p-[10%] flex flex-col items-center justify-center text-[#333]
+    }
+    .child-image{
+        @apply w-[120px] h-[120px] flex flex-col rounded-full mb-[15px]
+    }
+    .child-image > img{
+        @apply w-[100%] h-[100%] rounded-full
+    }
+    .advance-content{
+        @apply w-[100%] p-[10%] flex flex-col items-center justify-center
+    }
+
+
+
+
+</style>
+</html>
