@@ -1,0 +1,35 @@
+---
+import "../styles/global.css";
+---
+<div class="container-progress ">
+<div class="progress-wrapper ">
+    <div class="progress-circle">
+
+    </div>
+</div>
+<div class=" progress-info">
+    <h2>Tema</h2>
+    <span>Materia</span>
+</div>
+</div>
+
+<style>
+    .container-progress{
+        @apply bg-[#f5f5dc] w-[280px] h-[250px]
+    }
+    .progress-wrapper{
+        @apply h-[50%] justify-center items-center flex
+    }
+    .progress-circle{
+        @apply rounded-full bg-[#22ad2d] h-[120px] w-[125px]
+    }
+    .progress-info{
+        @apply h-[50%]
+    }
+    .progress-info > h2{
+        @apply h-[50%]  text-[30px]  items-end flex justify-center 
+    }
+    .progress-info > span{
+        @apply h-[50%] text-[20px] justify-center flex items-start
+    }
+</style>
