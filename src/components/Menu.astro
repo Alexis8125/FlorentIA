@@ -1,0 +1,72 @@
+---
+import "../styles/global.css"
+---
+
+<div class="container-menu">
+    <div class="container-logo">
+        <img src="../../public/logo.png" alt="" class="logo">
+    </div>
+    <div class="option">
+        <a href="" class="selection">
+            <span class="text">
+                Mí Jardín
+            </span>
+        </a>
+    </div>
+    <div class="option">
+        <a href="" class="selection">
+            <span class="text">
+                Mis Retos
+            </span>
+        </a>
+    </div>
+    <div class="option">
+        <a href="" class="selection">
+            <span class="text" style="font-family: 'Poppins', sans-serif;">
+                Mis Logros
+            </span>
+        </a>
+    </div>
+    <div class="option">
+        <a href="" class="selection">
+            <span class="text" style="font-family: 'Poppins', sans-serif;">
+                Explorar
+            </span>
+        </a>
+    </div>
+    <div class="option">
+        <a href="" class="selection">
+            <span class="text" style="font-family: 'Poppins', sans-serif;">
+                Mí Diario
+            </span>
+        </a>
+    </div>
+    <div class="option">
+        <a href="" class="selection">
+            <span class="text" style="font-family: 'Poppins', sans-serif;">
+                Mis Profesores
+            </span>
+        </a>
+    </div>
+</div>
+<style>
+    .container-menu{
+        @apply h-screen w-[300px] flex flex-col border-[0.5px] bg-[#FFFFF0]
+    }
+
+    .container-logo{
+        @apply h-[180px] w-full flex items-center justify-center
+    }
+
+    .logo{
+        @apply h-[280px]
+    }
+
+    .option{
+        @apply h-[85px] w-full border-[0.5px] flex items-center justify-center hover:cursor-pointer hover:bg-[#F5F5DC]
+    }
+
+    .text{
+        @apply text-[24px]
+    }
+</style>
