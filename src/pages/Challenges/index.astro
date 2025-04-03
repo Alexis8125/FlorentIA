@@ -3,6 +3,7 @@ import "../../styles/global.css";
 import Menu from "../../components/Menu.astro";
 import Home from "../Home/index.astro";
 import Signature from "../../components/Signature.astro";
+import Progress from "../../components/Progress.astro";
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -16,21 +17,29 @@ import Signature from "../../components/Signature.astro";
         <div class="menu">
             <Menu></Menu>
         </div>
-        <div class="information">
-            <div class="welcome">
-                <div class="child-image">
-                    <img src="../../../public/ingles.jpg" alt="">
 
-                </div>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                    Dolores magni facere eveniet dolor
-                </p>
-            </div>
+        <div class="information">
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus ea nesciunt rerum quos quidem facilis alias commodi. Velit, 
+                nam odit non vero repudiandae possimus odio nobis, blanditiis harum, impedit iusto.</p>
             <div class="advance-content">
                 <Signature>
-                    <a href="Signatures/"><span>Ingles</span></a>
-                <Signature/>
+                    
+                    <div class="container-progress ">
+                        <div class="progress-wrapper ">
+                            <a href="Signatures/"><span>Ingles</span></a>
+
+                            <div class="progress-circle">
+                                <img src="../../../public/logoIngles.png" alt="">
+                        
+                            </div>
+                        </div>
+                        <div class=" progress-info">
+                        
+                            <h2>Tema</h2>
+                            <span>Materia</span>
+                        </div>
+                    </div>
+                </Signature>
                 <Signature/>
                 <Signature/>
             </div>
@@ -57,39 +66,34 @@ import Signature from "../../components/Signature.astro";
     }
 
     .information {
-        @apply w-[1500px] flex-col h-full flex items-center justify-center;
+        @apply w-[1500px] flex-col h-full flex items-center justify-center bg-[#FFFFF0];
 }   
-
-
-    .welcome {
-        @apply w-full p-[10%] flex flex-col h-[50%] items-center justify-center text-[#333];
+    .information > p{
+        @apply text-[20px] text-center flex;
+        
     }
-
-    .welcome > h1{
-        font-size: 28px;
-        font-weight: 400
-    }
-
-    .welcome > p{
-        font-size: 34px;
-        margin-top: 15px;
-        font-weight: 700
-        margin-bottom: -24px;
-    }
-
-    .child-image {
-        @apply w-[200px] h-[200px] flex flex-col rounded-full mb-[15px];
-    }
-
-    .child-image > img {
-        @apply w-full h-full rounded-full;
-    }
-
     .advance-content {
-        @apply w-full h-[50%] p-[10%] flex items-center justify-center space-x-[24px] mt-[-120px];
+        @apply w-full h-[50%] p-[10%] flex items-center justify-end space-x-[24px] bg-[#FFFFF0];
+    }
+    .container-progress{
+        @apply bg-[#f5f5dc] w-[280px] h-[250px]
+    }
+    .progress-wrapper{
+        @apply h-[50%] justify-center items-center flex flex-col
     }
 
-
+    .progress-circle{
+        @apply rounded-full bg-[#FFFFF0] h-[120px] w-[125px]
+    }
+    .progress-info{
+        @apply h-[50%]
+    }
+    .progress-info > h2{
+        @apply h-[50%]  text-[30px]  items-end flex justify-center 
+    }
+    .progress-info > span{
+        @apply h-[50%] text-[20px] justify-center flex items-start
+    }
     @media and Screen()
 
 
