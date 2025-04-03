@@ -1,0 +1,19 @@
+---
+import "../styles/global.css"
+---
+
+<div class="container">
+    <div class="text">
+        <slot/>
+    </div>
+</div>
+
+<style>
+    .container{
+        @apply h-[350px] w-[350px] flex flex-col items-center justify-center
+    }
+
+    .text{
+        @apply text-[24px]
+    }
+</style>
