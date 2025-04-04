@@ -1,0 +1,134 @@
+---
+import "../../styles/global.css";
+import Menu from "../../components/Menu.astro";
+import Achievement from "../../components/Achievement.astro";
+---
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Logros</title>
+</head>
+<body>
+    <div class="container">
+        <div class="menu">
+            <Menu></Menu>
+        </div>
+        <div class="information">
+            <h1>Mis Logros</h1>
+            <div class="achievement-content">
+                <div class="content">
+                    <h3>Todos Tus Logros</h3>
+                </div>
+                <div class="content">
+                    <h3>Logros Inglés</h3>
+                </div>
+                <div class="content">
+                    <h3>Logros Español</h3>
+                </div>
+                <div class="content">
+                    <h3>Logros Sociales</h3>
+                </div>
+            </div>
+
+            <!-- Contenedor de logros -->
+            <div class="achievement-information">
+                <Achievement>
+                    <div class="achievement-icons">
+                        <img src="../../../public/estrella.png" alt="Estrella" class="achievement-icon">
+                        <img src="../../../public/estrella.png" alt="Estrella" class="achievement-icon">
+                        <img src="../../../public/estrella.png" alt="Estrella" class="achievement-icon">
+                    </div>
+                    <p class="achievement-text">Haz completado la primera unidad</p>
+                </Achievement>
+                <Achievement>
+                    <img src="../../../public/estrella.png" alt="Estrella" class="achievement-icon">
+                    <p class="achievement-text">Has comenzado tu camino, sigue adelante</p>
+                </Achievement>
+                <Achievement>
+                    <div class="achievement-icons">
+                        <img src="../../../public/estrella.png" alt="Estrella" class="achievement-icon">
+                        <img src="../../../public/estrella.png" alt="Estrella" class="achievement-icon">
+                    </div>
+                    <p class="achievement-text">Vas por buen camino, un poco más y lo lograrás</p>
+
+                </Achievement>
+            </div>
+            
+            <div class="achievement-information">
+                <Achievement>
+                    <div class="achievement-icons">
+                        <img src="../../../public/estrella.png" alt="Estrella" class="achievement-icon">
+                        <img src="../../../public/estrella.png" alt="Estrella" class="achievement-icon">
+                    </div>
+                    <p class="achievement-text">Vas por buen camino, un poco más y lo lograrás</p>
+                </Achievement>
+                <Achievement>
+                    <img src="../../../public/estrella.png" alt="Estrella" class="achievement-icon">
+                    <p class="achievement-text">Has comenzado tu camino, sigue adelante</p>
+                </Achievement>
+                <Achievement>
+                    <div class="achievement-icons">
+                        <img src="../../../public/estrella.png" alt="Estrella" class="achievement-icon">
+                        <img src="../../../public/estrella.png" alt="Estrella" class="achievement-icon">
+                        <img src="../../../public/estrella.png" alt="Estrella" class="achievement-icon">
+                    </div>
+                    <p class="achievement-text">Haz completado la primera unidad</p>
+
+                </Achievement>
+            </div>
+            
+        </div>
+    </div>
+</body>
+
+<style>
+    html, body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden;
+        background-color: #FFFFF0;
+    }
+
+    .container {
+        @apply flex h-screen bg-[#FFFFF0] w-full;
+    }
+
+    .menu {
+        @apply w-[300px] h-full;
+    }
+
+    .information {
+        @apply w-[1500px] flex-col h-full flex items-center justify-center;
+    }
+
+    .information > h1 {
+        @apply text-[40px];
+    }
+
+    .achievement-content {
+        @apply w-full h-[5%] p-[10%] flex items-center justify-center space-x-[45px] bg-[#FFFFF0];
+    }
+
+    .content {
+        @apply rounded-full bg-[#ffec1d] h-[60px] w-[90px] text-center;
+    }
+
+    .achievement-information {
+        @apply w-full p-[1%] flex items-center justify-center bg-[#FFFFF0];
+    }
+    .achievement-icons {
+        @apply flex items-center justify-center;
+    }
+
+    .achievement-icon {
+        @apply h-[50px] w-[50px];
+    }
+    .achievement-text {
+        @apply text-center
+    }
+</style>
+</html>
