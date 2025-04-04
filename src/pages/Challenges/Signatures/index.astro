@@ -3,6 +3,7 @@ import "../../../styles/global.css";
 import Menu from "../../../components/Menu.astro";
 import Signature from "../../../components/Signature.astro";
 import Home from "../../Home/index.astro";
+import Challenges from "../../Challenges/index.astro";
 ---
 
 <!DOCTYPE html>
@@ -19,25 +20,35 @@ import Home from "../../Home/index.astro";
             </div>
             <div class="sub-container">
                 <div class="tasks">
-                    <h2>Tareas</h2>
+                    <div class="tasks-header">
+                        <h2>Tareas</h2>
+                        <a href="/Challenges/">
+                            <button type="button" class="back-button text-white bg-[#e9aa61] hover:bg-[#d08855] focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm p-2.5  me-2 dark:bg-blue-[#e9aa61] dark:hover:bg-blue-[#e9aa61] dark:focus:ring-blue-[#e9aa61] hover:cursor-pointer">
+                                <svg class="w-5 h-5 -scale-x-100" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                                </svg>
+                                <span class="sr-only">Volver</span>
+                            </button>
+                        </a>
+                    </div>
                     <div class="component">
                         <div class="signature">
                             <Signature>
-                                <span>Nombre</span>
+                                <span>Tarea 1</span>
                                 <p>Descripción</p>
                                 <span>Hecha</span>
                             </Signature>
                         </div>
                         <div class="signature">
                             <Signature>
-                                <span>Nombre</span>
+                                <span>Tarea 2</span>
                                 <p>Descripción</p>
                                 <span>Hecha</span>
                             </Signature>
                         </div>
                         <div class="signature">
                             <Signature>
-                                <span>Nombre</span>
+                                <span>Tarea 3</span>
                                 <p>Descripción</p>
                                 <span>Hecha</span>
                             </Signature>
@@ -45,7 +56,32 @@ import Home from "../../Home/index.astro";
                     </div>
                 </div>
                 <div class="evaluations">
-                    <h2>Evaluaciones</h2>
+                    <div class="evaluations-header">
+                        <h2>Evaluaciones</h2>
+                    </div>
+                    <div class="component">
+                        <div class="signature">
+                            <Signature>
+                                <span>Evaluacion 1</span>
+                                <p>Descripción</p>
+                                <span>Hecha</span>
+                            </Signature>
+                        </div>
+                        <div class="signature">
+                            <Signature>
+                                <span>Evaluacion 2</span>
+                                <p>Descripción</p>
+                                <span>Hecha</span>
+                            </Signature>
+                        </div>
+                        <div class="signature">
+                            <Signature>
+                                <span>Evaluacion 3</span>
+                                <p>Descripción</p>
+                                <span>Hecha</span>
+                            </Signature>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>    
@@ -58,7 +94,6 @@ import Home from "../../Home/index.astro";
             width: 100vw;
             overflow: hidden;
             background-color: #FFFFF0;
-            /* @apply w-screen h-screen m-0 p-0 overflow-hidden; */
         }
 
         .container {
@@ -70,24 +105,71 @@ import Home from "../../Home/index.astro";
         }
 
         .sub-container{
-            @apply w-full bg-[#1aef61] 
+            @apply w-full  
         }
 
         .component{
-            @apply bg-[#a968eb] flex justify-around items-center flex-row w-full ;
+            @apply bg-[#FEFEE2] flex justify-around items-center flex-row w-full h-[80%] ;
         }
 
         .signature{
-            @apply bg-[#eb9898]  w-[25%] h-[90%] flex justify-center items-center; 
+            @apply relative w-[25%] h-[90%] flex flex-col justify-center items-center rounded-[10px] overflow-hidden;
+            background: linear-gradient(to right, #d08855 15%, #e9aa61 15%);
+            border: 2px solid #184d6d;
+        }
+
+        .signature::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 15%;        
+            width: 2px;
+            height: 100%;
+            background-color: #091b27; 
+            pointer-events: none;      
+        }
+
+        .signature::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 15%;       
+            height: 100%;
+            background-image: repeating-radial-gradient(
+                circle at 50% 20px,
+                #041722 0,
+                #07131a 5px,     
+                transparent 5px,
+                transparent 50px 
+            );
+            opacity: 0.8;      
+            pointer-events: none;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 10px; 
+            left: 310px; 
+            z-index: 10;
         }
 
         .tasks{
-            @apply w-full h-[50%] bg-[#07a3eb] flex justify-center  items-center flex-col
+            @apply w-full h-[50%] bg-[#FEFEE2] flex justify-center  items-center flex-col
+        }
+
+        .tasks-header{
+            @apply w-full h-[20%] flex justify-center items-center text-[40px]
         }
 
         .evaluations{
-            @apply w-full h-[50%] bg-[#eb07ba] flex justify-center 
+            @apply w-full h-[50%] bg-[#FEFEE2] flex justify-center items-center flex-col
         }
+
+        .evaluations-header{
+            @apply w-full h-[20%] flex justify-center items-center text-[40px]
+        }
+        
         @media and Screen()
 
 
