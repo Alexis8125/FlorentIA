@@ -1,0 +1,53 @@
+---
+import "../../styles/global.css";
+import Menu from "../../components/Menu.astro";
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mí Jardín</title>
+</head>
+<body>
+    <div class="container">
+        <div class="menu">
+            <Menu></Menu>
+        </div>
+        <div class="information">
+            <img src="../../../public/garden.jpg" alt="" class="garden-container">
+        </div>
+    </div>
+    
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            background-color: #FFFFF0;
+            /* @apply w-screen h-screen m-0 p-0 overflow-hidden; */
+        }
+    
+        .container {
+            @apply flex h-screen bg-[#FFFFF0] w-full;
+        }
+    
+        .menu {
+            @apply w-[300px] h-full;
+        }
+    
+        .information {
+            @apply w-[1500px] flex-col h-full flex items-center justify-center;
+        }
+        
+        .garden-container{
+            @apply w-[95%] h-[95%]
+        }
+    
+    </style>
+</body>
+</html>
+
