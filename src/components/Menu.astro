@@ -1,33 +1,36 @@
 ---
 import "../styles/global.css"
 import Challenges from "../pages/Challenges/index.astro";
+
 ---
 
 <div class="container-menu">
     <div class="container-logo">
-        <img src="../../public/logo.png" alt="" class="logo">
+        <a href="/Home" class="content-home">
+            <img src="../../public/logo.png" alt="" class="logo">
+        </a>
     </div>
     <div class="option">
-        <a href="" class="selection">
+        <a href="/Garden" class="selection">
             <span class="text">
                 Mí Jardín
             </span>
         </a>
     </div>
     <div class="option">
-        <a href="Challenges/" class="selection">
+        <a href="/Challenges" class="selection">
             <span class="text">
                 Mis Retos
             </span>
         </a>
     </div>
     <div class="option">
-        <a href="/Achievements/" class="selection">
+        <a href="/Achievements" class="selection">
             <span class="text">Mis Logros</span>
         </a>
     </div>
     <div class="option">
-        <a href="" class="selection">
+        <a href="/Explore" class="selection">
             <span class="text" style="font-family: 'Poppins', sans-serif;">
                 Explorar
             </span>
