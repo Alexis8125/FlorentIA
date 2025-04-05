@@ -29,9 +29,24 @@ import Progress from "../../components/Progress.astro";
                 </p>
             </div>
             <div class="advance-content">
-                <Progress></Progress>
-                <Progress></Progress>
-                <Progress></Progress>
+                <Progress>
+                    <div class="progress">
+                        <h2>Tema 1</h2>
+                        <span>Materia</span>
+                    </div>
+                </Progress>
+                <Progress>
+                    <div class="progress">
+                        <h2>Tema 2</h2>
+                        <span>Materia</span>
+                    </div>
+                </Progress>
+                <Progress>
+                    <div class="progress">
+                        <h2>Tema 3</h2>
+                        <span>Materia</span>
+                    </div>
+                </Progress>
             </div>
         </div>
     </div>
@@ -88,6 +103,12 @@ import Progress from "../../components/Progress.astro";
         @apply w-full h-[50%] p-[10%] flex items-center justify-center space-x-[24px] mt-[-120px];
     }
 
+    .progress > h2{
+        @apply h-[50%]  text-[30px]  items-end flex justify-center 
+    }
+    .progress > span{
+        @apply h-[50%] text-[20px] justify-center flex items-start
+    }
 
     @media and Screen()
 
