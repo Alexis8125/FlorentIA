@@ -8,9 +8,7 @@ import "../styles/global.css";
     </div>
 </div>
 <div class=" progress-info">
-
-    <h2>Tema</h2>
-    <span>Materia</span>
+    <slot/>
 </div>
 </div>
 
@@ -22,15 +20,10 @@ import "../styles/global.css";
         @apply h-[50%] justify-center items-center flex
     }
     .progress-circle{
-        @apply rounded-full bg-[#22ad2d] h-[120px] w-[125px]
+        @apply rounded-full bg-[#e9aa61] h-[120px] w-[125px]
     }
     .progress-info{
         @apply h-[50%]
     }
-    .progress-info > h2{
-        @apply h-[50%]  text-[30px]  items-end flex justify-center 
-    }
-    .progress-info > span{
-        @apply h-[50%] text-[20px] justify-center flex items-start
-    }
+   
 </style>
