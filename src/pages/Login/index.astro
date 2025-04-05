@@ -419,15 +419,16 @@ form.sign-in-form {
     <div class="container">
       <div class="forms-container">
         <div class="signin-signup">
-          <form action="#" class="sign-in-form">
+          <!-- FORMULARIO SIGN IN -->
+          <form id="login-form" action="#" class="sign-in-form">
             <h2 class="title">Sign in</h2>
             <div class="input-field">
               <i class="fas fa-user"></i>
-              <input type="text" placeholder="Username" />
+              <input id="username" type="text" placeholder="Username" required />
             </div>
             <div class="input-field">
               <i class="fas fa-lock"></i>
-              <input type="password" placeholder="Password" />
+              <input id="password" type="password" placeholder="Password" required />
             </div>
             <input type="submit" value="Login" class="btn solid" />
             <p class="social-text">Or Sign in with social platforms</p>
@@ -446,6 +447,8 @@ form.sign-in-form {
               </a>
             </div>
           </form>
+  
+          <!-- FORMULARIO SIGN UP (sin lógica de validación en este ejemplo) -->
           <form action="#" class="sign-up-form">
             <h2 class="title">Sign up</h2>
             <div class="input-field">
@@ -479,7 +482,7 @@ form.sign-in-form {
           </form>
         </div>
       </div>
-
+  
       <div class="panels-container">
         <div class="panel left-panel">
           <div class="content">
@@ -511,17 +514,42 @@ form.sign-in-form {
     </div>
 
     <script>
-        const sign_in_btn = document.querySelector("#sign-in-btn");
-        const sign_up_btn = document.querySelector("#sign-up-btn");
-        const container = document.querySelector(".container");
+      const sign_in_btn = document.querySelector("#sign-in-btn");
+      const sign_up_btn = document.querySelector("#sign-up-btn");
+      const container = document.querySelector(".container");
 
-        sign_up_btn.addEventListener("click", () => {
-            container.classList.add("sign-up-mode");
-        });
+      sign_up_btn.addEventListener("click", () => {
+          container.classList.add("sign-up-mode");
+      });
 
-        sign_in_btn.addEventListener("click", () => {
-            container.classList.remove("sign-up-mode");
-        });
+      sign_in_btn.addEventListener("click", () => {
+          container.classList.remove("sign-up-mode");
+      });
+
+      // Datos de usuarios simulados (usuario: { password, role })
+      const credentials = {
+        "estudiante1": { password: "pass1", role: "estudiante" },
+        "docente1": { password: "pass2", role: "docente" }
+      };
+
+      // Lógica para validar el login y redirigir según rol
+      const loginForm = document.getElementById("login-form");
+      loginForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const username = document.getElementById("username").value.trim();
+        const password = document.getElementById("password").value.trim();
+
+        if (credentials[username] && credentials[username].password === password) {
+          // Redirige según el rol del usuario
+          if (credentials[username].role === "estudiante") {
+            window.location.href = "/Home/";
+          } else if (credentials[username].role === "docente") {
+            window.location.href = "teacher.html";
+          }
+        } else {
+          alert("Credenciales incorrectas. Por favor, inténtalo nuevamente.");
+        }
+      });
     </script>
   </body>
 </html>
