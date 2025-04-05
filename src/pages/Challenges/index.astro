@@ -3,7 +3,6 @@ import "../../styles/global.css";
 import Menu from "../../components/Menu.astro";
 import Home from "../Home/index.astro";
 import Signature from "../../components/Signature.astro";
-import Signatures from "../Challenges/Signatures/index.astro";
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -19,11 +18,42 @@ import Signatures from "../Challenges/Signatures/index.astro";
         </div>
 
         <div class="information">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus ea nesciunt rerum quos quidem facilis alias commodi. Velit, 
-                nam odit non vero repudiandae possimus odio nobis, blanditiis harum, impedit iusto.</p>
+            <p>¡Tus retos te están esperando! Aprende, 
+                juega y demuestra todo lo que sabes. 💪📚 
+                ¡Tú puedes lograrlo!</p>
             <div class="advance-content">
                 <Signature>
                     
+                    <div class="container-progress ">
+                        <div class="progress-wrapper ">
+                            <a href="/Challenges/Signatures/"><span>Inglés</span></a>
+                            <div class="progress-circle">
+                                <img src="../../../public/logoIngles.png" alt="">
+                            </div>
+                        </div>
+                        <div class=" progress-info">
+                        
+                            <h2>Personal Pronouns</h2>
+                        </div>
+                    </div>
+                </Signature>
+                <Signature>
+                    <div class="container-progress ">
+                        <div class="progress-wrapper ">
+                            <a href="Signatures/"><span>Ingles</span></a>
+
+                            <div class="progress-circle">
+                                <img src="../../../public/logoIngles.png" alt="">
+                        
+                            </div>
+                        </div>
+                        <div class=" progress-info">
+                        
+                            <h2>Simple present</h2>
+                        </div>
+                    </div>
+                </Signature>
+                <Signature>
                     <div class="container-progress ">
                         <div class="progress-wrapper ">
                             <a href="Signatures/"><span>Ingles</span></a>
@@ -39,8 +69,6 @@ import Signatures from "../Challenges/Signatures/index.astro";
                         </div>
                     </div>
                 </Signature>
-                <Signature/>
-                <Signature/>
             </div>
         </div>
     </div>    
@@ -68,7 +96,7 @@ import Signatures from "../Challenges/Signatures/index.astro";
         @apply w-[1500px] flex-col h-full flex items-center justify-center bg-[#FFFFF0];
 }   
     .information > p{
-        @apply text-[20px] text-center flex;
+        @apply text-[35px] text-center flex mb-[70px];
         
     }
     .advance-content {
