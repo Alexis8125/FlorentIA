@@ -4,6 +4,7 @@ import ButtonLogin from "../components/button-login.astro"
 import Login from "../pages/Login/index.astro";
 import Progress from "../components/Progress.astro";
 import Home from "../pages/Home/index.astro";
+import Price from "../components/Price.astro";
 ---
 
 <!doctype html>
@@ -24,19 +25,21 @@ import Home from "../pages/Home/index.astro";
 					</div>
 					<div class="container-items w-[75%] h-full bg-[#B5D9EC] flex space-x-20 justify-center items-center hover:cursor-p">
 						<div class="items flex space-x-25 justify-end items-center bg-[#B5D9EC] w-[60%] ">
-							<a href="/Home">
+							<a href="#About">
 								<span class="text-[#184D6D] flex flex-col items-center justify-center hover:cursor-pointer">Sobre
 									<span class="mt-[-8px]">Nosotros</span>
 								</span>
 							</a>
-							<a href="/Teacher">
+							<a href="#Experiences">
 								<span class="text-[#184D6D] flex flex-col items-center justify-center hover:cursor-pointer">Viaje
 									<span class="mt-[-8px]">del Saber</span>
 								</span>
 							</a>
-							<span class="text-[#184D6D] flex flex-col items-center justify-center hover:cursor-pointer">Elige tu
-								<span class="mt-[-8px]">Aventura</span>
-							</span>
+							<a href="#Price">
+								<span class="text-[#184D6D] flex flex-col items-center justify-center hover:cursor-pointer">Elige tu
+									<span class="mt-[-8px]">Aventura</span>
+								</span>
+							</a>
 						</div>
 						<div class="login flex space-x-5 justify-center items-center bg-[#B5D9EC] w-[40%]">
 							<ButtonLogin>
@@ -73,22 +76,57 @@ import Home from "../pages/Home/index.astro";
 					</div>
 				</div>
 			</div>
-			<div class="info w-[1280px] w-max-[1280px] h-[350px] bg-[#183D2D] mx-auto flex flex-col items-center justify-center">
+			<div class="info w-[1280px] w-max-[1280px] h-[350px] bg-[#183D2D] mx-auto flex flex-col items-center justify-center" id="About">
 				<h2 class="text-[38px] text-[#FEFEE2] font-semibold">Un poco sobre nosotros</h2>
 				<p class="text-[23px] mt-[12px] text-[#FEFEE2] w-[966px] text-center">FlorentIA convierte el aprendizaje en una aventura, llena de desafíos y descubrimientos. Con tecnologia interactiva hace que cada lección sea emocionante y unica. ¡Aquí, aprender es explorar!</p>
 			</div>
-			<div class="experiences h-[300px] w-[1280px] w-max-[1280px] bg-[#183D2D] mx-auto flex items-center justify-evenly">
+			<div class="experiences h-[300px] w-[1280px] w-max-[1280px] bg-[#183D2D] mx-auto flex items-center justify-evenly" id="Experiences">
 				<div class="experience-info h-[95%] w-[30%] bg-[#245540] rounded-2xl flex items-center justify-center flex-col">
-					<img src="../../public/children.jpg" alt="" class="h-[150px] rounded">
-					<p class="text-[#FEFEE2] text-[16px] text-center w-[280px] mt-[15px]">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+					<img src="../../public/asistencia-.png" alt="" class="h-[150px] rounded">
+					<p class="text-[#FEFEE2] text-[16px] text-center w-[280px] mt-[15px]">🧑‍🏫 Asistencia Personalizada</p>
+					<p class="text-[#FEFEE2] text-[16px] text-center w-[280px]">Seguimiento del progreso y recomendaciones adaptadas al ritmo de cada estudiante.</p>
 				</div>
 				<div class="experience-info h-[95%] w-[30%] bg-[#245540] rounded-2xl flex items-center justify-center flex-col">
-					<img src="../../public/children.jpg" alt="" class="h-[150px] rounded">
-					<p class="text-[#FEFEE2] text-[16px] text-center w-[280px] mt-[15px]">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+					<img src="../../public/entorno-.png" alt="" class="h-[150px] rounded">
+					<p class="text-[#FEFEE2] text-[16px] text-center w-[280px] mt-[15px]">🔒 Entorno Seguro</p>
+					<p class="text-[#FEFEE2] text-[16px] text-center w-[280px]">Plataforma segura y amigable para los más pequeños, con contenido adecuado.</p>
 				</div>
 				<div class="experience-info h-[95%] w-[30%] bg-[#245540] rounded-2xl flex items-center justify-center flex-col">
-					<img src="../../public/children.jpg" alt="" class="h-[150px] rounded">
-					<p class="text-[#FEFEE2] text-[16px] text-center w-[280px] mt-[15px]">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+					<img src="../../public/desarrollo.png" alt="" class="h-[150px] rounded">
+					<p class="text-[#FEFEE2] text-[16px] text-center w-[280px]">🧠 Desarrollo Cognitivo</p>
+					<p class="text-[#FEFEE2] text-[16px] text-center w-[280px]">Actividades que estimulan el pensamiento crítico y la resolución de problemas desde temprana edad.</p>
+				</div>
+			</div>
+			<div class="price flex flex-col h-[650px] bg-[#183D2D] w-[1280px] mx-auto items-center justify-center p-[24px]" id="Price">
+				<h2 class="font-[600] text-[32px] text-[#FEFEE2] p-[20px]">Nuestros Planes y Precios</h2>
+				<div class="container-price h-[600px] w-full bg-[#183D2D] flex items-center justify-center space-x-[50px]">
+					<Price>
+						<h2 class="text-[#FEFEE2] text-[26px] text-center font-[600] mt-[24px]">🌱 Plan Semilla</h2>
+						<span class="font-[500] mt-[30px] text-center text-[18px]">1 a 10 Estudiantes</span>
+						<li class="list-none mt-[12px] text-center">Acceso Completo a FlorentIA</li>
+						<li class="list-none text-center">Actividades Interactivas</li>
+						<li class="list-none text-center">1 jardín virtual por niño</li>
+						<span class="text-center font-[600] mt-[18px]">💰 Desde $15.000 COP/mes (Por niño)</span>
+						<div class="w-[120px] h-[50px] bg-[#fefee2] rounded-[12px] text-center mx-auto text-[#333] flex items-center justify-center font-[600] mt-[38px] hover:cursor-pointer transition-colors hover:bg-[#e9aa61]">Comprar Plan<i class="fa-solid fa-arrow-right text-[12px] ml-[2px] mt-[1px]"></i></div>
+					</Price>
+					<Price>
+						<h2 class="text-[#FEFEE2] text-[26px] text-center font-[600] mt-[24px]">🌿 Plan Jardín</h2>
+						<span class="font-[500] mt-[30px] text-center text-[18px]">11 a 30 estudiantes</span>
+						<li class="list-none mt-[12px] text-center">Funciones avanzadas para docentes</li>
+						<li class="list-none text-center">Jardines múltiples por curso</li>
+						<li class="list-none text-center">Reportes de progreso por grupo</li>
+						<span class="text-center font-[600] mt-[18px]">💰 Desde $165.000 COP/mes</span>
+						<div class="w-[120px] h-[50px] bg-[#fefee2] rounded-[12px] text-center mx-auto text-[#333] flex items-center justify-center font-[600] mt-[38px] hover:cursor-pointer transition-colors hover:bg-[#e9aa61]">Comprar Plan<i class="fa-solid fa-arrow-right text-[12px] ml-[2px] mt-[1px]"></i></div>
+					</Price>
+					<Price>
+						<h2 class="text-[#FEFEE2] text-[26px] text-center font-[600] mt-[24px]">🌳 Plan Bosque</h2>
+						<span class="font-[500] mt-[30px] text-center text-[18px]">31 a 60 estudiantes</span>
+						<li class="list-none mt-[12px] text-center">Gestión de clases por niveles</li>
+						<li class="list-none text-center">Accesos personalizados para docentes</li>
+						<li class="list-none text-center">Soporte técnico prioritario</li>
+						<span class="text-center font-[600] mt-[18px]">💰 Desde $15.000 COP/mes (Por niño)</span>
+						<div class="w-[120px] h-[50px] bg-[#fefee2] rounded-[12px] text-center mx-auto text-[#333] flex items-center justify-center font-[600] mt-[38px] hover:cursor-pointer transition-colors hover:bg-[#e9aa61]">Comprar Plan<i class="fa-solid fa-arrow-right text-[12px] ml-[2px] mt-[1px]"></i></div>
+					</Price>
 				</div>
 			</div>
 			<div class="footer w-[1280px] w-max[1280px] h-[300px] flex mx-auto justify-center items-center bg-gradient-to-t from-[#4a2c1d] via-[#3c3122] to-[#183d2d]">
@@ -122,4 +160,10 @@ import Home from "../pages/Home/index.astro";
 	
 	</body>
 </html>
+
+<style>
+	Price{
+		@apply flex flex-col
+	}
+</style>
 

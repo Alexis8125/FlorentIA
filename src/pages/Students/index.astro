@@ -1,3 +1,201 @@
 ---
 import "../../styles/global.css";
+import Menu from "../../components/Menu-teacher.astro";
+import Progress from "../../components/Progress.astro";
 ---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Estudiantes - FlorentIA</title>
+    <link rel="icon" type="image/svg+xml" href="../../../public/logo-fondo.jpg" />
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 0px;
+          box-sizing: border-box;
+        }
+
+        a{
+            text-decoration:underline;
+            color: #288b98;
+        }
+    
+        h2 {
+          text-align: center;
+          margin-bottom: 20px;
+        }
+    
+        table {
+          width: 1000px;
+          border-collapse: collapse;
+          background-color: white;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+          border-radius: 8px;
+          overflow: hidden;
+        }
+    
+        th, td {
+          padding: 12px;
+          text-align: center;
+          border-bottom: 1px solid #ddd;
+        }
+    
+        th {
+          background-color: #f0f0f0;
+        }
+    
+        img {
+          width: 60px;
+          height: 60px;
+          object-fit: cover;
+          border-radius: 50%;
+        }
+    
+        /* Estilos responsive */
+        @media screen and (max-width: 600px) {
+          table, thead, tbody, th, td, tr {
+            display: block;
+          }
+    
+          thead {
+            display: none;
+          }
+    
+          tr {
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 10px;
+            background-color: #fff;
+          }
+    
+          td {
+            text-align: left;
+            padding: 8px;
+            position: relative;
+          }
+    
+          td::before {
+            content: attr(data-label);
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+          }
+    
+          img {
+            margin-top: 10px;
+          }
+        }
+      </style>
+</head>
+<body>
+    <div class="container">
+        <div class="menu">
+            <Menu></Menu>
+        </div>
+        <div class="information">
+            <h2>Estudiantes</h2>
+            <div class="list-container">
+                <table>
+                    <thead>
+                      <tr>
+                        <th>Código</th>
+                        <th>Nombre</th>
+                        <th>Fotografía</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td data-label="Código">202501</td>
+                        <td data-label="Nombre"><a href="#">Juan Pérez</a></td>
+                        <td data-label="Fotografía"><img src="https://watermark.lovepik.com/photo/20211208/large/lovepik-junior-high-school-students-writing-homework-picture_501603943.jpg" alt="Foto de Juan Pérez"></td>
+                      </tr>
+                      <tr>
+                        <td data-label="Código">202502</td>
+                        <td data-label="Nombre"> <a href="">María García</a></td>
+                        <td data-label="Fotografía"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2IzOezlV1Umi99uaEF4af3mlkeLD7Hzb3cQ&s" alt="Foto de María García"></td>
+                      </tr>
+                      <tr>
+                        <td data-label="Código">202503</td>
+                        <td data-label="Nombre"> <a href="">Carlos López</a></td>
+                        <td data-label="Fotografía"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQVy2VlktL3aB7lqZmBp8trLVs1CU59GjU4A&s" alt="Foto de Carlos López"></td>
+                      </tr>
+                    </tbody>
+                  </table>
+            </div>
+        </div>
+    </div>
+</body>
+<style>
+    html, body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden;
+        background-color: #FFFFF0;
+        /* @apply w-screen h-screen m-0 p-0 overflow-hidden; */
+    }
+
+    h2{
+        @apply text-center text-[32px] font-[700] mb-[98px]
+    }
+
+    .container {
+        @apply flex h-screen bg-[#FFFFF0] w-full;
+    }
+
+    .menu {
+        @apply w-[300px] h-full;
+    }
+
+    .information {
+        @apply w-[1500px] flex-col h-full flex items-center justify-center;
+}   
+
+
+    .welcome {
+        @apply w-full p-[10%] flex flex-col h-[50%] items-center justify-center text-[#333];
+    }
+
+    .welcome > h1{
+        font-size: 28px;
+        font-weight: 400
+    }
+
+    .welcome > p{
+        font-size: 34px;
+        margin-top: 15px;
+        font-weight: 700
+        margin-bottom: -24px;
+    }
+
+    .child-image {
+        @apply w-[200px] h-[200px] flex flex-col rounded-full mb-[15px];
+    }
+
+    .child-image > img {
+        @apply w-full h-full rounded-full;
+    }
+
+    .advance-content {
+        @apply w-full h-[50%] p-[10%] flex items-center justify-center space-x-[24px] mt-[-120px];
+    }
+
+    .progress > h2{
+        @apply h-[50%]  text-[30px]  items-end flex justify-center 
+    }
+    .progress > span{
+        @apply h-[50%] text-[20px] justify-center flex items-start
+    }
+
+    @media and Screen()
+
+
+
+</style>

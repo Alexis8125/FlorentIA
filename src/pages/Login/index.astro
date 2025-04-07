@@ -413,7 +413,8 @@ form.sign-in-form {
   }
 }
     </style>
-    <title>Sign in & Sign up Form</title>
+    <title>Inicia Sesión & Crea tu Cuenta - FlorentIA</title>
+    <link rel="icon" type="image/svg+xml" href="../../../public/logo-fondo.jpg" />
   </head>
   <body>
     <div class="container">
@@ -421,17 +422,17 @@ form.sign-in-form {
         <div class="signin-signup">
           <!-- FORMULARIO SIGN IN -->
           <form id="login-form" action="#" class="sign-in-form">
-            <h2 class="title">Sign in</h2>
+            <h2 class="title">Iniciar Sesión</h2>
             <div class="input-field">
               <i class="fas fa-user"></i>
-              <input id="username" type="text" placeholder="Username" required />
+              <input id="username" type="text" placeholder="Usuario" required />
             </div>
             <div class="input-field">
               <i class="fas fa-lock"></i>
-              <input id="password" type="password" placeholder="Password" required />
+              <input id="password" type="password" placeholder="Contraseña" required />
             </div>
             <input type="submit" value="Login" class="btn solid" />
-            <p class="social-text">Or Sign in with social platforms</p>
+            <p class="social-text">O inicia sesión con plataformas sociales</p>
             <div class="social-media">
               <a href="#" class="social-icon">
                 <i class="fab fa-facebook-f"></i>
@@ -450,21 +451,21 @@ form.sign-in-form {
   
           <!-- FORMULARIO SIGN UP (sin lógica de validación en este ejemplo) -->
           <form action="#" class="sign-up-form">
-            <h2 class="title">Sign up</h2>
+            <h2 class="title">Crear Cuenta</h2>
             <div class="input-field">
               <i class="fas fa-user"></i>
-              <input type="text" placeholder="Username" />
+              <input type="text" placeholder="Usuario" />
             </div>
             <div class="input-field">
               <i class="fas fa-envelope"></i>
-              <input type="email" placeholder="Email" />
+              <input type="email" placeholder="Correo Electronico" />
             </div>
             <div class="input-field">
               <i class="fas fa-lock"></i>
-              <input type="password" placeholder="Password" />
+              <input type="password" placeholder="Contraseña" />
             </div>
             <input type="submit" class="btn" value="Sign up" />
-            <p class="social-text">Or Sign up with social platforms</p>
+            <p class="social-text">O regístrate en plataformas sociales</p>
             <div class="social-media">
               <a href="#" class="social-icon">
                 <i class="fab fa-facebook-f"></i>
@@ -486,23 +487,21 @@ form.sign-in-form {
       <div class="panels-container">
         <div class="panel left-panel">
           <div class="content">
-            <h3>New here ?</h3>
+            <h3>¿Nuevo aquí?</h3>
             <p>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis,
-              ex ratione. Aliquid!
+              ¡Entonces aún no has visto lo increíble que es ver tu jardín crecer con cada aprendizaje!
             </p>
             <button class="btn transparent" id="sign-up-btn">
-              Sign up
+              Crear Cuenta
             </button>
           </div>
           <img src="../../../public/mascota.png" class="image" alt="" />
         </div>
         <div class="panel right-panel">
           <div class="content">
-            <h3>One of us ?</h3>
+            <h3>¿Tú de nuevo?</h3>
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum
-              laboriosam ad deleniti.
+              ¡Qué emoción verte regresar! Tu jardín te espera para seguir creciendo contigo.
             </p>
             <button class="btn transparent" id="sign-in-btn">
               Sign in
@@ -528,8 +527,12 @@ form.sign-in-form {
 
       // Datos de usuarios simulados (usuario: { password, role })
       const credentials = {
-        "estudiante1": { password: "pass1", role: "estudiante" },
-        "docente1": { password: "pass2", role: "docente" }
+        "Alexis_192224": { password: "12345@192224", role: "estudiante" },
+        "Majo_192241": {password: "12345@192241", role : "estudiante"},
+        "Liceth_192218": {password :"12345@192218", role : "estudiante"},
+        "Alexis": { password: "12345@", role: "docente" },
+        "Majo": {password: "12345@", role: "docente"},
+        "Liceth": {password: "12345@", role: "docente"}
       };
 
       // Lógica para validar el login y redirigir según rol
@@ -544,12 +547,46 @@ form.sign-in-form {
           if (credentials[username].role === "estudiante") {
             window.location.href = "/Home/";
           } else if (credentials[username].role === "docente") {
-            window.location.href = "teacher.html";
+            window.location.href = "/Teacher/";
           }
         } else {
           alert("Credenciales incorrectas. Por favor, inténtalo nuevamente.");
         }
       });
+
+      document.addEventListener("DOMContentLoaded", () => {
+    // Esperamos a que el DOM esté completamente cargado
+
+    const signUpForm = document.querySelector("form.sign-up-form");
+
+    if (signUpForm) {
+      // Detectar si hay un campo de nombre (por ejemplo: input con placeholder 'Name' o 'Full Name')
+      const nameInput = signUpForm.querySelector("input[placeholder*='Name'], input[placeholder*='name']");
+
+      // Crear campo de usuario automáticamente si no existe
+      let usernameInput = signUpForm.querySelector("input[name='username']");
+      if (!usernameInput) {
+        usernameInput = document.createElement("input");
+        usernameInput.type = "hidden"; // lo puedes hacer visible para pruebas
+        usernameInput.name = "username";
+        signUpForm.appendChild(usernameInput);
+      }
+
+      signUpForm.addEventListener("submit", (e) => {
+        if (nameInput) {
+          const name = nameInput.value.trim().toLowerCase().replace(/\s+/g, "");
+          const randomNum = Math.floor(100 + Math.random() * 900); // número entre 100 y 999
+          const generatedUsername = `${name}${randomNum}`;
+
+          usernameInput.value = generatedUsername;
+
+          console.log("Usuario generado automáticamente:", generatedUsername);
+        } else {
+          console.warn("No se encontró un campo de nombre en el formulario.");
+        }
+      });
+    }
+  });
     </script>
   </body>
 </html>
