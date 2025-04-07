@@ -1,50 +1,107 @@
 ---
 import "../../styles/global.css";
 import Menu from "../../components/Menu.astro";
-
 ---
-<!DOCTYPE html>
+
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <div class="container">
-        <div class="menu">
-            <Menu></Menu>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <div class="container">
+            <div class="menu">
+                <Menu />
+            </div>
+            <div class="information">
+                <div class="info-reports">
+                    <div class="title-row">
+                        <h1>Reportes</h1>
+                        <p><strong>Actividades Recientes :</strong></p>
+                    </div>
+                    <ul class="activities-list">
+                        <li>
+                            <strong>María José</strong> ha completado la unidad uno
+                            del tema Greetings a las (09:15 a.m).
+                        </li>
+                        <li>
+                            <strong>Carlos Ramírez</strong> revisó el material introductorio
+                            sobre Personal Pronouns a las (10:00 a.m).
+                        </li>
+                        <li>
+                            <strong>Sofía Martínez</strong> finalizó el cuestionario
+                            del tema Colors a las (10:30 a.m).
+                        </li>
+                        <li>
+                            <strong>Lucía Torres</strong> visualizó el video interactivo
+                            sobre el Verbo To Be a las (11:00 a.m).
+                        </li>
+                        <li>
+                            <strong>Andrés López</strong> participó en la actividad
+                            práctica de Numbers a las (11:45 a.m).
+                        </li>
+                        <li>
+                            <strong>Fernanda Díaz</strong> completó la unidad dos
+                            del tema Days of the Week a las (12:10 p.m).
+                        </li>
+                        <li>
+                            <strong>Camila Ríos</strong> descargó el material complementario
+                            de Greetings a las (1:30 p.m).
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
-        <div class="information">
+    </body>
 
-        </div>
-    </div>
-</body>
-<style>
-    html, body {
-        margin: 0;
-        padding: 0;
-        height: 100vh;
-        width: 100vw;
-        overflow: hidden;
-        background-color: #FFFFF0;
-        /* @apply w-screen h-screen m-0 p-0 overflow-hidden; */
-    }
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            background-color: #fffff0;
+        }
 
-    .container {
-        @apply flex h-screen bg-[#FFFFF0] w-full;
-    }
+        .container {
+            @apply flex h-screen bg-[#FFFFF0] w-full;
+        }
 
-    .menu {
-        @apply w-[300px] h-full;
-    }
+        .menu {
+            @apply w-[300px] h-full;
+        }
 
-    .information {
-        @apply w-[1500px] flex-col h-full flex items-center justify-center;
-}   
-    @media and Screen()
+        .information {
+            @apply w-[1500px] flex-col h-full flex items-center justify-center;
+        }
 
+        .info-reports {
+            @apply flex-col h-full flex items-center justify-center space-y-[10px];
+        }
 
+        .title-row {
+            @apply flex flex-col w-[80%];
+        }
 
-</style>
+        .title-row > h1 {
+            @apply text-[45px] text-center mb-[10px] bg-[#538802] text-[#fff];
+        }
+
+        .title-row > p {
+            @apply text-[25px] text-left border-t-1 border-[#000000] pb-[1px] text-[#ef8535];
+        }
+
+        .activities-list {
+            @apply list-disc p-[20px] border border-[#000000] rounded-[10px] w-[80%] bg-[#fff];
+            list-style-position: inside mb;
+        }
+
+        .activities-list > li {
+            @apply mb-[2px] text-[18px];
+        }
+    </style>
 </html>
