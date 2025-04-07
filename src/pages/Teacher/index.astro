@@ -1,3 +1,120 @@
 ---
+
 import "../../styles/global.css";
+import Menu from "../../components/Menu-teacher.astro";
+import Progress from "../../components/Progress.astro";
 ---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="../../../public/logo-fondo.jpg" />
+    <title>¡FlorentIA! - Home Student</title>
+</head>
+<body>
+    <div class="container">
+        <div class="menu">
+            <Menu></Menu>
+        </div>
+        <div class="information">
+            <div class="welcome">
+                <div class="child-image">
+                    <img src="../../../public/logo-fondo.jpg" alt="Logo">
+
+                </div>
+                <h1>
+                    !Bienvenido a FlorentIA¡
+                </h1>
+                <p>
+                    Tus Avances
+                </p>
+            </div>
+            <div class="advance-content">
+                <Progress>
+                    <div class="progress">
+                        <h2>Tema 1</h2>
+                        <span>Materia</span>
+                    </div>
+                </Progress>
+                <Progress>
+                    <div class="progress">
+                        <h2>Tema 2</h2>
+                        <span>Materia</span>
+                    </div>
+                </Progress>
+                <Progress>
+                    <div class="progress">
+                        <h2>Tema 3</h2>
+                        <span>Materia</span>
+                    </div>
+                </Progress>
+            </div>
+        </div>
+    </div>
+</body>
+<style>
+    html, body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden;
+        background-color: #FFFFF0;
+        /* @apply w-screen h-screen m-0 p-0 overflow-hidden; */
+    }
+
+    .container {
+        @apply flex h-screen bg-[#FFFFF0] w-full;
+    }
+
+    .menu {
+        @apply w-[300px] h-full;
+    }
+
+    .information {
+        @apply w-[1500px] flex-col h-full flex items-center justify-center;
+}   
+
+
+    .welcome {
+        @apply w-full p-[10%] flex flex-col h-[50%] items-center justify-center text-[#333];
+    }
+
+    .welcome > h1{
+        font-size: 28px;
+        font-weight: 400
+    }
+
+    .welcome > p{
+        font-size: 34px;
+        margin-top: 15px;
+        font-weight: 700
+        margin-bottom: -24px;
+    }
+
+    .child-image {
+        @apply w-[200px] h-[200px] flex flex-col rounded-full mb-[15px];
+    }
+
+    .child-image > img {
+        @apply w-full h-full rounded-full;
+    }
+
+    .advance-content {
+        @apply w-full h-[50%] p-[10%] flex items-center justify-center space-x-[24px] mt-[-120px];
+    }
+
+    .progress > h2{
+        @apply h-[50%]  text-[30px]  items-end flex justify-center 
+    }
+    .progress > span{
+        @apply h-[50%] text-[20px] justify-center flex items-start
+    }
+
+    @media and Screen()
+
+
+
+</style>
+</html>
