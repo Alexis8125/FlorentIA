@@ -1,0 +1,53 @@
+---
+import "../styles/global.css"
+---
+
+<div class="container-menu">
+    <div class="container-logo">
+        <a href="/Home" class="content-home">
+            <img src="../../public/logo.png" alt="" class="logo">
+        </a>
+    </div>
+    <div class="option">
+        <a href="/Garden" class="selection">
+            <span class="text">
+                Mis Estudiantes
+            </span>
+        </a>
+    </div>
+    <div class="option">
+        <a href="/Challenges" class="selection">
+            <span class="text">
+                Actividades
+            </span>
+        </a>
+    </div>
+    <div class="option">
+        <a href="/Achievements" class="selection">
+            <span class="text">
+                Reportes
+            </span>
+        </a>
+    </div>
+</div>
+<style>
+    .container-menu{
+        @apply h-screen w-[300px] flex flex-col border-[0.5px] bg-[#FFFFF0]
+    }
+
+    .container-logo{
+        @apply h-[180px] w-full flex items-center justify-center
+    }
+
+    .logo{
+        @apply h-[280px]
+    }
+
+    .option{
+        @apply h-[85px] w-full border-[0.5px] flex items-center justify-center hover:cursor-pointer hover:bg-[#F5F5DC]
+    }
+
+    .text{
+        @apply text-[24px]
+    }
+</style>
