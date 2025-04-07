@@ -1,28 +1,43 @@
 ---
 import "../styles/global.css";
 ---
-<div class="container-progress ">
-<div class="progress-wrapper ">
-    <div class="progress-circle">
+<script defer src="https://unpkg.com/alpinejs@3.2.4/dist/cdn.min.js"></script>
 
+<div class="container-progress">
+  <div class="progress-wrapper">
+    <div class="progress-circle" x-data="{ percent: 70, circumference: 2 * Math.PI * 55 }">
+      <svg class="transform -rotate-90 w-full h-full" viewBox="0 0 150 150">
+        <circle cx="75" cy="75" r="55" stroke="currentColor" stroke-width="14" fill="transparent"
+                class="text-[#f8dcb0]" />
+        <circle cx="75" cy="75" r="55" stroke="currentColor" stroke-width="14" fill="transparent"
+                :stroke-dasharray="circumference"
+                :stroke-dashoffset="circumference - percent / 100 * circumference"
+                class="text-[#2c2c2c] transition-all duration-500 ease-out" />
+      </svg>
+      <span class="absolute text-lg font-semibold text-[#2c2c2c]" x-text="`${percent}%`"></span>
     </div>
-</div>
-<div class=" progress-info">
-    <slot/>
-</div>
+  </div>
+  <div class="progress-info">
+    <slot />
+  </div>
 </div>
 
 <style>
-    .container-progress{
-        @apply bg-[#f5f5dc] w-[280px] h-[250px]
-    }
-    .progress-wrapper{
-        @apply h-[50%] justify-center items-center flex
-    }
-    .progress-circle{
-        @apply rounded-full bg-[#e9aa61] h-[120px] w-[125px]
-    }
-    .progress-info{
-        @apply h-[50%]
-    }
+  .container-progress {
+    @apply bg-[#f5f5dc] w-[280px] h-[250px];
+  }
+
+  .progress-wrapper {
+    @apply h-[50%] justify-center items-center flex;
+  }
+
+  .progress-circle {
+    @apply relative rounded-full h-[120px] w-[125px] flex items-center justify-center;
+  }
+
+  .progress-info {
+    @apply h-[50%];
+  }
 </style>
+
+
