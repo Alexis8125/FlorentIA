@@ -1,0 +1,155 @@
+---
+
+import "../../styles/global.css";
+import Menu from "../../components/Menu.astro";
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="../../../public/logo-fondo.jpg" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <title>Mis profesores</title>
+</head>
+<body>
+    <div class="container">
+        <div class="menu">
+            <Menu></Menu>
+        </div>
+        <div class="information">
+            <div class="section-title">
+                <h2>Mis profesores</h2>
+            </div>
+            <div class="teacher-profile">
+                <div class="teacher-card">
+                    <img class="teacher-avatar" src="https://st2.depositphotos.com/3687485/10944/v/450/depositphotos_109444180-stock-illustration-quiet-woman-vector-illustration.jpg" alt="Foto de la profesora">
+                    <div class="teacher-details">
+                        <h2>Profe</h2>
+                        <h3>Inglés</h3>
+                    </div>
+                    <button class="profile-button">Ver perfil</button>
+                </div>
+            </div>
+            <div class="teacher-sections">
+                <div class="teacher-card-section">
+                    <h2>Mensajes del profesor</h2>
+                    <p>Buen trabajo en el reto, sigue así</p>
+                </div>
+                <div class="teacher-card-section">
+                    <h2>Consejos del profe</h2>
+                    <p>Nunca dejes de aprender cosas nuevas</p>
+                </div>
+                <div class="teacher-card-section">
+                    <h2>Tareas o retos sugeridos</h2>
+                    <p>Mira el reto de present simple en la sección de explorar</p>
+                </div>
+            </div>
+            <div class="student-response">
+                <div class="send-note">
+                    <i class="fa-solid fa-pencil " ></i>
+                    <span>Enviar nota a la profe</span>
+                </div>
+                <div class="send-audio">
+                    <i class="fas fa-microphone" style="color: #296a31;"></i>
+                    <span>Enviar audio a la profe</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<style>
+    html, body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden;
+        background-color: #FFFFF0;
+        /* @apply w-screen h-screen m-0 p-0 overflow-hidden; */
+    }
+
+    .container {
+        @apply flex h-screen bg-[#FFFFF0] w-full;
+    }
+
+    .menu {
+        @apply w-[300px] h-full;
+    }
+
+    .information {
+        @apply w-[1500px] flex-col h-full flex items-center justify-center;
+    }   
+
+    .section-title{
+        @apply w-full h-[25%]  flex justify-center items-center;
+    }
+
+    .section-title >h2{
+        @apply text-[#184D6D] text-[40px];
+    }
+
+    .teacher-profile {
+    @apply w-full flex justify-center items-center ;
+    }
+
+    .teacher-card {
+    @apply w-full max-w-[620px] bg-[#fefee2] rounded-[12px] flex items-center justify-between px-[16px] py-[8px] shadow-[0_4px_6px_rgba(0,0,0,0.1)] border border-[#cccccc40];
+    }
+
+
+    .avatar-wrapper {
+        @apply bg-[#e9aa61] rounded-[50%] p-[8px] flex items-center justify-center;
+    }
+
+    .teacher-avatar {
+        @apply rounded-[50%] w-[50px] h-[50px];
+    }
+
+    .teacher-details {
+        @apply flex flex-col ml-[16px] flex-1;
+    }
+
+    .teacher-details h2 {
+        @apply text-[#184D6D] text-[18px];
+    }
+
+    .teacher-details h3 {
+        @apply text-[#538802] text-[14px];
+    }
+
+    .profile-button {
+        @apply bg-[#538802] text-[#f3ebeb] px-[16px] py-[8px] rounded-[8px] hover:bg-[#406a01] transition hover:cursor-pointer;
+    }
+
+    .teacher-sections{
+        @apply w-full h-[25%]  flex justify-around items-center mt-[25px];
+    }
+
+    .teacher-card-section{
+        @apply w-[25%] h-[170px] bg-[#FDE0A3] rounded-[4px] flex flex-col  items-center;
+    }
+
+    .teacher-card-section >h2{
+        @apply text-[20px] text-[#184D6D];
+    }
+
+    .student-response{
+        @apply w-full h-[25%] flex items-center justify-around;
+    }
+
+    .send-note{
+        @apply w-[200px] h-[40px] bg-[#f4b860] rounded-[4px] text-[#140404] flex justify-center items-center gap-[8px]; 
+    }
+
+    .send-audio{
+        @apply w-[200px] h-[40px] bg-[#538802] rounded-[4px] text-[#f3ebeb] flex justify-center items-center gap-[8px];
+    }
+
+    @media and Screen()
+
+
+
+</style>
+</html>
