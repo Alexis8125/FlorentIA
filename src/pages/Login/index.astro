@@ -6,11 +6,23 @@ import "../../styles/global.css"
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script
-      src="https://kit.fontawesome.com/64d58efce2.js"
-      crossorigin="anonymous"
-    ></script>
-    <!-- <link rel="stylesheet" href="style.css" /> -->
+    <head>
+      <!-- 1) Firebase App (compat) -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+  <!-- 2) Firestore (compat) -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+  <!-- 3) Auth (compat) -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+
+  <!-- 4) Tu FontAwesome (opcional: si sigues con error 403, usa el CDN oficial o añade "localhost" en tu panel de FontAwesome) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" integrity="sha512-…" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <!-- 5) TU CONFIG e INICIALIZACIÓN -->
+  <script>
+    // Copia exactamente la configuración de tu proyecto desde Firebase Console
+    
+    // Inicializa Firebase
+  </script>
     <style>
         @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
 
@@ -421,7 +433,7 @@ form.sign-in-form {
       <div class="forms-container">
         <div class="signin-signup">
           <!-- FORMULARIO SIGN IN -->
-          <form id="login-form" action="#" class="sign-in-form">
+          <form id="login-form" method="post" class="sign-in-form">
             <h2 class="title">Iniciar Sesión</h2>
             <div class="input-field">
               <i class="fas fa-user"></i>
@@ -513,7 +525,9 @@ form.sign-in-form {
     </div>
 
     <script>
-      const sign_in_btn = document.querySelector("#sign-in-btn");
+
+
+const sign_in_btn = document.querySelector("#sign-in-btn");
       const sign_up_btn = document.querySelector("#sign-up-btn");
       const container = document.querySelector(".container");
 
@@ -523,70 +537,75 @@ form.sign-in-form {
 
       sign_in_btn.addEventListener("click", () => {
           container.classList.remove("sign-up-mode");
-      });
+      });
 
-      // Datos de usuarios simulados (usuario: { password, role })
-      const credentials = {
-        "Alexis_192224": { password: "12345@192224", role: "estudiante" },
-        "Majo_192241": {password: "12345@192241", role : "estudiante"},
-        "Liceth_192218": {password :"12345@192218", role : "estudiante"},
-        "Alexis": { password: "12345@", role: "docente" },
-        "Majo": {password: "12345@", role: "docente"},
-        "Liceth": {password: "12345@", role: "docente"}
-      };
+      import firebase from "firebase/compat/app";
+      import "firebase/compat/auth";
+      import "firebase/compat/firestore";
+      console.log("Primera linea script");
+      
 
-      // Lógica para validar el login y redirigir según rol
-      const loginForm = document.getElementById("login-form");
-      loginForm.addEventListener("submit", function (e) {
-        e.preventDefault();
-        const username = document.getElementById("username").value.trim();
-        const password = document.getElementById("password").value.trim();
-
-        if (credentials[username] && credentials[username].password === password) {
-          // Redirige según el rol del usuario
-          if (credentials[username].role === "estudiante") {
-            window.location.href = "/Home/";
-          } else if (credentials[username].role === "docente") {
-            window.location.href = "/Teacher/";
-          }
-        } else {
-          alert("Credenciales incorrectas. Por favor, inténtalo nuevamente.");
-        }
-      });
 
       document.addEventListener("DOMContentLoaded", () => {
-    // Esperamos a que el DOM esté completamente cargado
+        console.log("Primer listener");
+        
+        const firebaseConfig = {
+          apiKey: "AIzaSyCgq36r1pfgHplUt7-HSIY_qNJiEybaIJc",
+          authDomain: "florentia-f47b9.firebaseapp.com",
+          projectId: "florentia-f47b9",
+          storageBucket: "florentia-f47b9.appspot.com",      // <- ojo: .appspot.com
+          messagingSenderId: "59886187087",
+          appId: "1:59886187087:web:d274071e62e43f00b5b03a"
+        };
 
-    const signUpForm = document.querySelector("form.sign-up-form");
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        console.log("Debajo de la inicializacion");
+        
 
-    if (signUpForm) {
-      // Detectar si hay un campo de nombre (por ejemplo: input con placeholder 'Name' o 'Full Name')
-      const nameInput = signUpForm.querySelector("input[placeholder*='Name'], input[placeholder*='name']");
+  // 2) Toma el formulario, asegúrate de que exista
+  const loginForm = document.getElementById("login-form");
+  console.log("¿Existe loginForm?", !!loginForm);
 
-      // Crear campo de usuario automáticamente si no existe
-      let usernameInput = signUpForm.querySelector("input[name='username']");
-      if (!usernameInput) {
-        usernameInput = document.createElement("input");
-        usernameInput.type = "hidden"; // lo puedes hacer visible para pruebas
-        usernameInput.name = "username";
-        signUpForm.appendChild(usernameInput);
+  loginForm.addEventListener("submit", async e => {
+    console.log("Hola vvs, si entro al listener");
+    e.preventDefault();
+    console.log("Submit interceptado");
+
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value.trim();
+    console.log("Credenciales:", username, password);
+
+    try {
+      console.log("Hola vvs, si sirvo");
+      const snap = await db
+      
+      
+        .collection("users")
+        .where("code","==", username)
+        .where("password","==", password)
+        .get();
+      console.log("Docs matches:", snap.size);
+      console.log("Hola vvs, aqui sigo");
+
+      if (!snap.empty) {
+        console.log("Hola vvs, dentro del if vvs");
+        
+        const dest = snap.docs[0].data().role === "estudiante"
+          ? "/Home/"
+          : "/Teacher/";
+        console.log("Redirigiendo a", dest);
+        // 3) Redirección
+        window.location.replace(dest);
+        return;
+      } else {
+        alert("Usuario o contraseña incorrectos.");
       }
-
-      signUpForm.addEventListener("submit", (e) => {
-        if (nameInput) {
-          const name = nameInput.value.trim().toLowerCase().replace(/\s+/g, "");
-          const randomNum = Math.floor(100 + Math.random() * 900); // número entre 100 y 999
-          const generatedUsername = `${name}${randomNum}`;
-
-          usernameInput.value = generatedUsername;
-
-          console.log("Usuario generado automáticamente:", generatedUsername);
-        } else {
-          console.warn("No se encontró un campo de nombre en el formulario.");
-        }
-      });
+    } catch (err) {
+      console.error("Error en login:", err);
     }
   });
+});
     </script>
   </body>
 </html>
