@@ -34,14 +34,15 @@ import Signature from "../../components/Signature.astro";
                         </div>
                         <div class=" progress-info">
                         
-                            <h2>Personal Pronouns</h2>
+                            <h2>Tareas Pendientes</h2>
+                            <a href="/Challenges/Signatures/" class="text-[#288b98] underline text-center text-[19px]">Ver</a>
                         </div>
                     </div>
                 </Signature>
-                <Signature>
+                <!-- <Signature>
                     <div class="container-progress ">
                         <div class="progress-wrapper ">
-                            <a href="Signatures/"><span>Ingles</span></a>
+                            <a href="Signatures/" class="mt-2"><span>Ingles</span></a>
 
                             <div class="progress-circle">
                                 <img src="../../../public/logoIngles.png" alt="">
@@ -51,6 +52,7 @@ import Signature from "../../components/Signature.astro";
                         <div class=" progress-info">
                         
                             <h2>Simple present</h2>
+                            <a href="/Challenges/Signatures/" class="text-[#288b98] underline text-center text-[19px]">Ver</a>
                         </div>
                     </div>
                 </Signature>
@@ -67,9 +69,10 @@ import Signature from "../../components/Signature.astro";
                         <div class=" progress-info">
                         
                             <h2>verb to be</h2>
+                            <a href="/Challenges/Signatures/" class="text-[#288b98] underline text-center text-[19px]">Ver</a>
                         </div>
                     </div>
-                </Signature>
+                </Signature> -->
             </div>
         </div>
     </div>    
@@ -101,10 +104,10 @@ import Signature from "../../components/Signature.astro";
         
     }
     .advance-content {
-        @apply w-full h-[50%] p-[10%] flex items-center justify-end space-x-[24px] bg-[#FFFFF0];
+        @apply w-full h-[50%] p-[10%] flex items-center justify-center space-x-[24px] bg-[#FFFFF0];
     }
     .container-progress{
-        @apply bg-[#f5f5dc] w-[280px] h-[250px]
+        @apply bg-[#f5f5dc] w-[280px] h-[290px] flex items-center justify-center flex-col
     }
     .progress-wrapper{
         @apply h-[50%] justify-center items-center flex flex-col
@@ -114,7 +117,7 @@ import Signature from "../../components/Signature.astro";
         @apply rounded-full bg-[#FFFFF0] h-[120px] w-[125px]
     }
     .progress-info{
-        @apply h-[50%]
+        @apply h-[50%] flex flex-col justify-center items-center
     }
     .progress-info > h2{
         @apply h-[50%]  text-[30px]  items-end flex justify-center 
