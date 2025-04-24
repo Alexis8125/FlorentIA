@@ -21,21 +21,21 @@ import Price from "../components/Price.astro";
 			<div class="sub-container  w-[1280px] w-max[1280px] flex items-center justify-center m-auto flex-col">
 				<div class="header w-full h-20 flex m-auto">
 					<div class="container-logo w-[25%] bg-[#B5D9EC] h-full">
-						<img src="../../public/logo.png" alt="" class="h-[280px] mt-[-100px]  ml-[25px]">
+						<img src="../../public/logo.png" alt="" class="logo-image h-[280px] mt-[-100px]  ml-[25px]">
 					</div>
 					<div class="container-items w-[75%] h-full bg-[#B5D9EC] flex space-x-20 justify-center items-center hover:cursor-p">
 						<div class="items flex space-x-25 justify-end items-center bg-[#B5D9EC] w-[60%] ">
-							<a href="#About">
+							<a href="#About" class="option">
 								<span class="text-[#184D6D] flex flex-col items-center justify-center hover:cursor-pointer">Sobre
 									<span class="mt-[-8px]">Nosotros</span>
 								</span>
 							</a>
-							<a href="#Experiences">
+							<a href="#Experiences" class="option">
 								<span class="text-[#184D6D] flex flex-col items-center justify-center hover:cursor-pointer">Viaje
 									<span class="mt-[-8px]">del Saber</span>
 								</span>
 							</a>
-							<a href="#Price">
+							<a href="#Price" class="option">
 								<span class="text-[#184D6D] flex flex-col items-center justify-center hover:cursor-pointer">Elige tu
 									<span class="mt-[-8px]">Aventura</span>
 								</span>
@@ -61,8 +61,8 @@ import Price from "../components/Price.astro";
 						<p class="text-[44px] text-center w-[650px] ">
 							Explora, aprende y haz crecer tu jardín del conocimiento
 						</p>
-						<img src="../../public/mountain.png" alt="" class="h-[390px] w-[950px] mt-[-145px] ml-[340px]">
-						<img src="../../public/mountain-short.png" alt="" class="h-[350px] w-[450px] mt-[-360px]">
+						<img src="../../public/mountain.png" alt="" class="montain-left h-[390px] w-[950px] mt-[-145px] ml-[340px]">
+						<img src="../../public/mountain-short.png" alt="" class="montain-right h-[350px] w-[450px] mt-[-360px]">
 					</div>
 					<div class="grass h-[50%] bg-[linear-gradient(to_bottom,#538802_0%,#305C1B_62%,#183D2D_100%)] w-full">
 						<img src="../../public/arbusto-flor.png" alt="" class="mt-[-60px] ml-[1140px] h-[90px]">
@@ -162,8 +162,220 @@ import Price from "../components/Price.astro";
 </html>
 
 <style>
-	Price{
-		@apply flex flex-col
+	/* Mantén tu regla original de Price */
+	Price {
+	  @apply flex flex-col;
 	}
-</style>
+  
+	/* ================================
+	   Ajustes para pantallas ≤ 1280px
+	   ================================ */
+	@media (max-width: 1280px) {
+	  /* Subcontenedor principal */
+	  .sub-container {
+		width: 100% !important;
+		padding: 0 1rem;
+	  }
+  
+	  /* Secciones a ancho completo */
+	  .content-info,
+	  .info,
+	  .experiences,
+	  .price,
+	  .footer {
+		width: 100% !important;
+	  }
+  
+	  /* Header: pasa a columna */
+	  .header {
+		flex-direction: column;
+		height: auto;
+	  }
+	  .header .container-logo,
+	  .header .container-items {
+		width: 100% !important;
+	  }
+	  .header .container-items .items,
+	  .header .container-items .login {
+		width: 100% !important;
+		justify-content: center;
+		flex-wrap: wrap;
+		gap: 1rem;
+	  }
+  
+	  /* Imágenes “flores/montaña”: responsivas */
+	  .montain img,
+	  .grass img {
+		max-width: 100%;
+		height: auto;
+		margin: 0 auto;
+	  }
+	}
+
+	@media screen and (max-width: 1024px){
+		.container{
+			width: 100vw;
+		}
+
+		.sub-container{
+			width: 100%;
+			max-width: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			margin: auto;
+			flex-direction:column;
+		}
+
+		.header{
+			width: 100%;
+			height: 70px;
+			display: flex;
+			margin: auto;
+		}
+
+		.container-logo{
+			width: 30%
+			height: 100%; 
+			justify-content: center;
+			align-items: center;
+		}
+
+		.logo-image{
+			height: 230px;
+			margin-top: 0;
+			margin-left: 0;
+		}
+
+		.container-items{
+			width: 70%;
+			height: 100%;
+			display: flex;
+			gap: 1rem;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.container-items:hover{
+			cursor: pointer;
+		}
+
+		.items{
+			display: flex;
+			gap: 1rem;
+			justify-content: end;
+			align-items: center;
+			width: 65%;
+		}
+
+		.option > span{
+			display: flex;
+			flex-direction:column;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.option > span:hover{
+			cursor: pointer;
+		}
+
+		.option > span >span{
+			margin-top: -5px;
+		}
+
+		.login{
+			display: flex;
+			gap: 1rem;
+			justify-content: center;
+			align-items: center;
+			width: 35%;
+		}
+
+		.content-info{
+			height: 450px;
+			width: 100vw;
+			max-width: 100vw;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			font-weight: 700;
+		}
+
+		.montain{
+			height: 50%;
+			width: 100%;
+		}
+
+		.montain > p{
+			font-size: 44px;
+			text-align: center;
+			width: 650px;
+		}
+
+		.montain-left{
+			height: 360px;
+		}
+	}
+  
+	/* ================================
+	   Ajustes para pantallas ≤ 768px
+	   ================================ */
+	@media (max-width: 768px) {
+	  /* Reduce altura fija y añade padding */
+	  .content-info {
+		height: auto !important;
+		padding: 2rem 1rem;
+	  }
+	  /* Texto del hero */
+	  .content-info .montain p {
+		font-size: 2rem;
+		width: auto !important;
+	  }
+  
+	  /* Texto de la sección “Sobre nosotros” */
+	  .info p {
+		width: 90% !important;
+		font-size: 1rem;
+	  }
+  
+	  /* Experiencias en columna */
+	  .experiences {
+		flex-direction: column;
+		height: auto !important;
+		gap: 1.5rem;
+	  }
+	  .experience-info {
+		width: 90% !important;
+	  }
+  
+	  /* Precios en columna */
+	  .container-price {
+		flex-direction: column;
+		gap: 1.5rem;
+	  }
+	  .container-price Price {
+		width: 100% !important;
+	  }
+	}
+  
+	/* ================================
+	   Ajustes para pantallas ≤ 480px
+	   ================================ */
+	@media (max-width: 480px) {
+	  /* Ajuste general de tipografías */
+	  body {
+		font-size: 14px;
+	  }
+	  .header .container-items span,
+	  .header .container-items .login span {
+		font-size: 14px;
+	  }
+	  /* Texto del hero más pequeño */
+	  .montain p {
+		font-size: 1.5rem;
+	  }
+	}
+  </style>
+  
 
