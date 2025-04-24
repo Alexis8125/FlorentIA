@@ -22,9 +22,7 @@ import Progress from "../../components/Progress.astro";
                     <img src="../../../public/logo-fondo.jpg" alt="Logo">
 
                 </div>
-                <h1>
-                    !Bienvenido a FlorentIA¡
-                </h1>
+                <h1 id="welcome-message">Cargando…</h1>
                 <p>
                     Tus Avances
                 </p>
@@ -52,6 +50,62 @@ import Progress from "../../components/Progress.astro";
         </div>
     </div>
 </body>
+<!-- Al final de tu Home (.astro o .html) -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+    import {
+      getFirestore,
+      collection,
+      query,
+      where,
+      getDocs
+    } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+  
+    // 1) Configura tu Firebase (misma config del login)
+    const firebaseConfig = {
+      apiKey: "…",
+      authDomain: "florentia-f47b9.firebaseapp.com",
+      projectId: "florentia-f47b9",
+      storageBucket: "florentia-f47b9.appspot.com",
+      messagingSenderId: "59886187087",
+      appId: "1:59886187087:web:d274071e62e43f00b5b03a"
+    };
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+  
+    // 2) Función async para cargar el nombre
+    (async () => {
+      const code = localStorage.getItem("codigoEstudiante");
+      const welcomeEl = document.getElementById("welcome-message");
+  
+      if (!code) {
+        welcomeEl.textContent = "¡Bienvenido a FlorentIA!";
+        return;
+      }
+  
+      try {
+        const q = query(
+          collection(db, "users"),
+          where("code", "==", code)
+        );
+        const snapshot = await getDocs(q);
+  
+        if (!snapshot.empty) {
+          const userData = snapshot.docs[0].data();
+          // Asume que en Firestore guardaste un campo `name`
+          const name = userData.name || `${userData.firstName} ${userData.lastName}`;
+          welcomeEl.textContent = `¡Bienvenido, ${name}!`;
+        } else {
+          welcomeEl.textContent = "¡Bienvenido a FlorentIA!";
+        }
+      } catch (err) {
+        console.error("Error al cargar nombre:", err);
+        welcomeEl.textContent = "¡Bienvenido a FlorentIA!";
+      }
+    })();
+  </script>
+  
+
 <style>
     html, body {
         margin: 0;
@@ -116,4 +170,5 @@ import Progress from "../../components/Progress.astro";
 
 
 </style>
+
 </html>

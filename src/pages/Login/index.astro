@@ -586,10 +586,12 @@ const sign_in_btn = document.querySelector("#sign-in-btn");
         .where("password","==", password)
         .get();
       console.log("Docs matches:", snap.size);
-      console.log("Hola vvs, aqui sigo");
+      
 
       if (!snap.empty) {
-        console.log("Hola vvs, dentro del if vvs");
+        
+        localStorage.setItem("codigoEstudiante", snap.docs[0].data().code);
+
         
         const dest = snap.docs[0].data().role === "estudiante"
           ? "/Home/"

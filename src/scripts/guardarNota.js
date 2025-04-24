@@ -1,25 +1,19 @@
-// scripts/guardarNota.js
+import { guardarNota } from "../../src/scripts/saveNote";
 
-window.addEventListener("DOMContentLoaded", () => {
-    const fechaSpan = document.getElementById("fecha");
-    const fechaActual = new Date().toLocaleDateString("es-ES");
-
-    if (fechaSpan) {
-        fechaSpan.textContent = fechaActual;
-    }
-
-    window.guardarNota = function () {
-        const entrada = {
-            fecha: fechaActual,
-            aprendizaje: (document.getElementById("aprendizaje")).value,
-            emocion: (document.getElementById("emocion")).value,
-            motivo: (document.getElementById("motivo")).value,
-            logro: (document.getElementById("logro")).value,
-            pensamientos: (document.getElementById("pensamientos")).value,
-        };
-
-        localStorage.setItem(`nota-${fechaActual}`, JSON.stringify(entrada));
-        window.location.href = `/Diary/nota?fecha=${encodeURIComponent(fechaActual)}`;
-
+window.guardarNota = async function () {
+    const nota = {
+        aprendizaje: document.getElementById("aprendizaje").value,
+        emocion: document.getElementById("emocion").value,
+        motivo: document.getElementById("motivo").value,
+        logro: document.getElementById("logro").value,
+        pensamientos: document.getElementById("pensamientos").value,
     };
-});
+
+    const id = await guardarNota(nota);
+    if (id) {
+        alert("Nota guardada con éxito.");
+        window.location.href = "/Diary"; // redirige a index
+    } else {
+        alert("Ocurrió un error al guardar la nota.");
+    }
+};

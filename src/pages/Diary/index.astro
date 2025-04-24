@@ -2,6 +2,9 @@
 import Activities from "../../components/Vue/Activities.astro";
 import "../../styles/global.css";
 import Menu from "../../components/Menu.astro";
+import "../../scripts/loadNotes";
+import NotasGrid from "../../components/NotasGrid.astro";
+import LoadNotes from "./LoadNotes.astro";
 ---
 
 <!doctype html>
@@ -26,9 +29,9 @@ import Menu from "../../components/Menu.astro";
                     <h2>Mi Diario</h2>
                 </div>
                 <div class="activities-grid">
-                    <Activities>
+                    <NotasGrid>
                         <a
-                            href="/Diary/nota"
+                            href="/Diary/note"
                             class="activity-item special-card no-underline"
                         >
                             <div class="icon-container">
@@ -47,133 +50,117 @@ import Menu from "../../components/Menu.astro";
                             </div>
                             <h2>Agregar Nota</h2>
                         </a>
-                    </Activities>
-                    
-                    <Activities>
-                        <div class="activity-item"></div>
-                        <div class="activities-grid" id="notas-guardadas"></div>
+                        <NotasGrid />
+                        <div id="notasContainer" class="mt-6"></div>
+                        <LoadNotes client:only />
 
-                    </Activities>
-                    <Activities>
-                        <div class="activity-item"></div>
-                    </Activities>
-                </div>
-                <div class="activities-grid">
-                    <Activities>
-                        <div class="activity-item"></div>
-                    </Activities>
-                    <Activities>
-                        <div class="activity-item"></div>
-                    </Activities>
-                    <Activities>
-                        <div class="activity-item"></div>
-                    </Activities>
                 </div>
             </div>
         </div>
-        <script type="module" src="/src/scripts/cargarNotas.js"></script>
+        
 
+        <style>
+            .page-container {
+                @apply flex h-screen bg-[#FFFFF0] w-full;
+            }
+
+            .activities-section {
+                @apply bg-[#FFFFF0] w-full;
+            }
+
+            .section-header {
+                @apply text-[30px] justify-center items-center flex;
+            }
+
+            .activities-grid {
+                @apply flex justify-evenly items-center;
+            }
+
+            .activity-item {
+                width: 160px;
+                height: 160px;
+                background-color: #a5c5aa; /* fondo hoja */
+                background-image: linear-gradient(
+                        to right,
+                        rgba(39, 36, 36, 0.1) 1px,
+                        transparent 1px
+                    ),
+                    linear-gradient(
+                        to bottom,
+                        rgba(44, 44, 44, 0.1) 1px,
+                        transparent 1px
+                    );
+                background-size: 20px 20px;
+                border: 2px solid #2c2c2c; /* borde cuadrícula */
+                box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+                position: relative;
+                border-radius: 6px;
+                margin: 12px;
+                transition:
+                    transform 0.2s ease,
+                    box-shadow 0.2s ease;
+            }
+            .activity-item:hover {
+                transform: translateY(-4px);
+                box-shadow: 6px 6px 14px rgba(0, 0, 0, 0.3);
+            }
+
+            .activity-item::before {
+                content: "";
+                position: absolute;
+                top: -12px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 18px;
+                height: 18px;
+                background: radial-gradient(
+                    circle at center,
+                    #ef8535 40%,
+                    #ef8535 100%
+                );
+                border-radius: 50%;
+                border: 2px solid #8b5e00;
+                z-index: 10;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            }
+            .activity-item h2 {
+                font-size: 16px;
+                text-align: center;
+                color: #2c2c2c;
+                margin-top: 12px;
+                font-weight: 500;
+                letter-spacing: 0.5px;
+            }
+
+            .icon-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 70%;
+            }
+
+            .icon {
+                width: 40px;
+                height: 40px;
+                stroke: #2c2c2c;
+            }
+
+            .special-card {
+                background-color: #c0f4ac;
+                background-image: linear-gradient(
+                        to right,
+                        rgba(44, 44, 44, 0.05) 1px,
+                        transparent 1px
+                    ),
+                    linear-gradient(
+                        to bottom,
+                        rgba(44, 44, 44, 0.05) 1px,
+                        transparent 1px
+                    );
+                background-size: 20px 20px;
+            }
+        </style>
     </body>
+    <script type="module" src="/scripts/loadNotes.js"></script>
 
-    <style>
-        .page-container {
-            @apply flex h-screen bg-[#FFFFF0] w-full;
-        }
-
-        .activities-section {
-            @apply bg-[#FFFFF0] w-full;
-        }
-
-        .section-header {
-            @apply text-[30px] justify-center items-center flex;
-        }
-
-        .activities-grid {
-            @apply flex justify-evenly items-center;
-        }
-
-        .activity-item {
-            width: 160px;
-            height: 160px;
-            background-color: #a5c5aa; /* fondo hoja */
-            background-image: linear-gradient(
-                    to right,
-                    rgba(39, 36, 36, 0.1) 1px,
-                    transparent 1px
-                ),
-                linear-gradient(
-                    to bottom,
-                    rgba(44, 44, 44, 0.1) 1px,
-                    transparent 1px
-                );
-            background-size: 20px 20px;
-            border: 2px solid #2c2c2c; /* borde cuadrícula */
-            box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
-            position: relative;
-            border-radius: 6px;
-            margin: 12px;
-            transition:
-                transform 0.2s ease,
-                box-shadow 0.2s ease;
-        }
-        .activity-item:hover {
-            transform: translateY(-4px);
-            box-shadow: 6px 6px 14px rgba(0, 0, 0, 0.3);
-        }
-
-        .activity-item::before {
-            content: "";
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 18px;
-            height: 18px;
-            background: radial-gradient(
-                circle at center,
-                #ef8535 40%,
-                #ef8535 100%
-            );
-            border-radius: 50%;
-            border: 2px solid #8b5e00;
-            z-index: 10;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-        .activity-item h2 {
-            font-size: 16px;
-            text-align: center;
-            color: #2c2c2c;
-            margin-top: 12px;
-            font-weight: 500;
-            letter-spacing: 0.5px;
-        }
-
-        .icon-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 70%;
-        }
-
-        .icon {
-            width: 40px;
-            height: 40px;
-            stroke: #2c2c2c;
-        }
-
-        .special-card {
-            background-color: #c0f4ac;
-            background-image: linear-gradient(
-                    to right,
-                    rgba(44, 44, 44, 0.05) 1px,
-                    transparent 1px
-                ),
-                linear-gradient(
-                    to bottom,
-                    rgba(44, 44, 44, 0.05) 1px,
-                    transparent 1px
-                );
-            background-size: 20px 20px;
-        }
-    </style>
 </html>
