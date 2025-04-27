@@ -1,5 +1,5 @@
----
-import { onMount } from "astro/jsx-runtime";
+--- 
+import { onMount } from "astro";
 ---
 
 <script type="module">
@@ -37,7 +37,7 @@ import { onMount } from "astro/jsx-runtime";
             const nota = doc.data();
             const div = document.createElement("div");
             div.className = "rounded-xl shadow-md bg-white p-4 mb-4";
-            div.innerHTML = `
+            div.innerHTML = ` 
         <h3 class="text-lg font-bold">${nota.titulo}</h3>
         <p class="text-sm text-gray-500">${nota.fecha}</p>
         <p class="mt-2">${nota.texto}</p>
@@ -47,10 +47,14 @@ import { onMount } from "astro/jsx-runtime";
         });
     }
 
-    cargarNotas();
+    onMount(() => {
+        cargarNotas();
+    });
 
     window.verNota = function (id) {
         localStorage.setItem("notaSeleccionada", id);
         window.location.href = "/seeNote/";
     };
 </script>
+
+

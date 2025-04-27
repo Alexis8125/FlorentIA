@@ -111,18 +111,18 @@ import Progress from "../../components/Progress.astro";
                     </thead>
                     <tbody>
                       <tr>
-                        <td data-label="Código">202501</td>
-                        <td data-label="Nombre"><a href="#">Juan Pérez</a></td>
+                        <td data-label="Código">Cargando...</td>
+                        <td data-label="Nombre"><a href="#">Cargando...</a></td>
                         <td data-label="Fotografía"><img src="https://watermark.lovepik.com/photo/20211208/large/lovepik-junior-high-school-students-writing-homework-picture_501603943.jpg" alt="Foto de Juan Pérez"></td>
                       </tr>
                       <tr>
-                        <td data-label="Código">202502</td>
-                        <td data-label="Nombre"> <a href="">María García</a></td>
+                        <td data-label="Código">Cargando...</td>
+                        <td data-label="Nombre"> <a href="">Cargando...</a></td>
                         <td data-label="Fotografía"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2IzOezlV1Umi99uaEF4af3mlkeLD7Hzb3cQ&s" alt="Foto de María García"></td>
                       </tr>
                       <tr>
-                        <td data-label="Código">202503</td>
-                        <td data-label="Nombre"> <a href="">Carlos López</a></td>
+                        <td data-label="Código">Cargando...</td>
+                        <td data-label="Nombre"> <a href="">Cargando...</a></td>
                         <td data-label="Fotografía"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQVy2VlktL3aB7lqZmBp8trLVs1CU59GjU4A&s" alt="Foto de Carlos López"></td>
                       </tr>
                     </tbody>
@@ -131,6 +131,94 @@ import Progress from "../../components/Progress.astro";
         </div>
     </div>
 </body>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+  
+  // Tu configuración de Firebase
+  const firebaseConfig = {
+    apiKey: "AIzaSyCgq36r1pfgHplUt7-HSIY_qNJiEybaIJc",
+    authDomain: "florentia-f47b9.firebaseapp.com",
+    projectId: "florentia-f47b9",
+    storageBucket: "florentia-f47b9.firebasestorage.app",
+    messagingSenderId: "59886187087",
+    appId: "1:59886187087:web:d274071e62e43f00b5b03a"
+  };
+  
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  
+  // Obtener el código del docente del localStorage
+  const codigoDocente = localStorage.getItem("codigoEstudiante");
+  
+  console.log("Código del docente desde localStorage:", codigoDocente);
+  
+  // Función principal
+  async function cargarEstudiantes() {
+    if (!codigoDocente) {
+      alert("No se encontró el código del docente en el almacenamiento local.");
+      return;
+    }
+  
+    // Primero buscamos el docente para saber qué curso dicta
+    const docentesRef = collection(db, "users"); // Ajusta el nombre de tu colección si es diferente
+    const qDocente = query(docentesRef, where("code", "==", codigoDocente));
+    const queryDocenteSnap = await getDocs(qDocente);
+  
+    if (queryDocenteSnap.empty) {
+      alert("Docente no encontrado en la base de datos.");
+      return;
+    }
+  
+    const docenteData = queryDocenteSnap.docs[0].data();
+    const cursoDocente = docenteData.course; // Aquí asumimos que el docente tiene un campo 'course' como "600" o "700" (String)
+  
+    console.log("Curso del docente:", cursoDocente); // Verifica el curso del docente
+  
+    let cursosPermitidos = [];
+    if (cursoDocente === "600") { // Comparando como string
+      cursosPermitidos = ["601", "602"];
+    } else if (cursoDocente === "700") { // Comparando como string
+      cursosPermitidos = ["701", "702"];
+    } else {
+      alert("El curso del docente no es válido.");
+      console.log("El curso del docente no es válido.");
+      return;
+    }
+  
+    // Ahora traemos los estudiantes de esos cursos
+    const estudiantesRef = collection(db, "users"); // Ajusta el nombre de tu colección si es diferente
+    const qEstudiantes = query(estudiantesRef, where("course", "in", cursosPermitidos));
+    const queryEstudiantesSnap = await getDocs(qEstudiantes);
+  
+    console.log("Estudiantes encontrados:", queryEstudiantesSnap.size); // Verifica cuántos estudiantes fueron encontrados
+  
+    if (queryEstudiantesSnap.empty) {
+      alert("No se encontraron estudiantes para este curso.");
+      return;
+    }
+  
+    const tbody = document.querySelector("tbody");
+    tbody.innerHTML = ""; // Limpiamos el tbody
+  
+    queryEstudiantesSnap.forEach((doc) => {
+      const estudiante = doc.data();
+      const tr = document.createElement("tr");
+  
+      tr.innerHTML = `
+        <td data-label="Código">${estudiante.code}</td>
+        <td data-label="Nombre"><a href="#">${estudiante.firstName + " " + estudiante.lastName}</a></td>
+        <td data-label="Fotografía"><img src="${estudiante.photoUrl || 'https://via.placeholder.com/60'}" alt="Foto de ${estudiante.firstName}"></td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+  
+  // Ejecutar
+  cargarEstudiantes();
+  </script>
+  
+  
 <style>
     html, body {
         margin: 0;
@@ -193,9 +281,4 @@ import Progress from "../../components/Progress.astro";
     .progress > span{
         @apply h-[50%] text-[20px] justify-center flex items-start
     }
-
-    @media and Screen()
-
-
-
 </style>

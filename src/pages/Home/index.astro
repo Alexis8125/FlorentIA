@@ -28,19 +28,19 @@ import Progress from "../../components/Progress.astro";
                 </p>
             </div>
             <div class="advance-content">
-                <Progress>
+                <Progress percent={0}>
                     <div class="progress">
                         <h2>Personal Pronouns</h2>
                         <span>Inglés</span>
                     </div>
                 </Progress>
-                <Progress>
+                <Progress percent={0}>
                     <div class="progress">
                         <h2>Simple present</h2>
                         <span>Inglés</span>
                     </div>
                 </Progress>
-                <Progress>
+                <Progress percent={15}>
                     <div class="progress">
                         <h2>verb to be</h2>
                         <span>Inglés</span>
@@ -104,7 +104,7 @@ import Progress from "../../components/Progress.astro";
       }
     })();
   </script>
-  
+</html>
 
 <style>
     html, body {
@@ -164,11 +164,4 @@ import Progress from "../../components/Progress.astro";
     .progress > span{
         @apply h-[50%] text-[20px] justify-center flex items-start
     }
-
-    @media and Screen()
-
-
-
 </style>
-
-</html>

@@ -1,0 +1,183 @@
+---
+import "../../../styles/global.css";
+import Menu from "../../../components/Menu-teacher.astro";
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="../../../public/logo-fondo.jpg" />
+    <title>¡FlorentIA! - Subir Actividades</title>
+</head>
+<body>
+    <div class="container">
+        <div class="menu">
+            <Menu></Menu>
+        </div>
+        <div class="information">
+            <h2>Subir Actividad</h2>
+            <p>Selecciona el tipo de contenido que deseas subir, añade la información necesaria y define una fecha de entrega:</p>
+            
+            <form action="/subir-tarea" method="POST" enctype="multipart/form-data">
+                <label for="tipoContenido">Tipo de contenido:</label><br>
+                <select id="tipoContenido" name="tipoContenido" required>
+                    <option value="archivo">Subir archivo</option>
+                    <option value="enlace">Añadir enlace</option>
+                    <option value="otro">Otro tipo de contenido</option>
+                </select><br><br>
+
+                <!-- Campo para subir archivos -->
+                <div id="campoArchivo" class="campoTipoContenido">
+                    <label for="fileUpload">Selecciona archivo:</label><br>
+                    <input type="file" id="fileUpload" name="tarea" accept=".pdf,.doc,.docx,.jpg,.png" required><br><br>
+                </div>
+
+                <!-- Campo para añadir enlaces -->
+                <div id="campoEnlace" class="campoTipoContenido" style="display:none;">
+                    <label for="enlace">Añadir enlace:</label><br>
+                    <input type="url" id="enlace" name="enlace" placeholder="https://ejemplo.com" required><br><br>
+                </div>
+
+                <!-- Campo para otro tipo de contenido -->
+                <div id="campoOtro" class="campoTipoContenido" style="display:none;">
+                    <label for="contenidoOtro">Descripción del contenido:</label><br>
+                    <textarea id="contenidoOtro" name="contenidoOtro" rows="4" cols="50" placeholder="Escribe detalles sobre el contenido..." style="resize: vertical;"></textarea><br><br>
+                </div>
+
+                <label for="fechaEntrega">Fecha de entrega:</label><br>
+                <input type="date" id="fechaEntrega" name="fechaEntrega" required><br><br>
+
+                <label for="comentarios">Comentarios adicionales:</label><br>
+                <textarea id="comentarios" name="comentarios" rows="4" cols="50" placeholder="Escribe detalles adicionales de la actividad..." style="resize: vertical;"></textarea><br><br>
+
+                <button type="submit">Subir tarea</button>
+            </form>
+        </div>  
+    </div>
+
+    <script>
+        // Función para mostrar los campos según el tipo de contenido seleccionado
+        document.getElementById("tipoContenido").addEventListener("change", function() {
+            var tipo = this.value;
+            var campoArchivo = document.getElementById("campoArchivo");
+            var campoEnlace = document.getElementById("campoEnlace");
+            var campoOtro = document.getElementById("campoOtro");
+
+            // Ocultar todos los campos primero
+            campoArchivo.style.display = "none";
+            campoEnlace.style.display = "none";
+            campoOtro.style.display = "none";
+
+            // Mostrar el campo adecuado según la selección
+            if (tipo === "archivo") {
+                campoArchivo.style.display = "block";
+            } else if (tipo === "enlace") {
+                campoEnlace.style.display = "block";
+            } else if (tipo === "otro") {
+                campoOtro.style.display = "block";
+            }
+        });
+    </script>
+</body>
+</html>
+
+<style>
+    html, body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden;
+        background-color: #FFFFF0;
+    }
+
+    .container {
+        display: flex;
+        height: 100vh;
+        background-color: #FFFFF0;
+        width: 100%;
+    }
+
+    .menu {
+        width: 300px;
+        height: 100%;
+    }
+
+    .information {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        max-width: 500px;
+        flex-direction: column;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        background-color: #fef9f4; /* Color suave tipo Florentia */
+        border-radius: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin: 0 auto;
+        text-align: center;
+        max-height: 80vh; /* Limita la altura del div a un 80% de la pantalla */
+        overflow-y: auto; /* Activa la barra de desplazamiento vertical */
+        margin-top: 120px;
+    }
+    
+    .information h2 {
+        color: #ff7f50;
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    .information p {
+        font-size: 1rem;
+        margin-bottom: 1rem;
+        color: #555;
+    }
+
+    .information form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .information label {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+        color: #333;
+    }
+
+    .information input[type="file"], .information input[type="date"], .information input[type="url"], .information textarea {
+        margin-bottom: 1rem;
+        background-color: #fff;
+        border: 2px dashed #ff7f50;
+        padding: 1rem;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+    .information textarea {
+        resize: vertical;
+    }
+
+    .information button {
+        background-color: #ff7f50;
+        color: white;
+        padding: 0.8rem 2rem;
+        border: none;
+        border-radius: 30px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .information button:hover {
+        background-color: #ff5722;
+    }
+</style>
+
+

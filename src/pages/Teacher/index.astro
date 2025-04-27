@@ -1,5 +1,4 @@
 ---
-
 import "../../styles/global.css";
 import Menu from "../../components/Menu-teacher.astro";
 import Progress from "../../components/Progress.astro";
@@ -10,7 +9,7 @@ import Progress from "../../components/Progress.astro";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/svg+xml" href="../../../public/logo-fondo.jpg" />
-    <title>¡FlorentIA! - Home Teacher</title>
+    <title>¡FlorentIA! - Home Student</title>
 </head>
 <body>
     <div class="container">
@@ -23,27 +22,25 @@ import Progress from "../../components/Progress.astro";
                     <img src="../../../public/logo-fondo.jpg" alt="Logo">
 
                 </div>
-                <h1>
-                    !Bienvenido a FlorentIA¡
-                </h1>
+                <h1 id="welcome-message">Cargando…</h1>
                 <p>
                     Tus Avances
                 </p>
             </div>
             <div class="advance-content">
-                <Progress>
+                <Progress percent={0}>
                     <div class="progress">
                         <h2>Personal Pronouns</h2>
                         <span>Inglés</span>
                     </div>
                 </Progress>
-                <Progress>
+                <Progress percent={0}>
                     <div class="progress">
                         <h2>Simple present</h2>
                         <span>Inglés</span>
                     </div>
                 </Progress>
-                <Progress>
+                <Progress percent={15}>
                     <div class="progress">
                         <h2>verb to be</h2>
                         <span>Inglés</span>
@@ -53,6 +50,62 @@ import Progress from "../../components/Progress.astro";
         </div>
     </div>
 </body>
+<!-- Al final de tu Home (.astro o .html) -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+    import {
+      getFirestore,
+      collection,
+      query,
+      where,
+      getDocs
+    } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+  
+    // 1) Configura tu Firebase (misma config del login)
+    const firebaseConfig = {
+      apiKey: "…",
+      authDomain: "florentia-f47b9.firebaseapp.com",
+      projectId: "florentia-f47b9",
+      storageBucket: "florentia-f47b9.appspot.com",
+      messagingSenderId: "59886187087",
+      appId: "1:59886187087:web:d274071e62e43f00b5b03a"
+    };
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+  
+    // 2) Función async para cargar el nombre
+    (async () => {
+      const code = localStorage.getItem("codigoEstudiante");
+      const welcomeEl = document.getElementById("welcome-message");
+  
+      if (!code) {
+        welcomeEl.textContent = "¡Bienvenido a FlorentIA!";
+        return;
+      }
+  
+      try {
+        const q = query(
+          collection(db, "users"),
+          where("code", "==", code)
+        );
+        const snapshot = await getDocs(q);
+  
+        if (!snapshot.empty) {
+          const userData = snapshot.docs[0].data();
+          // Asume que en Firestore guardaste un campo `name`
+          const name = userData.name || `${userData.firstName} ${userData.lastName}`;
+          welcomeEl.textContent = `¡Bienvenido/a, ${name}!`;
+        } else {
+          welcomeEl.textContent = "¡Bienvenido a FlorentIA!";
+        }
+      } catch (err) {
+        console.error("Error al cargar nombre:", err);
+        welcomeEl.textContent = "¡Bienvenido a FlorentIA!";
+      }
+    })();
+  </script>
+</html>
+
 <style>
     html, body {
         margin: 0;
@@ -111,10 +164,4 @@ import Progress from "../../components/Progress.astro";
     .progress > span{
         @apply h-[50%] text-[20px] justify-center flex items-start
     }
-
-    @media and Screen()
-
-
-
 </style>
-</html>
