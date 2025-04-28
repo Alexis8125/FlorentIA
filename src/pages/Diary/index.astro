@@ -2,13 +2,10 @@
 import Activities from "../../components/Vue/Activities.astro";
 import "../../styles/global.css";
 import Menu from "../../components/Menu.astro";
-import "../../scripts/loadNotes";
-import NotasGrid from "../../components/NotasGrid.astro";
-import LoadNotes from "./LoadNotes.astro";
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="es">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -26,38 +23,77 @@ import LoadNotes from "./LoadNotes.astro";
             </div>
             <div class="activities-section">
                 <div class="section-header">
-                    <h2>Mi Diario</h2>
+                    <h2 class="main-title">Mi Diario</h2>
                 </div>
-                <div class="activities-grid">
-                    <NotasGrid>
-                        <a
-                            href="/Diary/note"
-                            class="activity-item special-card no-underline"
-                        >
-                            <div class="icon-container">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    class="icon"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="#2c2c2c"
-                                    stroke-width="2"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                >
-                                    <path d="M12 5v14M5 12h14"></path>
-                                </svg>
-                            </div>
-                            <h2>Agregar Nota</h2>
-                        </a>
-                        <NotasGrid />
-                        <div id="notasContainer" class="mt-6"></div>
-                        <LoadNotes client:only />
 
+                <div class="activities-column">
+                    <!-- Botón de Agregar Nota (más pequeño) -->
+                    <a
+                        href="/Diary/note"
+                        class="activity-item special-card no-underline small-card"
+                    >
+                        <div class="icon-container">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="icon"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="#2c2c2c"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <path d="M12 5v14M5 12h14"></path>
+                            </svg>
+                        </div>
+                        <h2>Agregar Nota</h2>
+                    </a>
+
+                    <!-- Wrapping notes with scrollbar -->
+                    <div class="notes-wrapper">
+                        <div id="notes-container" class="notes-grid"></div>
+                    </div>
+
+                    <!-- Botón Eliminar Todas al fondo centrado -->
+                    <div class="delete-wrapper">
+                        <button
+                            type="button"
+                            class="boton-eliminar"
+                            onclick="clearAllNotes()"
+                        >
+                            Eliminar todas las notas
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-        
+
+        <!-- Firebase, Load and Delete Scripts -->
+        <script type="module" src="/src/scripts/firebaseConfig.js"></script>
+        <script
+            type="module"
+            src="/src/scripts/loadNotes.js"
+            onload="renderNotes()"></script>
+        <script type="module">
+            import { db } from "/src/scripts/firebaseConfig.js";
+            import {
+                collection,
+                getDocs,
+                deleteDoc,
+                doc,
+            } from "firebase/firestore";
+
+            window.clearAllNotes = async function () {
+                if (!confirm("¿Seguro que quieres eliminar todas las notas?"))
+                    return;
+                const notesRef = collection(db, "notes");
+                const snapshot = await getDocs(notesRef);
+                for (const snap of snapshot.docs) {
+                    await deleteDoc(doc(db, "notes", snap.id));
+                }
+                document.getElementById("notes-container").innerHTML = "";
+            };
+        </script>
 
         <style>
             .page-container {
@@ -69,98 +105,128 @@ import LoadNotes from "./LoadNotes.astro";
             }
 
             .section-header {
-                @apply text-[30px] justify-center items-center flex;
+                @apply justify-center items-center flex mt-[40px] mb-[20px];
+            }
+            .main-title {
+                font-size: 48px;
+                font-weight: 800;
+                color: #184D6D;
             }
 
-            .activities-grid {
-                @apply flex justify-evenly items-center;
+            .activities-column {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+                width: 100%;
+            }
+
+            .notes-wrapper {
+                width: 100%;
+                max-height: 60vh;
+                overflow-y: auto;
+            }
+
+            .notes-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                gap: 1rem;
+                justify-items: center;
             }
 
             .activity-item {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
                 width: 160px;
                 height: 160px;
-                background-color: #a5c5aa; /* fondo hoja */
+                background-color: #a5c5aa;
                 background-image: linear-gradient(
                         to right,
-                        rgba(39, 36, 36, 0.1) 1px,
+                        rgba(239, 133, 53, 0.3) 1px,
                         transparent 1px
                     ),
                     linear-gradient(
                         to bottom,
-                        rgba(44, 44, 44, 0.1) 1px,
+                        rgba(239, 133, 53, 0.3) 1px,
                         transparent 1px
                     );
                 background-size: 20px 20px;
-                border: 2px solid #2c2c2c; /* borde cuadrícula */
+                border: 2px solid #ef8535;
                 box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
                 position: relative;
                 border-radius: 6px;
-                margin: 12px;
+                padding: 0.5rem;
                 transition:
                     transform 0.2s ease,
                     box-shadow 0.2s ease;
+                text-decoration: none;
             }
+
             .activity-item:hover {
                 transform: translateY(-4px);
                 box-shadow: 6px 6px 14px rgba(0, 0, 0, 0.3);
             }
 
-            .activity-item::before {
-                content: "";
-                position: absolute;
-                top: -12px;
-                left: 50%;
-                transform: translateX(-50%);
-                width: 18px;
-                height: 18px;
-                background: radial-gradient(
-                    circle at center,
-                    #ef8535 40%,
-                    #ef8535 100%
-                );
-                border-radius: 50%;
-                border: 2px solid #8b5e00;
-                z-index: 10;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            .small-card {
+                width: 120px;
+                height: 120px;
             }
+
             .activity-item h2 {
                 font-size: 16px;
                 text-align: center;
                 color: #2c2c2c;
-                margin-top: 12px;
+                margin: 0;
                 font-weight: 500;
                 letter-spacing: 0.5px;
+            }
+
+            .small-text {
+                font-size: 0.75rem;
+                color: #2c2c2c;
+                text-align: center;
+                margin: 0;
             }
 
             .icon-container {
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                height: 70%;
+                height: 60%;
             }
 
             .icon {
-                width: 40px;
-                height: 40px;
+                width: 30px;
+                height: 30px;
                 stroke: #2c2c2c;
             }
 
             .special-card {
                 background-color: #c0f4ac;
-                background-image: linear-gradient(
-                        to right,
-                        rgba(44, 44, 44, 0.05) 1px,
-                        transparent 1px
-                    ),
-                    linear-gradient(
-                        to bottom,
-                        rgba(44, 44, 44, 0.05) 1px,
-                        transparent 1px
-                    );
-                background-size: 20px 20px;
+            }
+
+            .boton-eliminar {
+                background-color: #ff5900;
+                color: white;
+                padding: 0.5rem 1rem;
+                border: none;
+                border-radius: 0.5rem;
+                cursor: pointer;
+                transition: background-color 0.2s;
+            }
+
+            .boton-eliminar:hover {
+                background-color: #184D6D;
+            }
+
+            .delete-wrapper {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                margin-top: 1rem;
             }
         </style>
     </body>
-    <script type="module" src="/scripts/loadNotes.js"></script>
-
 </html>

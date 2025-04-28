@@ -1,55 +1,70 @@
-// public/scripts/loadNotes.js
+// /src/scripts/loadNotes.js
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
-import {
-    getFirestore,
-    collection,
-    query,
-    where,
-    getDocs,
-} from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+import { db } from "./firebaseConfig.js";
+import { collection, query, orderBy, getDocs } from "firebase/firestore";
 
-const firebaseConfig = {
-    apiKey: "AIzaSyCgq36r1pfgHplUt7-HSIY_qNJiEybaIJc",
-    authDomain: "florentia-f47b9.firebaseapp.com",
-    projectId: "florentia-f47b9",
-    storageBucket: "florentia-f47b9.appspot.com",
-    messagingSenderId: "59886187087",
-    appId: "1:59886187087:web:d274071e62e43f00b5b03a",
-};
+/**
+ * Fetches all notes from Firestore and renders them into the #notes-container.
+ * Styles each card like the "Agregar Nota" card, with "Nota" at top and date at bottom.
+ */
+export async function renderNotes() {
+    const container = document.getElementById("notes-container");
+    if (!container) return;
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+    // Clear existing cards
+    container.innerHTML = "";
 
-const codigo = localStorage.getItem("codigoEstudiante");
-
-async function cargarNotas() {
-    const q = query(
-        collection(db, "notas"),
-        where("codigo", "==", codigo),
+    // Query notes ordered by fecha descending
+    const notesQuery = query(
+        collection(db, "notes"),
+        orderBy("fecha", "desc")
     );
-    const querySnapshot = await getDocs(q);
 
-    const contenedor = document.getElementById("notasContainer");
-    contenedor.innerHTML = "";
+    try {
+        const snapshot = await getDocs(notesQuery);
+        snapshot.forEach(docSnap => {
+            const note = { id: docSnap.id, ...docSnap.data() };
 
-    querySnapshot.forEach((doc) => {
-        const nota = doc.data();
-        const div = document.createElement("div");
-        div.className = "rounded-xl shadow-md bg-white p-4 mb-4";
-        div.innerHTML = `
-            <h3 class="text-lg font-bold">${nota.titulo}</h3>
-            <p class="text-sm text-gray-500">${nota.fecha}</p>
-            <p class="mt-2">${nota.texto}</p>
-            <button onclick="verNota('${doc.id}')" class="text-green-700 hover:underline mt-2">Ver más</button>
-        `;
-        contenedor.appendChild(div);
-    });
+            // Create card anchor
+            const card = document.createElement("a");
+            card.href = `/Diary/${note.id}`;
+            card.className = "activity-item special-card no-underline";
+
+            // Icon container (reusing same plus icon style)
+            const iconContainer = document.createElement("div");
+            iconContainer.className = "icon-container";
+            iconContainer.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="#2c2c2c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18M3 6h18M3 18h18"></path>
+        </svg>`;
+            card.appendChild(iconContainer);
+
+            // Title at top
+            const title = document.createElement("h2");
+            title.textContent = "Nota";
+            title.style.margin = "0";
+            card.appendChild(title);
+
+            // Spacer to push date to bottom
+            const spacer = document.createElement("div");
+            spacer.style.flex = "1";
+            card.appendChild(spacer);
+
+            // Date at bottom
+            const dateText = document.createElement("p");
+            dateText.className = "small-text";
+            dateText.textContent = new Date(note.fecha).toLocaleDateString("es-ES");
+            card.appendChild(dateText);
+
+            container.appendChild(card);
+        });
+    } catch (e) {
+        console.error("Error loading notes from Firestore:", e);
+    }
 }
 
-cargarNotas();
+// Expose to global scope
+if (typeof window !== "undefined") {
+    window.renderNotes = renderNotes;
+}
 
-window.verNota = function (id) {
-    localStorage.setItem("notaSeleccionada", id);
-    window.location.href = "/seeNote/";
-};
+

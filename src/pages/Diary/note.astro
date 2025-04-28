@@ -39,13 +39,24 @@ import Menu from "../../components/Menu.astro";
                     <!-- Dibujo del día -->
                     <div class="diary-section">
                         <label class="label">Dibujo del día</label>
-                        <input
-                            type="file"
-                            id="dibujo"
-                            accept="image/*"
-                            class="file-input"
-                        />
-                        <p class="file-note">
+
+                        <div class="file-upload-wrapper">
+                            <button
+                                type="button"
+                                class="custom-file-button"
+                                onclick="document.getElementById('dibujo').click()"
+                            >
+                                📷 Elegir Dibujo
+                            </button>
+                            <input
+                                type="file"
+                                id="dibujo"
+                                accept="image/*"
+                                class="file-input-hidden"
+                            />
+                        </div>
+
+                        <p class="file-note" id="file-name">
                             Puedes subir tu dibujo o usar stickers.
                         </p>
                     </div>
@@ -91,23 +102,43 @@ import Menu from "../../components/Menu.astro";
 
                     <!-- Botón de guardar -->
                     <div class="diary-footer">
-                        <button class="boton-guardar" onclick="guardarNota()"
-                            >Guardar mi entrada</button
-                        >
+                        <button type="button" class="boton-guardar" onclick="saveDiaryEntry()">Guardar mi entrada</button>
+
                     </div>
 
                     <!-- Volver a leer -->
                     <div class="diary-footer mt">
-                        <a href="/Diary" class="link-entradas"
-                            >📚 Ver entradas anteriores</a
-                        >
+                        <a href="/Diary" class="link-entradas">
+                            📚 Ver entradas anteriores
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
-        
     </body>
-    <script type="module" src="/js/guardarNota.js"></script>
+
+    <script type="module" src="/src/scripts/saveNote.js"></script>
+    <script type="module" src="/src/scripts/firebaseConfig.js"></script>
+
+    <script>
+        const fecha = new Date();
+
+        // 1) Día numérico
+        const day = fecha.getDate();
+
+        // 2) Nombre de mes largo (usa toLocaleString con sólo { month })
+        const monthName = fecha.toLocaleString("es-ES", { month: "long" });
+
+        // 3) Año numérico
+        const year = fecha.getFullYear();
+
+        // Montamos el texto “27 de abril de 2025”
+        const texto = `${day} de ${monthName} de ${year}`;
+
+        const span = document.getElementById("fecha");
+        if (span) span.textContent = texto;
+    </script>
+    
 
     <style>
         html,
@@ -132,10 +163,13 @@ import Menu from "../../components/Menu.astro";
         }
 
         .information {
-            width: 1500px;
+            flex: 1;
             height: 100%;
             display: flex;
             justify-content: center;
+            overflow-y: auto; /* sólo scroll vertical si es necesario */
+            padding: 20px;
+            box-sizing: border-box;
         }
 
         .diary-box {
@@ -144,9 +178,9 @@ import Menu from "../../components/Menu.astro";
             background-color: #fffff0;
             padding: 32px;
             border-radius: 16px;
-            box-shadow:
+            /* box-shadow:
                 0 20px 25px -5px rgba(0, 0, 0, 0.1),
-                0 10px 10px -5px rgba(0, 0, 0, 0.04);
+                0 10px 10px -5px rgba(0, 0, 0, 0.04); */
         }
 
         .diary-title {
@@ -170,12 +204,16 @@ import Menu from "../../components/Menu.astro";
             margin-bottom: 0.5rem;
         }
 
-        .textarea {
+        .textarea,
+        .input,
+        .select {
             width: 100%;
             padding: 1rem;
             border-radius: 0.5rem;
             border: 1px solid #d1d5db;
             outline: none;
+            overflow-wrap: break-word; /* Prevents text overflow */
+            word-wrap: break-word; /* Ensures text wrapping */
         }
 
         .textarea:focus {
@@ -184,17 +222,10 @@ import Menu from "../../components/Menu.astro";
         }
 
         .input {
-            width: 100%;
             padding: 0.75rem;
-            border-radius: 0.5rem;
-            border: 1px solid #d1d5db;
         }
 
         .select {
-            width: 100%;
-            padding: 0.75rem;
-            border-radius: 0.5rem;
-            border: 1px solid #d1d5db;
             margin-bottom: 0.5rem;
         }
 
@@ -245,5 +276,32 @@ import Menu from "../../components/Menu.astro";
             margin-top: 1.5rem;
             text-align: center;
         }
+        .file-upload-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .custom-file-button {
+            background-color: #60a5fa;
+            color: white;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .custom-file-button:hover {
+            background-color: #2563eb;
+        }
+
+        .file-input-hidden {
+            display: none;
+        }
     </style>
+    
 </html>

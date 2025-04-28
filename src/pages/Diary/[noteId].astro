@@ -1,0 +1,95 @@
+---
+export const prerender = false;
+import "../../styles/global.css";
+import Menu from "../../components/Menu.astro";
+import SeeNote from "../../components/SeeNote.astro";
+
+const { noteId } = Astro.params;
+---
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mi Diario - Ver Nota</title>
+</head>
+<body>
+    <div class="container">
+        <div class="menu">
+            <Menu />
+        </div>
+        <div class="information">
+            <!-- Botón de Volver SOLO CON ICONO -->
+            <button class="back-button" onclick="history.back()" aria-label="Volver">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon-arrow" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+            </button>
+
+            <SeeNote noteId={noteId} />
+        </div>
+    </div>
+
+    <script type="module" src="/src/scripts/storage.js"></script>
+    <script type="module" src="/src/scripts/seeNote.js"></script>
+
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Inter', sans-serif;
+            background-color: #f9fafb;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+            width: 100%;
+        }
+
+        .menu {
+            width: 250px; 
+            box-sizing: border-box;
+        }
+
+        .information {
+            flex: 1;
+            padding: 60px;
+            overflow-y: auto;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .back-button {
+            background-color: #184D6D;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            align-self: flex-start;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            transition: background-color 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #123954;
+        }
+
+        .icon-arrow {
+            width: 24px;
+            height: 24px;
+        }
+    </style>
+</body>
+</html>
+
