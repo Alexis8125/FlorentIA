@@ -14,56 +14,31 @@ import Progress from "../../components/Progress.astro";
 <body>
     <div class="container">
         <div class="menu">
-            <Menu></Menu>
+          <Menu />
         </div>
         <div class="information">
-            <div class="welcome">
-                <div class="child-image">
-                    <img src="../../../public/logo-fondo.jpg" alt="Logo">
-
-                </div>
-                <h1 id="welcome-message">Cargando…</h1>
-                <p>
-                    Tus Avances
-                </p>
+          <div class="welcome">
+            <div class="child-image">
+              <img src="/logo-fondo.jpg" alt="Logo" />
             </div>
-            <div class="advance-content">
-                <Progress percent={0}>
-                    <div class="progress">
-                        <h2>Personal Pronouns</h2>
-                        <span>Inglés</span>
-                    </div>
-                </Progress>
-                <Progress percent={0}>
-                    <div class="progress">
-                        <h2>Simple present</h2>
-                        <span>Inglés</span>
-                    </div>
-                </Progress>
-                <Progress percent={15}>
-                    <div class="progress">
-                        <h2>verb to be</h2>
-                        <span>Inglés</span>
-                    </div>
-                </Progress>
-            </div>
+            <h1 id="welcome-message">Cargando…</h1>
+            <p>Tus Avances</p>
+          </div>
+    
+          <div class="advance-content" id="advance-content">
+            <!-- Aquí se cargan los temas dinámicamente -->
+          </div>
         </div>
-    </div>
+      </div>
 </body>
-<!-- Al final de tu Home (.astro o .html) -->
+
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
-    import {
-      getFirestore,
-      collection,
-      query,
-      where,
-      getDocs
-    } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
-  
-    // 1) Configura tu Firebase (misma config del login)
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+    
+    // Configurar Firebase
     const firebaseConfig = {
-      apiKey: "…",
+      apiKey: "...",
       authDomain: "florentia-f47b9.firebaseapp.com",
       projectId: "florentia-f47b9",
       storageBucket: "florentia-f47b9.appspot.com",
@@ -72,38 +47,95 @@ import Progress from "../../components/Progress.astro";
     };
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
-  
-    // 2) Función async para cargar el nombre
+    
+    // Función principal
     (async () => {
       const code = localStorage.getItem("codigoEstudiante");
       const welcomeEl = document.getElementById("welcome-message");
-  
+      const advanceContent = document.querySelector(".advance-content");
+    
       if (!code) {
         welcomeEl.textContent = "¡Bienvenido a FlorentIA!";
         return;
       }
-  
+    
       try {
-        const q = query(
-          collection(db, "users"),
-          where("code", "==", code)
-        );
-        const snapshot = await getDocs(q);
-  
-        if (!snapshot.empty) {
-          const userData = snapshot.docs[0].data();
-          // Asume que en Firestore guardaste un campo `name`
-          const name = userData.name || `${userData.firstName} ${userData.lastName}`;
-          welcomeEl.textContent = `¡Bienvenido, ${name}!`;
-        } else {
+        // Buscar usuario
+        const userRef = doc(db, "users", code);
+        const userSnap = await getDoc(userRef);
+    
+        if (!userSnap.exists()) {
           welcomeEl.textContent = "¡Bienvenido a FlorentIA!";
+          return;
         }
-      } catch (err) {
-        console.error("Error al cargar nombre:", err);
+    
+        const userData = userSnap.data();
+        const name = `${userData.firstName} ${userData.lastName}`;
+        const course = userData.course; // ej: "702"
+    
+        welcomeEl.textContent = `¡Bienvenido, ${name}!`;
+    
+        // Detectar sexto o séptimo
+        let gradeFolder = "";
+        if (course.startsWith("6")) {
+          gradeFolder = "sixth";
+        } else if (course.startsWith("7")) {
+          gradeFolder = "seventh";
+        } else {
+          gradeFolder = null;
+        }
+    
+        if (!gradeFolder) {
+          advanceContent.innerHTML = "<p>No se encontraron módulos para tu curso.</p>";
+          return;
+        }
+    
+        // Buscar módulos por grado
+        const moduleRef = doc(db, "modules", "moduleId", gradeFolder, `module${capitalize(gradeFolder)}`);
+        const moduleSnap = await getDoc(moduleRef);
+    
+        if (!moduleSnap.exists()) {
+          advanceContent.innerHTML = "<p>No hay temas disponibles.</p>";
+          return;
+        }
+    
+        const moduleData = moduleSnap.data();
+        const topics = moduleData.topics || [];
+    
+        // Limpiar antes de insertar
+        advanceContent.innerHTML = "";
+    
+        // Mostrar cada tema
+        // Mostrar cada tema junto con su barra de progreso real
+        topics.forEach((topic, index) => {
+  const progreso = moduleData.progress ? moduleData.progress[index] || 0 : 0;
+
+  const card = document.createElement("div");
+  card.classList.add("card-tema");
+  card.innerHTML = `
+    <h2>${topic}</h2>
+    <p>${moduleData.subject}</p>
+    <div class="circular-progress" style="--progress:${progreso}">
+      <span>${progreso}%</span>
+    </div>
+  `;
+  advanceContent.appendChild(card);
+});
+
+
+    
+      } catch (error) {
+        console.error("Error al cargar el estudiante o módulos:", error);
         welcomeEl.textContent = "¡Bienvenido a FlorentIA!";
       }
+    
     })();
-  </script>
+    
+    function capitalize(str) {
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+    </script>
+    
 </html>
 
 <style>
@@ -164,4 +196,26 @@ import Progress from "../../components/Progress.astro";
     .progress > span{
         @apply h-[50%] text-[20px] justify-center flex items-start
     }
+
+    .circular-progress {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: conic-gradient(
+    #4d5bf9 calc(var(--progress) * 1%),
+    #cadcff 0
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.2em;
+  color: #4d5bf9;
+}
+
+.circular-progress span {
+  position: absolute;
+}
+
 </style>
