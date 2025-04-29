@@ -1,5 +1,4 @@
 ---
-
 import "../../styles/global.css";
 import Menu from "../../components/Menu.astro";
 ---
@@ -23,14 +22,14 @@ import Menu from "../../components/Menu.astro";
             </div>
             <div class="teacher-profile">
                 <div class="teacher-card">
-                    <img class="teacher-avatar" src="https://st2.depositphotos.com/3687485/10944/v/450/depositphotos_109444180-stock-illustration-quiet-woman-vector-illustration.jpg" alt="Foto de la profesora">
+                    <img id="fotoProfesor" class="teacher-avatar" src="https://st2.depositphotos.com/3687485/10944/v/450/depositphotos_109444180-stock-illustration-quiet-woman-vector-illustration.jpg" alt="Foto de la profesora">
                     <div class="teacher-details">
-                        <h2>Profe</h2>
-                        <h3>Inglés</h3>
+                        <h2 id="nombreProfesor">Profe</h2>
+                        <h3 id="gradoProfesor">Inglés</h3>
                     </div>
                     <button class="profile-button">Ver perfil</button>
                 </div>
-            </div>
+            </div>            
             <div class="teacher-sections">
                 <div class="teacher-card-section">
                     <h2>Mensajes del profesor</h2>
@@ -46,7 +45,7 @@ import Menu from "../../components/Menu.astro";
                 </div>
             </div>
             <div class="student-response">
-                <div class="send-note">
+                <div class="send-note hover:cursor-pointer" id="open-note">
                     <i class="fa-solid fa-pencil " ></i>
                     <span>Enviar nota a la profe</span>
                 </div>
@@ -55,9 +54,117 @@ import Menu from "../../components/Menu.astro";
                     <span>Enviar audio a la profe</span>
                 </div>
             </div>
+            <!-- Formulario oculto inicialmente -->
+            <div id="note-form" style="display: none;" class="note-form">
+                <textarea id="student-message" placeholder="Escribe tu mensaje..." class="textarea-message"></textarea>
+                <button type="submit" id="send-message-button" class="submit-message">Enviar mensaje</button>
+            </div>
         </div>
     </div>
 </body>
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+    const firebaseConfig = {
+        apiKey: "AIzaSyCgq36r1pfgHplUt7-HSIY_qNJiEybaIJc",
+        authDomain: "florentia-f47b9.firebaseapp.com",
+        projectId: "florentia-f47b9",
+        storageBucket: "florentia-f47b9.firebasestorage.app",
+        messagingSenderId: "59886187087",
+        appId: "1:59886187087:web:d274071e62e43f00b5b03a"
+    };
+  
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+  
+    async function cargarProfesor() {
+      const codigoEstudiante = localStorage.getItem("codigoEstudiante");
+  
+      if (!codigoEstudiante) {
+        window.location.href = "/login";
+        return;
+      }
+  
+      const studentQuery = query(
+        collection(db, "users"),
+        where("code", "==", codigoEstudiante)
+      );
+      const studentSnap = await getDocs(studentQuery);
+  
+      if (studentSnap.empty) {
+        alert("No se encontró el estudiante");
+        return;
+      }
+  
+      const studentData = studentSnap.docs[0].data();
+      const studentCourse = studentData.course;
+  
+      let courseProfesor = null;
+      if (studentCourse === "601" || studentCourse === "602") {
+        courseProfesor = "600";
+      } else if (studentCourse === "701" || studentCourse === "702") {
+        courseProfesor = "700";
+      }
+  
+      if (!courseProfesor) {
+        alert("Curso no válido");
+        return;
+      }
+  
+      const profesorQuery = query(
+        collection(db, "users"),
+        where("course", "==", courseProfesor.toString()),
+        where("role", "==", "docente")
+      );
+      const profesorSnap = await getDocs(profesorQuery);
+  
+      if (profesorSnap.empty) {
+        alert("No se encontraron profesores");
+        return;
+      }
+  
+      const profesorData = profesorSnap.docs[0].data();
+  
+      // Aquí llenamos los datos
+      document.getElementById("nombreProfesor").textContent = profesorData.firstName + " " + profesorData.lastName;
+      document.getElementById("gradoProfesor").textContent = (courseProfesor == "600") ? "Sexto" : "Séptimo";
+  
+      if (profesorData.photoUrl) {
+        document.getElementById("fotoProfesor").src = profesorData.photoUrl;
+      } else {
+        document.getElementById("fotoProfesor").src = "https://st2.depositphotos.com/3687485/10944/v/450/depositphotos_109444180-stock-illustration-quiet-woman-vector-illustration.jpg";
+      }
+    }
+  
+    cargarProfesor();
+  </script>
+  <script>
+    const openNoteButton = document.getElementById('open-note');
+    const noteForm = document.getElementById('note-form');
+
+    openNoteButton.addEventListener('click', () => {
+        if (noteForm.style.display === 'none') {
+            noteForm.style.display = 'flex';
+        } else {
+            noteForm.style.display = 'none';
+        }
+    });
+
+    const sendMessageButton = document.getElementById('send-message-button');
+    sendMessageButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        const message = document.getElementById('student-message').value;
+        if (message.trim() !== "") {
+            alert('Mensaje enviado: ' + message);
+            document.getElementById('student-message').value = "";
+            noteForm.style.display = 'none';
+        } else {
+            alert('Por favor escribe un mensaje antes de enviar.');
+        }
+    });
+</script>
+
+</html>
 
 <style>
     html, body {
@@ -147,9 +254,16 @@ import Menu from "../../components/Menu.astro";
         @apply w-[200px] h-[40px] bg-[#538802] rounded-[4px] text-[#f3ebeb] flex justify-center items-center gap-[8px];
     }
 
-    @media and Screen()
+    .note-form {
+    @apply w-full flex flex-col items-center mt-[16px];
+}
 
+.textarea-message {
+    @apply w-[300px] h-[100px] p-[8px] border border-[#d1d5dc] rounded-[6px] resize-none mb-[8px];
+}
 
+.submit-message {
+    @apply bg-[#538802] text-[#fff] px-[16px] py-[8px] rounded-[6px] hover:bg-[#406a01] transition;
+}
 
 </style>
-</html>

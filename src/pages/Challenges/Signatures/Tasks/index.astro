@@ -1,0 +1,115 @@
+---
+import "../../../../styles/global.css";
+import Menu from "../../../../components/Menu.astro";
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="../../../public/logo-fondo.jpg" />
+    <title>¡FlorentIA! - Subir Actividades</title>
+</head>
+<body>
+    <div class="container">
+        <div class="menu">
+            <Menu></Menu>
+        </div>
+        <div class="information">
+            <h2>Subir tarea</h2>
+            <p>Selecciona tu archivo de tarea para enviarlo:</p>
+            
+            <form action="/subir-tarea" method="POST" enctype="multipart/form-data">
+                <label for="fileUpload">Selecciona archivo:</label><br>
+                <input type="file" id="fileUpload" name="tarea" accept=".pdf,.doc,.docx,.jpg,.png" required><br><br>
+                
+                <button type="submit">Subir tarea</button>
+            </form>
+        </div>  
+    </div>
+</body>
+</html>
+<style>
+    html, body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden;
+        background-color: #FFFFF0;
+        /* @apply w-screen h-screen m-0 p-0 overflow-hidden; */
+    }
+
+    .container {
+        @apply flex h-screen bg-[#FFFFF0] w-full;
+    }
+
+    .menu {
+        @apply w-[300px] h-full;
+    }
+
+    .information {
+        @apply w-[1500px] flex-col h-full flex items-center justify-center;
+    }
+    
+    .information {
+  padding: 2rem;
+  background-color: #fef9f4; /* Color suave tipo Florentia */
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.information h2 {
+  color: #ff7f50; /* Color cálido para el título */
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.information p {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  color: #555;
+}
+
+.information form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.information label {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.information input[type="file"] {
+  margin-bottom: 1.5rem;
+  background-color: #fff;
+  border: 2px dashed #ff7f50;
+  padding: 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.information button {
+  background-color: #ff7f50;
+  color: white;
+  padding: 0.8rem 2rem;
+  border: none;
+  border-radius: 30px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.information button:hover {
+  background-color: #ff5722;
+}
+
+
+</style>
