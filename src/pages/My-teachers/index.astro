@@ -44,21 +44,6 @@ import Menu from "../../components/Menu.astro";
                     <p>Mira el reto de present simple en la sección de explorar</p>
                 </div>
             </div>
-            <div class="student-response">
-                <div class="send-note hover:cursor-pointer" id="open-note">
-                    <i class="fa-solid fa-pencil " ></i>
-                    <span>Enviar nota a la profe</span>
-                </div>
-                <div class="send-audio">
-                    <i class="fas fa-microphone" style="color: #296a31;"></i>
-                    <span>Enviar audio a la profe</span>
-                </div>
-            </div>
-            <!-- Formulario oculto inicialmente -->
-            <div id="note-form" style="display: none;" class="note-form">
-                <textarea id="student-message" placeholder="Escribe tu mensaje..." class="textarea-message"></textarea>
-                <button type="submit" id="send-message-button" class="submit-message">Enviar mensaje</button>
-            </div>
         </div>
     </div>
 </body>
@@ -235,11 +220,11 @@ import Menu from "../../components/Menu.astro";
     }
 
     .teacher-card-section{
-        @apply w-[25%] h-[170px] bg-[#FDE0A3] rounded-[4px] flex flex-col  items-center;
+        @apply w-[25%] h-[170px] bg-[#FDE0A3] rounded-[10px] flex flex-col items-center mt-[20px] p-[20px];
     }
 
     .teacher-card-section >h2{
-        @apply text-[20px] text-[#184D6D];
+        @apply text-[20px] text-[#184D6D] ;
     }
 
     .student-response{
