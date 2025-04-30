@@ -128,14 +128,45 @@ import Progress from "../../components/Progress.astro";
                     </tbody>
                   </table>
             </div>
+            <!-- Modal para mostrar información del estudiante -->
+            <div id="studentModal" class="modal">
+              <div class="modal-content">
+                <span class="close">&times;</span>
+                <div class="student-info">
+                  <img id="modalStudentImage" src="" alt="Foto del estudiante">
+                  <h2 id="modalStudentName"></h2>
+                  <p>Código: <span id="modalStudentCode"></span></p>
+                  <p>Curso: <span id="modalStudentCourse"></span></p>
+                </div>
+                <div class="student-progress">
+                  <h3>Avances</h3>
+                  <div id="progressContainer"></div>
+                </div>
+                <div class="message-section">
+                  <h3>Enviar mensaje</h3>
+                  <textarea id="messageText" placeholder="Escribe tu mensaje o recomendación..."></textarea>
+                  <button id="sendMessageBtn">Enviar</button>
+                </div>
+              </div>
+            </div>
         </div>
     </div>
+    
 </body>
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+  import { 
+    getFirestore, 
+    collection, 
+    query, 
+    where, 
+    getDocs,
+    doc,
+    getDoc,
+    addDoc
+  } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
   
-  // Tu configuración de Firebase
+  // Configuración Firebase
   const firebaseConfig = {
     apiKey: "AIzaSyCgq36r1pfgHplUt7-HSIY_qNJiEybaIJc",
     authDomain: "florentia-f47b9.firebaseapp.com",
@@ -145,80 +176,196 @@ import Progress from "../../components/Progress.astro";
     appId: "1:59886187087:web:d274071e62e43f00b5b03a"
   };
   
+  // Inicializar Firebase
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
   
-  // Obtener el código del docente del localStorage
-  const codigoDocente = localStorage.getItem("codigoEstudiante");
-  
-  console.log("Código del docente desde localStorage:", codigoDocente);
+  // Función para mostrar errores
+  function mostrarError(mensaje) {
+    const tbody = document.querySelector("tbody");
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="3" style="color: red; text-align: center; padding: 20px;">
+          ${mensaje}
+        </td>
+      </tr>
+    `;
+  }
   
   // Función principal
   async function cargarEstudiantes() {
-    if (!codigoDocente) {
-      alert("No se encontró el código del docente en el almacenamiento local.");
-      return;
+    try {
+      // 1. Verificar código del docente
+      const codigoDocente = localStorage.getItem("codigoEstudiante");
+      if (!codigoDocente) {
+        mostrarError("No se encontró el código del docente. Por favor inicie sesión nuevamente.");
+        return;
+      }
+  
+      // 2. Obtener curso del docente
+      const docentesRef = collection(db, "users");
+      const qDocente = query(docentesRef, where("code", "==", codigoDocente));
+      const queryDocenteSnap = await getDocs(qDocente);
+  
+      if (queryDocenteSnap.empty) {
+        mostrarError("Docente no registrado en la base de datos");
+        return;
+      }
+  
+      const docenteData = queryDocenteSnap.docs[0].data();
+      const cursoDocente = docenteData.course;
+  
+      // 3. Determinar cursos permitidos
+      let cursosPermitidos = [];
+      if (cursoDocente === "600") cursosPermitidos = ["601", "602"];
+      else if (cursoDocente === "700") cursosPermitidos = ["701", "702"];
+      else {
+        mostrarError("El docente no tiene un curso válido asignado");
+        return;
+      }
+  
+      // 4. Obtener estudiantes
+      const estudiantesRef = collection(db, "users");
+      const qEstudiantes = query(
+        estudiantesRef, 
+        where("course", "in", cursosPermitidos),
+        where("role", "==", "estudiante")
+      );
+  
+      const querySnapshot = await getDocs(qEstudiantes);
+      
+      if (querySnapshot.empty) {
+        mostrarError("No se encontraron estudiantes en estos cursos");
+        return;
+      }
+  
+      // 5. Mostrar estudiantes en tabla
+      const tbody = document.querySelector("tbody");
+      tbody.innerHTML = "";
+  
+      querySnapshot.forEach((doc) => {
+        const estudiante = doc.data();
+        tbody.innerHTML += `
+          <tr>
+            <td>${estudiante.code || 'N/A'}</td>
+            <td>
+              <a href="#" class="student-link" data-id="${doc.id}">
+                ${estudiante.firstName} ${estudiante.lastName}
+              </a>
+            </td>
+            <td>
+              <img src="${estudiante.photoUrl || 'https://via.placeholder.com/60'}" 
+                   alt="${estudiante.firstName}" width="60">
+            </td>
+          </tr>
+        `;
+      });
+  
+    } catch (error) {
+      console.error("Error:", error);
+      mostrarError("Error al cargar los datos. Por favor recarga la página.");
     }
-  
-    // Primero buscamos el docente para saber qué curso dicta
-    const docentesRef = collection(db, "users"); // Ajusta el nombre de tu colección si es diferente
-    const qDocente = query(docentesRef, where("code", "==", codigoDocente));
-    const queryDocenteSnap = await getDocs(qDocente);
-  
-    if (queryDocenteSnap.empty) {
-      alert("Docente no encontrado en la base de datos.");
-      return;
-    }
-  
-    const docenteData = queryDocenteSnap.docs[0].data();
-    const cursoDocente = docenteData.course; // Aquí asumimos que el docente tiene un campo 'course' como "600" o "700" (String)
-  
-    console.log("Curso del docente:", cursoDocente); // Verifica el curso del docente
-  
-    let cursosPermitidos = [];
-    if (cursoDocente === "600") { // Comparando como string
-      cursosPermitidos = ["601", "602"];
-    } else if (cursoDocente === "700") { // Comparando como string
-      cursosPermitidos = ["701", "702"];
-    } else {
-      alert("El curso del docente no es válido.");
-      console.log("El curso del docente no es válido.");
-      return;
-    }
-  
-    // Ahora traemos los estudiantes de esos cursos
-    const estudiantesRef = collection(db, "users"); // Ajusta el nombre de tu colección si es diferente
-    const qEstudiantes = query(estudiantesRef, where("course", "in", cursosPermitidos));
-    const queryEstudiantesSnap = await getDocs(qEstudiantes);
-  
-    console.log("Estudiantes encontrados:", queryEstudiantesSnap.size); // Verifica cuántos estudiantes fueron encontrados
-  
-    if (queryEstudiantesSnap.empty) {
-      alert("No se encontraron estudiantes para este curso.");
-      return;
-    }
-  
-    const tbody = document.querySelector("tbody");
-    tbody.innerHTML = ""; // Limpiamos el tbody
-  
-    queryEstudiantesSnap.forEach((doc) => {
-      const estudiante = doc.data();
-      const tr = document.createElement("tr");
-  
-      tr.innerHTML = `
-        <td data-label="Código">${estudiante.code}</td>
-        <td data-label="Nombre"><a href="#">${estudiante.firstName + " " + estudiante.lastName}</a></td>
-        <td data-label="Fotografía"><img src="${estudiante.photoUrl || 'https://via.placeholder.com/60'}" alt="Foto de ${estudiante.firstName}"></td>
-      `;
-      tbody.appendChild(tr);
-    });
   }
   
-  // Ejecutar
-  cargarEstudiantes();
+  // Manejar clic en estudiantes
+  document.addEventListener("click", async (e) => {
+    if (e.target.classList.contains("student-link")) {
+      e.preventDefault();
+      const studentId = e.target.getAttribute("data-id");
+      if (studentId) await mostrarInfoEstudiante(studentId);
+    }
+  });
+  
+  // Función para mostrar info del estudiante (modal)
+  async function mostrarInfoEstudiante(studentId) {
+    try {
+      const studentRef = doc(db, "users", studentId);
+      const studentSnap = await getDoc(studentRef);
+      
+      if (!studentSnap.exists()) {
+        alert("Estudiante no encontrado");
+        return;
+      }
+      
+      const studentData = studentSnap.data();
+      
+      // Actualizar modal
+      document.getElementById("modalStudentImage").src = studentData.photoUrl || 'https://via.placeholder.com/100';
+      document.getElementById("modalStudentName").textContent = `${studentData.firstName} ${studentData.lastName}`;
+      document.getElementById("modalStudentCode").textContent = studentData.code;
+      document.getElementById("modalStudentCourse").textContent = studentData.course;
+      
+      // Mostrar modal
+      document.getElementById("studentModal").style.display = "block";
+      document.getElementById("studentModal").setAttribute("data-current-student", studentId);
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Error al cargar información del estudiante");
+    }
+  }
+  
+  // Cerrar modal
+  document.querySelector(".close").addEventListener("click", () => {
+    document.getElementById("studentModal").style.display = "none";
+  });
+  
+  // Iniciar cuando el DOM esté listo
+  document.addEventListener("DOMContentLoaded", cargarEstudiantes);
+
+
+
+  // Añade esta función para enviar mensajes
+async function sendMessage(studentId) {
+  const messageText = document.getElementById("messageText").value.trim();
+  
+  if (!messageText) {
+    alert("Por favor escribe un mensaje");
+    return;
+  }
+
+  try {
+    // Obtener ID del docente
+    const codigoDocente = localStorage.getItem("codigoDocente");
+    const docentesRef = collection(db, "users");
+    const q = query(docentesRef, where("code", "==", codigoDocente));
+    const querySnapshot = await getDocs(q);
+    
+    if (querySnapshot.empty) {
+      alert("No se pudo identificar al docente");
+      return;
+    }
+
+    const docenteId = querySnapshot.docs[0].id;
+
+    // Guardar mensaje en Firestore
+    await addDoc(collection(db, "messages"), {
+      from: docenteId,
+      to: studentId,
+      message: messageText,
+      timestamp: new Date(),
+      read: false
+    });
+
+    alert("Mensaje enviado con éxito");
+    document.getElementById("messageText").value = "";
+    
+  } catch (error) {
+    console.error("Error al enviar mensaje:", error);
+    alert("Error al enviar el mensaje");
+  }
+
+  // Modificar el event listener del botón
+document.getElementById("sendMessageBtn").addEventListener("click", async () => {
+  const studentId = document.querySelector("#studentModal").getAttribute("data-current-student");
+  if (studentId) {
+    await sendMessage(studentId);
+  }
+});
+
+
+}
   </script>
-  
-  
+</html>
 <style>
     html, body {
         margin: 0;
@@ -281,4 +428,81 @@ import Progress from "../../components/Progress.astro";
     .progress > span{
         @apply h-[50%] text-[20px] justify-center flex items-start
     }
+
+    /* Estilos para el modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  overflow: auto;
+}
+
+.modal-content {
+  background-color: #FFFFF0;
+  margin: 5% auto;
+  padding: 20px;
+  border-radius: 8px;
+  width: 70%;
+  max-width: 800px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: black;
+}
+
+.student-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.student-info img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-right: 20px;
+}
+
+.student-progress {
+  margin: 20px 0;
+  padding: 15px;
+  background-color: white;
+  border-radius: 8px;
+}
+
+.message-section textarea {
+  width: 100%;
+  height: 100px;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+.message-section button {
+  background-color: #288b98;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.message-section button:hover {
+  background-color: #1f7a86;
+}
 </style>
