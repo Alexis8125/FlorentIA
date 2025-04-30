@@ -1,42 +1,68 @@
 ---
 import "../../styles/global.css";
 import Menu from "../../components/Menu.astro";
-import Progress from "../../components/Progress.astro";
 ---
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/svg+xml" href="../../../public/logo-fondo.jpg" />
-    <title>¡FlorentIA! - Home Student</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" href="/logo-fondo.jpg" />
+  <title>¡FlorentIA! - Home Student</title>
 </head>
 <body>
-    <div class="container">
-        <div class="menu">
-          <Menu />
+  <div class="container">
+    <aside class="menu">
+      <Menu />
+    </aside>
+    <main class="information">
+      <section class="welcome">
+        <div class="child-image">
+          <img src="/logo-fondo.jpg" alt="Logo FlorentIA" />
         </div>
-        <div class="information">
-          <div class="welcome">
-            <div class="child-image">
-              <img src="/logo-fondo.jpg" alt="Logo" />
-            </div>
-            <h1 id="welcome-message">Cargando…</h1>
-            <p>Tus Avances</p>
-          </div>
-    
-          <div class="advance-content" id="advance-content">
-            <!-- Aquí se cargan los temas dinámicamente -->
-          </div>
-        </div>
-      </div>
-</body>
+        <h1 id="welcome-message">Cargando…</h1>
+        <p>Tus Avances</p>
+      </section>
 
-<script type="module">
+      <section class="advance-content" id="advance-content">
+        <!-- Aquí se inyectarán las tarjetas dinámicamente -->
+      </section>
+    </main>
+  </div>
+
+  <style global>
+    .advance-content {
+   display: grid;
+   grid-auto-flow: column;
+   grid-auto-columns: minmax(260px, 1fr);
+   column-gap: 16px;     
+   padding: 1rem 2rem;
+   overflow-x: auto;
+   background-color: transparent;  
+ }
+ 
+ .card-tema {
+   background-color: #f5f5dc;      
+   border-radius: 30px;
+   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+   padding: 1rem;
+   margin: 0.5rem 0;    
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   transition: transform 0.2s ease;
+ }
+ .card-tema:hover {
+   transform: translateY(-4px);   
+ }
+   
+ </style>
+
+  <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
     import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
-    
-    // Configurar Firebase
+
+    // Configuración de Firebase
     const firebaseConfig = {
       apiKey: "...",
       authDomain: "florentia-f47b9.firebaseapp.com",
@@ -47,175 +73,197 @@ import Progress from "../../components/Progress.astro";
     };
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
-    
-    // Función principal
+
+   // Generador de HTML reutilizable para el círculo de progreso
+
+   const createProgressCircleHTML = percent => `
+    <div class="container-progress">
+      <svg class="progress-circle" width="100" height="100" viewBox="0 0 100 100">
+        <defs>
+          <linearGradient id="gradienteProgreso" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#f8dcb0"/>
+            <stop offset="100%" stop-color="#f8dcb0"/>
+          </linearGradient>
+        </defs>
+        <!-- aro de fondo (beige pálido) -->
+        <circle class="bg" cx="50" cy="50" r="45" stroke-width="40px"></circle>
+        <!-- progreso en sólido #f8dcb0 -->
+        <circle class="progress" cx="50" cy="50" r="45" fill="#f5f5dc" stroke-width="10"
+                stroke-dasharray="283"
+                stroke-dashoffset="${283 - (283 * percent / 100)}"
+                stroke="url(#gradienteProgreso)"></circle>
+        <!-- Texto del porcentaje centrado -->
+        <text class="percent-text" x="50" y="55" text-anchor="middle" font-size="24" 
+              font-weight="bold" fill="#333">${percent}%</text>
+      </svg>
+    </div>
+  `;
+
     (async () => {
       const code = localStorage.getItem("codigoEstudiante");
       const welcomeEl = document.getElementById("welcome-message");
-      const advanceContent = document.querySelector(".advance-content");
-    
+      const advanceContent = document.getElementById("advance-content");
+      
+
       if (!code) {
         welcomeEl.textContent = "¡Bienvenido a FlorentIA!";
         return;
       }
-    
+
       try {
-        // Buscar usuario
+        // Obtener datos de usuario
         const userRef = doc(db, "users", code);
         const userSnap = await getDoc(userRef);
-    
         if (!userSnap.exists()) {
           welcomeEl.textContent = "¡Bienvenido a FlorentIA!";
           return;
         }
-    
         const userData = userSnap.data();
         const name = `${userData.firstName} ${userData.lastName}`;
-        const course = userData.course; // ej: "702"
-    
         welcomeEl.textContent = `¡Bienvenido, ${name}!`;
-    
-        // Detectar sexto o séptimo
+
+        // Determinar carpeta de módulos según grado
+        const course = userData.course || "";
         let gradeFolder = "";
-        if (course.startsWith("6")) {
-          gradeFolder = "sixth";
-        } else if (course.startsWith("7")) {
-          gradeFolder = "seventh";
-        } else {
-          gradeFolder = null;
-        }
-    
+        if (course.startsWith("6")) gradeFolder = "sixth";
+        else if (course.startsWith("7")) gradeFolder = "seventh";
+        else gradeFolder = null;
+
         if (!gradeFolder) {
           advanceContent.innerHTML = "<p>No se encontraron módulos para tu curso.</p>";
           return;
         }
-    
-        // Buscar módulos por grado
+
+        // Obtener módulos de Firestore
         const moduleRef = doc(db, "modules", "moduleId", gradeFolder, `module${capitalize(gradeFolder)}`);
         const moduleSnap = await getDoc(moduleRef);
-    
         if (!moduleSnap.exists()) {
           advanceContent.innerHTML = "<p>No hay temas disponibles.</p>";
           return;
         }
-    
         const moduleData = moduleSnap.data();
         const topics = moduleData.topics || [];
-    
-        // Limpiar antes de insertar
+
+        // Progreso de ejemplo (reemplaza por datos reales)
+        const progresoManual = [30, 50, 95, 45];
+
         advanceContent.innerHTML = "";
-    
-        // Mostrar cada tema
-        // Mostrar cada tema junto con su barra de progreso real
+
+        // Renderizar cada tarjeta
         topics.forEach((topic, index) => {
-  const progreso = moduleData.progress ? moduleData.progress[index] || 0 : 0;
+          const progreso = progresoManual[index] || 0;
+          const card = document.createElement("div");
+          card.classList.add("card-tema");
+          card.innerHTML = createProgressCircleHTML(progreso) + `
+            <h2 class="tema-titulo">${topic}</h2>
+            <p class="tema-subtitulo">${moduleData.subject}</p>
+          `;
+          advanceContent.appendChild(card);
+        });
 
-  const card = document.createElement("div");
-  card.classList.add("card-tema");
-  card.innerHTML = `
-    <h2>${topic}</h2>
-    <p>${moduleData.subject}</p>
-    <div class="circular-progress" style="--progress:${progreso}">
-      <span>${progreso}%</span>
-    </div>
-  `;
-  advanceContent.appendChild(card);
-});
-
-
-    
       } catch (error) {
-        console.error("Error al cargar el estudiante o módulos:", error);
+        console.error("Error al cargar datos:", error);
         welcomeEl.textContent = "¡Bienvenido a FlorentIA!";
       }
-    
     })();
-    
+
     function capitalize(str) {
       return str.charAt(0).toUpperCase() + str.slice(1);
     }
-    </script>
-    
+  </script>
+
+
+
+</body>
 </html>
 
+
 <style>
-    html, body {
-        margin: 0;
-        padding: 0;
-        height: 100vh;
-        width: 100vw;
-        overflow: hidden;
-        background-color: #FFFFF0;
-        /* @apply w-screen h-screen m-0 p-0 overflow-hidden; */
-    }
+  /* Reset y layout general */
+  html, body {
+    margin: 0; padding: 0;
+    width: 100vw; height: 100vh;
+    overflow: hidden;
+    background-color: #FFFFF0;
+    font-family: sans-serif;
+  }
+  .container {
+    display: flex;
+    height: 100%;
+  }
+  .menu {
+    width: 300px;
+    height: 100%;
+    border-right: 1px solid #ccc;
+    background: #fff;
+  }
+  .information {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow-y: auto;
+  }
 
-    .container {
-        @apply flex h-screen bg-[#FFFFF0] w-full;
-    }
+  /* sección de bienvenida */
+  .welcome {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 0;
+    color: #333;
+  }
+  .welcome h1 {
+    font-size: 28px;
+    font-weight: 400;
+    margin: 0;
+  }
+  .welcome p {
+    font-size: 34px;
+    font-weight: 700;
+    margin: 0.5rem 0 0;
+  }
+  .child-image {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 1rem;
+  }
+  .child-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 
-    .menu {
-        @apply w-[300px] h-full;
-    }
+  .tema-titulo {
+    margin: 0.5rem 0 0;
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: #333;
+  }
+  .tema-subtitulo {
+    margin: 0.25rem 0 0;
+    font-size: 1rem;
+    color: #555;
+  }
 
-    .information {
-        @apply w-[1500px] flex-col h-full flex items-center justify-center;
-}   
+  /* contenedor claro tipo papel */
+  .container-progress {
+    background-color: transparent; 
+    width: 100px; 
+    height: 100px;
+    margin-bottom: .5rem;
+  }
+  .progress-circle {
+    position: relative; 
+    transform: rotate(-90deg);
+  }
 
-
-    .welcome {
-        @apply w-full p-[10%] flex flex-col h-[50%] items-center justify-center text-[#333];
-    }
-
-    .welcome > h1{
-        font-size: 28px;
-        font-weight: 400
-    }
-
-    .welcome > p{
-        font-size: 34px;
-        margin-top: 15px;
-        font-weight: 700
-        margin-bottom: -24px;
-    }
-
-    .child-image {
-        @apply w-[200px] h-[200px] flex flex-col rounded-full mb-[15px];
-    }
-
-    .child-image > img {
-        @apply w-full h-full rounded-full;
-    }
-
-    .advance-content {
-        @apply w-full h-[50%] p-[10%] flex items-center justify-center space-x-[24px] mt-[-120px];
-    }
-
-    .progress > h2{
-        @apply h-[50%]  text-[30px]  items-end flex justify-center 
-    }
-    .progress > span{
-        @apply h-[50%] text-[20px] justify-center flex items-start
-    }
-
-    .circular-progress {
-  position: relative;
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  background: conic-gradient(
-    #4d5bf9 calc(var(--progress) * 1%),
-    #cadcff 0
-  );
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  font-size: 1.2em;
-  color: #4d5bf9;
-}
-
-.circular-progress span {
-  position: absolute;
-}
+  .percent-text {
+    transform: rotate(90deg);
+    transform-origin: 50px 50px;
+  }
 
 </style>
