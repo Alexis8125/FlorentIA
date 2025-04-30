@@ -1,0 +1,102 @@
+---
+const { noteId } = Astro.props;
+---
+<div id="see-note" class="see-note-container" data-note-id={noteId}>
+    <header class="see-note-header">
+        <h2 class="see-note-title">Tu Nota</h2>
+        <p class="see-note-date" id="seeDate">Cargando fecha…</p>
+    </header>
+
+    <div class="see-note-content">
+        <div class="see-note-section">
+            <h3 class="section-title">&iquest;Qu&eacute; aprend&iacute;?</h3>
+            <p id="seeLearning" class="section-text"></p>
+        </div>
+
+        <div class="see-note-section">
+            <h3 class="section-title">Emoci&oacute;n</h3>
+            <p id="seeEmotion" class="section-text"></p>
+        </div>
+
+        <div class="see-note-section">
+            <h3 class="section-title">Logro</h3>
+            <p id="seeAchievement" class="section-text"></p>
+        </div>
+
+        <div class="see-note-section">
+            <h3 class="section-title">Pensamientos</h3>
+            <p id="seeThoughts" class="section-text"></p>
+        </div>
+
+        <div id="seeDrawingSection" class="see-note-section" style="display:none">
+            <h3 class="section-title">Dibujo</h3>
+            <p id="seeDrawing" class="section-text"></p>
+        </div>
+    </div>
+</div>
+
+<style>
+    .see-note-container {
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        padding: 2rem;
+        max-width: 800px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .see-note-header {
+        text-align: center;
+        border-bottom: 2px solid #ef8535;
+        padding-bottom: 0.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .see-note-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #184d6d;
+        margin: 0;
+    }
+
+    .see-note-date {
+        font-size: 0.875rem;
+        color: #6b7280;
+        margin-top: 0.25rem;
+    }
+
+    .see-note-content {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .see-note-section {
+        background-color: #f9fafb;
+        border-left: 4px solid #ef8535;
+        border-radius: 6px;
+        padding: 1rem;
+    }
+
+    .section-title {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: #333;
+        margin: 0 0 0.5rem 0;
+    }
+
+    .section-text {
+        margin: 0;
+        font-size: 1rem;
+        line-height: 1.5;
+        color: #444;
+    }
+</style>
+
+
+
+
+
