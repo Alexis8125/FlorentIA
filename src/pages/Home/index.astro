@@ -25,42 +25,76 @@ import Menu from "../../components/Menu.astro";
       </section>
 
       <section class="advance-content" id="advance-content">
-        <!-- Aquí se inyectarán las tarjetas dinámicamente -->
+        <p class="loading-message">Cargando temas...</p>
       </section>
     </main>
   </div>
 
   <style global>
     .advance-content {
-   display: grid;
-   grid-auto-flow: column;
-   grid-auto-columns: minmax(260px, 1fr);
-   column-gap: 16px;     
-   padding: 1rem 2rem;
-   overflow-x: auto;
-   background-color: transparent;  
- }
- 
- .card-tema {
-   background-color: #f5f5dc;      
-   border-radius: 30px;
-   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-   padding: 1rem;
-   margin: 0.5rem 0;    
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   transition: transform 0.2s ease;
- }
- .card-tema:hover {
-   transform: translateY(-4px);   
- }
-   
- </style>
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(260px, 1fr);
+      gap: 16px;     
+      padding: 1rem 2rem;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x proximity;
+      background-color: transparent;  
+      min-height: 300px;
+    }
+    
+    .card-tema {
+      background-color: #f5f5dc;      
+      border-radius: 30px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      padding: 1.5rem;
+      margin: 0.5rem 0;    
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.2s ease;
+      scroll-snap-align: start;
+      min-width: 250px;
+    }
+    
+    .loading-message {
+      text-align: center;
+      width: 100%;
+      color: #666;
+      font-size: 1.2rem;
+    }
+    
+    .no-topics-message {
+      text-align: center;
+      width: 100%;
+      color: #666;
+      font-size: 1.2rem;
+    }
+    
+    .grade-badge {
+      background-color: #f8dcb0;
+      padding: 0.25rem 0.5rem;
+      border-radius: 1rem;
+      font-size: 0.8rem;
+      margin-top: 0.5rem;
+    }
+  </style>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
-    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+    import { 
+      getFirestore, 
+      doc,
+      getDoc,
+      collection,
+      query,
+      where,
+      getDocs,
+      writeBatch,
+      updateDoc,
+      arrayUnion
+    } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
 
     // Configuración de Firebase
     const firebaseConfig = {
@@ -71,199 +105,332 @@ import Menu from "../../components/Menu.astro";
       messagingSenderId: "59886187087",
       appId: "1:59886187087:web:d274071e62e43f00b5b03a"
     };
+    
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-   // Generador de HTML reutilizable para el círculo de progreso
+    // Función para crear el círculo de progreso
+    const createProgressCircle = (percent) => {
+      const circle = document.createElement('div');
+      circle.innerHTML = `
+        <svg width="100" height="100" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="45" fill="none" stroke="#e0e0e0" stroke-width="10"/>
+          <circle cx="50" cy="50" r="45" fill="none" stroke="#f8dcb0" stroke-width="10" 
+                  stroke-dasharray="283" stroke-dashoffset="${283 - (283 * percent / 100)}"
+                  transform="rotate(-90 50 50)"/>
+          <text x="50" y="55" text-anchor="middle" font-size="24" fill="#333">${percent}%</text>
+        </svg>
+      `;
+      return circle;
+    };
 
-   const createProgressCircleHTML = percent => `
-    <div class="container-progress">
-      <svg class="progress-circle" width="100" height="100" viewBox="0 0 100 100">
-        <defs>
-          <linearGradient id="gradienteProgreso" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="#f8dcb0"/>
-            <stop offset="100%" stop-color="#f8dcb0"/>
-          </linearGradient>
-        </defs>
-        <!-- aro de fondo (beige pálido) -->
-        <circle class="bg" cx="50" cy="50" r="45" stroke-width="40px"></circle>
-        <!-- progreso en sólido #f8dcb0 -->
-        <circle class="progress" cx="50" cy="50" r="45" fill="#f5f5dc" stroke-width="10"
-                stroke-dasharray="283"
-                stroke-dashoffset="${283 - (283 * percent / 100)}"
-                stroke="url(#gradienteProgreso)"></circle>
-        <!-- Texto del porcentaje centrado -->
-        <text class="percent-text" x="50" y="55" text-anchor="middle" font-size="24" 
-              font-weight="bold" fill="#333">${percent}%</text>
-      </svg>
-    </div>
-  `;
+    // Función para inicializar progreso si no existe
+    async function initializeStudentProgress(studentCode, topics) {
+      const activityRef = collection(db, "activity");
+      const batch = writeBatch(db);
+      
+      // Verificar qué temas ya tienen registro
+      const existingQuery = query(activityRef, where("studentCode", "==", studentCode));
+      const existingSnapshot = await getDocs(existingQuery);
+      const existingTopics = existingSnapshot.docs.map(doc => doc.data().topic);
+      
+      // Crear registros solo para temas nuevos
+      topics.forEach(topic => {
+        if (!existingTopics.includes(topic)) {
+          const newDocRef = doc(activityRef);
+          batch.set(newDocRef, {
+            studentCode: studentCode,
+            topic: topic,
+            progress: 0,
+            completedExercises: [],
+            lessonsViewed: [],
+            lastActivity: null
+          });
+        }
+      });
+      
+      if (batch._mutations.length > 0) {
+        await batch.commit();
+      }
+    }
+
+    // Función para actualizar progreso
+    async function updateStudentProgress(studentCode, topic, action) {
+      const activityRef = collection(db, "activity");
+      const q = query(
+        activityRef,
+        where("studentCode", "==", studentCode),
+        where("topic", "==", topic)
+      );
+      
+      const snapshot = await getDocs(q);
+      
+      if (snapshot.empty) {
+        // Crear nuevo registro si no existe
+        await addDoc(activityRef, {
+          studentCode: studentCode,
+          topic: topic,
+          progress: 0,
+          completedExercises: [],
+          lessonsViewed: [],
+          lastActivity: new Date()
+        });
+        return 0;
+      }
+      
+      const docRef = snapshot.docs[0].ref;
+      const currentData = snapshot.docs[0].data();
+      let newProgress = currentData.progress;
+      
+      switch(action.type) {
+        case 'EXERCISE_COMPLETE':
+          if (!currentData.completedExercises.includes(action.exerciseId)) {
+            await updateDoc(docRef, {
+              completedExercises: arrayUnion(action.exerciseId),
+              progress: Math.min(currentData.progress + 10, 100), // +10% por ejercicio
+              lastActivity: new Date()
+            });
+            newProgress = Math.min(currentData.progress + 10, 100);
+          }
+          break;
+          
+        case 'LESSON_VIEW':
+          if (!currentData.lessonsViewed.includes(action.lessonId)) {
+            await updateDoc(docRef, {
+              lessonsViewed: arrayUnion(action.lessonId),
+              progress: Math.min(currentData.progress + 5, 100), // +5% por lección
+              lastActivity: new Date()
+            });
+            newProgress = Math.min(currentData.progress + 5, 100);
+          }
+          break;
+          
+        case 'ASSESSMENT_COMPLETE':
+          const assessmentProgress = action.score >= 70 ? 30 : 10;
+          await updateDoc(docRef, {
+            progress: Math.min(currentData.progress + assessmentProgress, 100),
+            lastActivity: new Date()
+          });
+          newProgress = Math.min(currentData.progress + assessmentProgress, 100);
+          break;
+      }
+      
+      return newProgress;
+    }
 
     (async () => {
       const code = localStorage.getItem("codigoEstudiante");
       const welcomeEl = document.getElementById("welcome-message");
       const advanceContent = document.getElementById("advance-content");
       
-
       if (!code) {
         welcomeEl.textContent = "¡Bienvenido a FlorentIA!";
+        advanceContent.innerHTML = '<p class="no-topics-message">Inicia sesión para ver tus temas</p>';
         return;
       }
 
       try {
-        // Obtener datos de usuario
+        // 1. Obtener datos del estudiante
         const userRef = doc(db, "users", code);
         const userSnap = await getDoc(userRef);
+        
         if (!userSnap.exists()) {
           welcomeEl.textContent = "¡Bienvenido a FlorentIA!";
+          advanceContent.innerHTML = '<p class="no-topics-message">Usuario no encontrado</p>';
           return;
         }
+        
         const userData = userSnap.data();
-        const name = `${userData.firstName} ${userData.lastName}`;
-        welcomeEl.textContent = `¡Bienvenido, ${name}!`;
+        welcomeEl.textContent = `¡Bienvenido, ${userData.firstName} ${userData.lastName}!`;
 
-        // Determinar carpeta de módulos según grado
+        // 2. Determinar el grado del estudiante
         const course = userData.course || "";
         let gradeFolder = "";
-        if (course.startsWith("6")) gradeFolder = "sixth";
-        else if (course.startsWith("7")) gradeFolder = "seventh";
-        else gradeFolder = null;
-
-        if (!gradeFolder) {
-          advanceContent.innerHTML = "<p>No se encontraron módulos para tu curso.</p>";
+        
+        if (course.includes("6") || course.toLowerCase().includes("sexto")) {
+          gradeFolder = "sixth";
+        } else if (course.includes("7") || course.toLowerCase().includes("septimo")) {
+          gradeFolder = "seventh";
+        } else {
+          advanceContent.innerHTML = '<p class="no-topics-message">No se pudo determinar tu grado</p>';
           return;
         }
 
-        // Obtener módulos de Firestore
+        // 3. Obtener los módulos correspondientes al grado
+        advanceContent.innerHTML = '<p class="loading-message">Cargando temas y progreso...</p>';
+        
         const moduleRef = doc(db, "modules", "moduleId", gradeFolder, `module${capitalize(gradeFolder)}`);
         const moduleSnap = await getDoc(moduleRef);
+        
         if (!moduleSnap.exists()) {
-          advanceContent.innerHTML = "<p>No hay temas disponibles.</p>";
+          advanceContent.innerHTML = `<p class="no-topics-message">No hay temas disponibles para ${gradeFolder === "sixth" ? "sexto" : "séptimo"} grado</p>`;
           return;
         }
+
         const moduleData = moduleSnap.data();
         const topics = moduleData.topics || [];
+        
+        if (topics.length === 0) {
+          advanceContent.innerHTML = `<p class="no-topics-message">No hay temas configurados para ${gradeFolder === "sixth" ? "sexto" : "séptimo"} grado</p>`;
+          return;
+        }
 
-        // Progreso de ejemplo (reemplaza por datos reales)
-        const progresoManual = [30, 50, 95, 45];
+        // 4. Inicializar progreso si no existe
+        await initializeStudentProgress(code, topics);
 
-        advanceContent.innerHTML = "";
+        // 5. Obtener el progreso del estudiante desde 'activity'
+        const activityRef = collection(db, "activity");
+        const progressQuery = query(activityRef, where("studentCode", "==", code));
+        const progressSnapshot = await getDocs(progressQuery);
+        
+        const studentProgress = {};
+        progressSnapshot.forEach((doc) => {
+          const activityData = doc.data();
+          if (activityData.topic) {
+            studentProgress[activityData.topic] = activityData.progress || 0;
+          }
+        });
 
-        // Renderizar cada tarjeta
-        topics.forEach((topic, index) => {
-          const progreso = progresoManual[index] || 0;
-          const card = document.createElement("div");
-          card.classList.add("card-tema");
-          card.innerHTML = createProgressCircleHTML(progreso) + `
-            <h2 class="tema-titulo">${topic}</h2>
-            <p class="tema-subtitulo">${moduleData.subject}</p>
-          `;
+        // 6. Mostrar los temas con progreso
+        advanceContent.innerHTML = '';
+        
+        topics.forEach((topic) => {
+          const progress = studentProgress[topic] || 0;
+          const card = document.createElement('div');
+          card.className = 'card-tema';
+          
+          card.appendChild(createProgressCircle(progress));
+          
+          const title = document.createElement('h2');
+          title.className = 'tema-titulo';
+          title.textContent = topic;
+          card.appendChild(title);
+          
+          const subtitle = document.createElement('p');
+          subtitle.className = 'tema-subtitulo';
+          subtitle.textContent = moduleData.subject || 'Inglés';
+          card.appendChild(subtitle);
+          
+          const gradeBadge = document.createElement('div');
+          gradeBadge.className = 'grade-badge';
+          gradeBadge.textContent = gradeFolder === "sixth" ? "6° Grado" : "7° Grado";
+          card.appendChild(gradeBadge);
+          
           advanceContent.appendChild(card);
         });
 
       } catch (error) {
         console.error("Error al cargar datos:", error);
         welcomeEl.textContent = "¡Bienvenido a FlorentIA!";
+        advanceContent.innerHTML = '<p class="no-topics-message">Error al cargar los temas</p>';
       }
     })();
 
     function capitalize(str) {
       return str.charAt(0).toUpperCase() + str.slice(1);
     }
+
+    // Función para usar desde otros componentes cuando se complete una actividad
+    window.updateProgress = async function(actionType, topic, data) {
+      const code = localStorage.getItem("codigoEstudiante");
+      if (!code) return;
+      
+      try {
+        await updateStudentProgress(code, topic, {
+          type: actionType,
+          ...data
+        });
+      } catch (error) {
+        console.error("Error al actualizar progreso:", error);
+      }
+    };
   </script>
 
-
-
+  <style>
+    /* Estilos base */
+    html, body {
+      margin: 0; 
+      padding: 0;
+      width: 100vw; 
+      height: 100vh;
+      overflow: hidden;
+      background-color: #FFFFF0;
+      font-family: sans-serif;
+    }
+    
+    .container {
+      display: flex;
+      height: 100%;
+    }
+    
+    .menu {
+      width: 300px;
+      height: 100%;
+      background: #fff;
+      border-right: 1px solid #e0e0e0;
+    }
+    
+    .information {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 0;
+      overflow-y: auto;
+    }
+    
+    /* Sección de bienvenida */
+    .welcome {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+    
+    .welcome h1 {
+      font-size: 2rem;
+      font-weight: 400;
+      color: #333;
+      margin: 1rem 0 0;
+    }
+    
+    .welcome p {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #333;
+      margin: 0.5rem 0 2rem;
+    }
+    
+    .child-image {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid #f8dcb0;
+    }
+    
+    .child-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    /* Estilos para los temas */
+    .tema-titulo {
+      margin: 1rem 0 0;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #333;
+      text-align: center;
+    }
+    
+    .tema-subtitulo {
+      margin: 0.5rem 0 0;
+      font-size: 1rem;
+      color: #666;
+      text-align: center;
+    }
+  </style>
 </body>
 </html>
-
-
-<style>
-  /* Reset y layout general */
-  html, body {
-    margin: 0; padding: 0;
-    width: 100vw; height: 100vh;
-    overflow: hidden;
-    background-color: #FFFFF0;
-    font-family: sans-serif;
-  }
-  .container {
-    display: flex;
-    height: 100%;
-  }
-  .menu {
-    width: 300px;
-    height: 100%;
-    border-right: 1px solid #ccc;
-    background: #fff;
-  }
-  .information {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    overflow-y: auto;
-  }
-
-  /* sección de bienvenida */
-  .welcome {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 2rem 0;
-    color: #333;
-  }
-  .welcome h1 {
-    font-size: 28px;
-    font-weight: 400;
-    margin: 0;
-  }
-  .welcome p {
-    font-size: 34px;
-    font-weight: 700;
-    margin: 0.5rem 0 0;
-  }
-  .child-image {
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    overflow: hidden;
-    margin-bottom: 1rem;
-  }
-  .child-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .tema-titulo {
-    margin: 0.5rem 0 0;
-    font-size: 1.25rem;
-    font-weight: 500;
-    color: #333;
-  }
-  .tema-subtitulo {
-    margin: 0.25rem 0 0;
-    font-size: 1rem;
-    color: #555;
-  }
-
-  /* contenedor claro tipo papel */
-  .container-progress {
-    background-color: transparent; 
-    width: 100px; 
-    height: 100px;
-    margin-bottom: .5rem;
-  }
-  .progress-circle {
-    position: relative; 
-    transform: rotate(-90deg);
-  }
-
-  .percent-text {
-    transform: rotate(90deg);
-    transform-origin: 50px 50px;
-  }
-
-</style>
