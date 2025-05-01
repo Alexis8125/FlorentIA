@@ -22,7 +22,7 @@ import Menu from "../../components/Menu.astro";
             </div>
             <div class="teacher-profile">
                 <div class="teacher-card">
-                    <img id="fotoProfesor" class="teacher-avatar" src="https://st2.depositphotos.com/3687485/10944/v/450/depositphotos_109444180-stock-illustration-quiet-woman-vector-illustration.jpg" alt="Foto de la profesora">
+                    <img id="fotoProfesor" class="teacher-avatar" src="" alt="Foto de la profesor@">
                     <div class="teacher-details">
                         <h2 id="nombreProfesor">Profe</h2>
                         <h3 id="gradoProfesor">Inglés</h3>
@@ -33,23 +33,48 @@ import Menu from "../../components/Menu.astro";
             <div class="teacher-sections">
                 <div class="teacher-card-section">
                     <h2>Mensajes del profesor</h2>
-                    <p>Buen trabajo en el reto, sigue así</p>
+                    <div id="mensajes-container" class="mensajes-container">
+                        <!-- Los mensajes se cargarán aquí dinámicamente -->
+                    </div>
                 </div>
-                <div class="teacher-card-section">
-                    <h2>Consejos del profe</h2>
-                    <p>Nunca dejes de aprender cosas nuevas</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="teacher-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-header">
+                <img id="modal-teacher-avatar" class="modal-avatar" src="" alt="Foto del profesor">
+                <div class="modal-title">
+                    <h2 id="modal-teacher-name"></h2>
+                    <h3 id="modal-teacher-course"></h3>
                 </div>
-                <div class="teacher-card-section">
-                    <h2>Tareas o retos sugeridos</h2>
-                    <p>Mira el reto de present simple en la sección de explorar</p>
+            </div>
+            <div class="modal-body">
+                <div class="modal-section">
+                    <h4>Descripción</h4>
+                    <p id="modal-teacher-description"></p>
+                </div>
+                <div class="modal-section">
+                    <h4>Rol</h4>
+                    <p id="modal-teacher-role"></p>
                 </div>
             </div>
         </div>
     </div>
 </body>
 <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-    import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { 
+        getFirestore, 
+        collection, 
+        query, 
+        where, 
+        getDocs, 
+        orderBy 
+    } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
     const firebaseConfig = {
         apiKey: "AIzaSyCgq36r1pfgHplUt7-HSIY_qNJiEybaIJc",
         authDomain: "florentia-f47b9.firebaseapp.com",
@@ -58,70 +83,175 @@ import Menu from "../../components/Menu.astro";
         messagingSenderId: "59886187087",
         appId: "1:59886187087:web:d274071e62e43f00b5b03a"
     };
-  
+
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
-  
+
+    async function cargarMensajes() {
+        const mensajesContainer = document.getElementById("mensajes-container");
+        
+        try {
+            // Usa el mismo identificador que cargarProfesor()
+            const codigoEstudiante = localStorage.getItem("codigoEstudiante");
+            if (!codigoEstudiante) {
+                throw new Error("No se encontró código de estudiante");
+            }
+
+            // 1. Obtener ID del estudiante (documento en Firestore)
+            const studentQuery = query(
+                collection(db, "users"),
+                where("code", "==", codigoEstudiante)
+            );
+            const studentSnap = await getDocs(studentQuery);
+            
+            if (studentSnap.empty) {
+                throw new Error("Estudiante no registrado");
+            }
+            
+            const studentId = studentSnap.docs[0].id; // ID del documento Firestore
+
+            // 2. Buscar mensajes
+            const q = query(
+                collection(db, "messages"),
+                where("to", "==", studentId), // Usa el ID del documento, no el código
+                orderBy("timestamp", "desc")
+            );
+
+            mensajesContainer.innerHTML = "<p class='loading'>Cargando mensajes...</p>";
+            const querySnapshot = await getDocs(q);
+
+            // 3. Mostrar resultados
+            mensajesContainer.innerHTML = "";
+            
+            if (querySnapshot.empty) {
+                mensajesContainer.innerHTML = "<p class='no-messages'>No tienes mensajes aún</p>";
+                return;
+            }
+
+            // 4. Mostrar mensajes
+            const nombreProfesor = document.getElementById("nombreProfesor").textContent;
+            
+            querySnapshot.forEach((doc) => {
+                const msg = doc.data();
+                const fecha = msg.timestamp?.toDate()?.toLocaleString('es-ES', {
+                    day: '2-digit',
+                    month: 'short',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                }) || "Fecha desconocida";
+
+                mensajesContainer.innerHTML += `
+                    <div class="mensaje">
+                        <div class="mensaje-cabecera">
+                            <strong>${nombreProfesor}</strong>
+                            <span class="fecha">${fecha}</span>
+                        </div>
+                        <div class="mensaje-texto">${msg.message || "Sin contenido"}</div>
+                    </div>
+                `;
+            });
+
+        } catch (error) {
+            console.error("Error en cargarMensajes():", error);
+            mensajesContainer.innerHTML = `
+                <p class="error">
+                    Error al cargar mensajes: ${error.message}
+                </p>
+            `;
+        }
+    }
+
     async function cargarProfesor() {
-      const codigoEstudiante = localStorage.getItem("codigoEstudiante");
+    const codigoEstudiante = localStorage.getItem("codigoEstudiante");
   
-      if (!codigoEstudiante) {
+    if (!codigoEstudiante) {
         window.location.href = "/login";
         return;
-      }
+    }
   
-      const studentQuery = query(
+    const studentQuery = query(
         collection(db, "users"),
         where("code", "==", codigoEstudiante)
-      );
-      const studentSnap = await getDocs(studentQuery);
+    );
+    const studentSnap = await getDocs(studentQuery);
   
-      if (studentSnap.empty) {
+    if (studentSnap.empty) {
         alert("No se encontró el estudiante");
         return;
-      }
+    }
   
-      const studentData = studentSnap.docs[0].data();
-      const studentCourse = studentData.course;
+    const studentData = studentSnap.docs[0].data();
+    const studentCourse = studentData.course;
   
-      let courseProfesor = null;
-      if (studentCourse === "601" || studentCourse === "602") {
+    let courseProfesor = null;
+    if (studentCourse === "601" || studentCourse === "602") {
         courseProfesor = "600";
-      } else if (studentCourse === "701" || studentCourse === "702") {
+    } else if (studentCourse === "701" || studentCourse === "702") {
         courseProfesor = "700";
-      }
+    }
   
-      if (!courseProfesor) {
+    if (!courseProfesor) {
         alert("Curso no válido");
         return;
-      }
+    }
   
-      const profesorQuery = query(
+    const profesorQuery = query(
         collection(db, "users"),
         where("course", "==", courseProfesor.toString()),
         where("role", "==", "docente")
-      );
-      const profesorSnap = await getDocs(profesorQuery);
+    );
+    const profesorSnap = await getDocs(profesorQuery);
   
-      if (profesorSnap.empty) {
+    if (profesorSnap.empty) {
         alert("No se encontraron profesores");
         return;
-      }
-  
-      const profesorData = profesorSnap.docs[0].data();
-  
-      // Aquí llenamos los datos
-      document.getElementById("nombreProfesor").textContent = profesorData.firstName + " " + profesorData.lastName;
-      document.getElementById("gradoProfesor").textContent = (courseProfesor == "600") ? "Sexto" : "Séptimo";
-  
-      if (profesorData.photoUrl) {
-        document.getElementById("fotoProfesor").src = profesorData.photoUrl;
-      } else {
-        document.getElementById("fotoProfesor").src = "https://st2.depositphotos.com/3687485/10944/v/450/depositphotos_109444180-stock-illustration-quiet-woman-vector-illustration.jpg";
-      }
     }
   
+    const profesorData = profesorSnap.docs[0].data();
+  
+    // Llenar datos en la tarjeta principal
+    document.getElementById("nombreProfesor").textContent = profesorData.firstName + " " + profesorData.lastName;
+    document.getElementById("gradoProfesor").textContent = (courseProfesor == "600") ? "Sexto" : "Séptimo";
+  
+    const fotoProfesor = profesorData.photoUrl || "https://cdn-icons-png.freepik.com/256/14024/14024680.png?semt=ais_hybrid";
+    document.getElementById("fotoProfesor").src = fotoProfesor;
+    
+    // Configurar el modal con los datos completos
+    document.getElementById("modal-teacher-name").textContent = profesorData.firstName + " " + profesorData.lastName;
+    document.getElementById("modal-teacher-course").textContent = (courseProfesor == "600") ? "Sexto" : "Séptimo";
+    document.getElementById("modal-teacher-description").textContent = profesorData.description || "No hay descripción disponible";
+    document.getElementById("modal-teacher-role").textContent = "Docente";
+    document.getElementById("modal-teacher-avatar").src = fotoProfesor;
+}
+
+// Agrega el manejo del modal
+document.addEventListener("DOMContentLoaded", () => {
     cargarProfesor();
+    cargarMensajes();
+    
+    // Obtener elementos del modal
+    const modal = document.getElementById("teacher-modal");
+    const btn = document.querySelector(".profile-button");
+    const span = document.querySelector(".close-modal");
+    
+    // Cuando se hace clic en el botón, mostrar el modal
+    btn.onclick = function() {
+        modal.style.display = "block";
+    }
+    
+    // Cuando se hace clic en la X, cerrar el modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+    
+    // Cuando se hace clic fuera del modal, cerrarlo
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+});
+    
   </script>
   <script>
     const openNoteButton = document.getElementById('open-note');
@@ -216,11 +346,11 @@ import Menu from "../../components/Menu.astro";
     }
 
     .teacher-sections{
-        @apply w-full h-[25%]  flex justify-around items-center mt-[25px];
+        @apply w-full h-[25%]  flex justify-center items-center mt-[25px];
     }
 
     .teacher-card-section{
-        @apply w-[25%] h-[170px] bg-[#FDE0A3] rounded-[10px] flex flex-col items-center mt-[20px] p-[20px];
+        @apply w-[40%] h-[250px] bg-[#FDE0A3] rounded-[10px] flex flex-col items-center mt-[60px] p-[20px];
     }
 
     .teacher-card-section >h2{
@@ -251,4 +381,146 @@ import Menu from "../../components/Menu.astro";
     @apply bg-[#538802] text-[#fff] px-[16px] py-[8px] rounded-[6px] hover:bg-[#406a01] transition;
 }
 
+.mensajes-container {
+        width: 100%;
+        max-height: 300px;
+        overflow-y: auto;
+        padding: 10px;
+        background: white;
+        border-radius: 8px;
+        margin-top: 10px;
+    }
+
+    .mensaje {
+        padding: 12px;
+        margin-bottom: 12px;
+        background: #f8f9fa;
+        border-radius: 6px;
+        border-left: 3px solid #288b98;
+    }
+
+    .mensaje-cabecera {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+        font-size: 14px;
+    }
+
+    .mensaje-cabecera strong {
+        color: #184D6D;
+    }
+
+    .mensaje-cabecera .fecha {
+        color: #6c757d;
+        font-size: 12px;
+    }
+
+    .mensaje-texto {
+        color: #333;
+        line-height: 1.5;
+    }
+
+    .loading, .no-messages {
+        text-align: center;
+        padding: 20px;
+        color: #6c757d;
+    }
+
+    .error {
+        text-align: center;
+        padding: 20px;
+        color: #dc3545;
+    }
+
+    .error button {
+        background: #288b98;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        margin-top: 5px;
+        cursor: pointer;
+    }
+
+
+    .modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #FFFFF0;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 50%;
+    max-width: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 15px;
+}
+
+.modal-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 20px;
+}
+
+.modal-title h2 {
+    color: #184D6D;
+    margin: 0;
+    font-size: 24px;
+}
+
+.modal-title h3 {
+    color: #538802;
+    margin: 5px 0 0 0;
+    font-size: 18px;
+}
+
+.modal-body {
+    padding: 10px 0;
+}
+
+.modal-section {
+    margin-bottom: 15px;
+}
+
+.modal-section h4 {
+    color: #184D6D;
+    margin-bottom: 5px;
+    font-size: 16px;
+}
+
+.modal-section p {
+    color: #333;
+    margin: 0;
+    font-size: 14px;
+}
+
+.close-modal {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-modal:hover {
+    color: black;
+}
 </style>
