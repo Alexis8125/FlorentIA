@@ -1,167 +1,350 @@
 ---
 import "../../styles/global.css";
 import Menu from "../../components/Menu-teacher.astro";
-import Progress from "../../components/Progress.astro";
 ---
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/svg+xml" href="../../../public/logo-fondo.jpg" />
-    <title>¡FlorentIA! - Home Student</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" href="/logo-fondo.jpg" />
+  <title>¡FlorentIA! - Home Teacher</title>
 </head>
 <body>
-    <div class="container">
-        <div class="menu">
-            <Menu></Menu>
+  <div class="container">
+    <aside class="menu">
+      <Menu />
+    </aside>
+    <main class="information">
+      <section class="welcome">
+        <div class="child-image">
+          <img src="/logo-fondo.jpg" alt="Logo FlorentIA" />
         </div>
-        <div class="information">
-            <div class="welcome">
-                <div class="child-image">
-                    <img src="../../../public/logo-fondo.jpg" alt="Logo">
+        <h1 id="welcome-message">Cargando…</h1>
+        <p>Progreso General</p>
+      </section>
 
-                </div>
-                <h1 id="welcome-message">Cargando…</h1>
-                <p>
-                    Tus Avances
-                </p>
-            </div>
-            <div class="advance-content">
-                <Progress percent={0}>
-                    <div class="progress">
-                        <h2>Personal Pronouns</h2>
-                        <span>Inglés</span>
-                    </div>
-                </Progress>
-                <Progress percent={0}>
-                    <div class="progress">
-                        <h2>Simple present</h2>
-                        <span>Inglés</span>
-                    </div>
-                </Progress>
-                <Progress percent={15}>
-                    <div class="progress">
-                        <h2>verb to be</h2>
-                        <span>Inglés</span>
-                    </div>
-                </Progress>
-            </div>
-        </div>
-    </div>
-</body>
-<!-- Al final de tu Home (.astro o .html) -->
-<script type="module">
+      <section class="advance-content" id="advance-content">
+        <p class="loading-message">Cargando progreso general...</p>
+      </section>
+    </main>
+  </div>
+
+  <style global>
+    .advance-content {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(260px, 1fr);
+      gap: 16px;     
+      padding: 1rem 2rem;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x proximity;
+      background-color: transparent;  
+      min-height: 300px;
+    }
+    
+    .card-tema {
+      background-color: #f5f5dc;      
+      border-radius: 30px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      padding: 1.5rem;
+      margin: 0.5rem 0;    
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.2s ease;
+      scroll-snap-align: start;
+      min-width: 250px;
+    }
+    
+    .loading-message {
+      text-align: center;
+      width: 100%;
+      color: #666;
+      font-size: 1.2rem;
+    }
+    
+    .no-topics-message {
+      text-align: center;
+      width: 100%;
+      color: #666;
+      font-size: 1.2rem;
+    }
+    
+    .grade-badge {
+      background-color: #f8dcb0;
+      padding: 0.25rem 0.5rem;
+      border-radius: 1rem;
+      font-size: 0.8rem;
+      margin-top: 0.5rem;
+    }
+    
+    .progress-description {
+      font-size: 0.9rem;
+      color: #666;
+      text-align: center;
+      margin-top: 0.5rem;
+    }
+  </style>
+
+  <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
-    import {
-      getFirestore,
+    import { 
+      getFirestore, 
       collection,
+      doc,
+      getDoc,
       query,
       where,
       getDocs
     } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
-  
-    // 1) Configura tu Firebase (misma config del login)
+
+    // Configuración de Firebase
     const firebaseConfig = {
-      apiKey: "…",
+      apiKey: "...",
       authDomain: "florentia-f47b9.firebaseapp.com",
       projectId: "florentia-f47b9",
       storageBucket: "florentia-f47b9.appspot.com",
       messagingSenderId: "59886187087",
       appId: "1:59886187087:web:d274071e62e43f00b5b03a"
     };
+    
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
-  
-    // 2) Función async para cargar el nombre
+
+    // Función para crear el círculo de progreso
+    const createProgressCircle = (percent) => {
+      const circle = document.createElement('div');
+      circle.innerHTML = `
+        <svg width="100" height="100" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="45" fill="none" stroke="#e0e0e0" stroke-width="10"/>
+          <circle cx="50" cy="50" r="45" fill="none" stroke="#f8dcb0" stroke-width="10" 
+                  stroke-dasharray="283" stroke-dashoffset="${283 - (283 * percent / 100)}"
+                  transform="rotate(-90 50 50)"/>
+          <text x="50" y="55" text-anchor="middle" font-size="24" fill="#333">${percent}%</text>
+        </svg>
+      `;
+      return circle;
+    };
+
+    // Función para calcular el promedio de progreso
+    async function getAverageProgress(gradeFolder, topic) {
+      try {
+        // 1. Obtener todos los estudiantes del grado
+        const studentsQuery = query(
+          collection(db, "users"),
+          where("role", "==", "estudiante"),
+          where("course", "==", gradeFolder === "sixth" ? "6" : "7")
+        );
+        
+        const studentsSnapshot = await getDocs(studentsQuery);
+        
+        if (studentsSnapshot.empty) return 0;
+        
+        // 2. Obtener progreso de cada estudiante para este tema
+        const activityRef = collection(db, "activity");
+        let totalProgress = 0;
+        let count = 0;
+        
+        for (const studentDoc of studentsSnapshot.docs) {
+          const studentCode = studentDoc.data().code;
+          const progressQuery = query(
+            activityRef,
+            where("studentCode", "==", studentCode),
+            where("topic", "==", topic)
+          );
+          
+          const progressSnapshot = await getDocs(progressQuery);
+          
+          if (!progressSnapshot.empty) {
+            const progressData = progressSnapshot.docs[0].data();
+            totalProgress += progressData.progress || 0;
+            count++;
+          }
+        }
+        
+        // 3. Calcular promedio
+        return count > 0 ? Math.round(totalProgress / count) : 0;
+        
+      } catch (error) {
+        console.error("Error calculando progreso promedio:", error);
+        return 0;
+      }
+    }
+
     (async () => {
       const code = localStorage.getItem("codigoEstudiante");
       const welcomeEl = document.getElementById("welcome-message");
-  
+      const advanceContent = document.getElementById("advance-content");
+      
       if (!code) {
         welcomeEl.textContent = "¡Bienvenido a FlorentIA!";
+        advanceContent.innerHTML = '<p class="no-topics-message">Inicia sesión para ver el progreso</p>';
         return;
       }
-  
+
       try {
-        const q = query(
-          collection(db, "users"),
-          where("code", "==", code)
-        );
+        // 1. Obtener datos del docente
+        const usersRef = collection(db, "users");
+        const q = query(usersRef, where("code", "==", code));
         const snapshot = await getDocs(q);
-  
-        if (!snapshot.empty) {
-          const userData = snapshot.docs[0].data();
-          // Asume que en Firestore guardaste un campo `name`
-          const name = userData.name || `${userData.firstName} ${userData.lastName}`;
-          welcomeEl.textContent = `¡Bienvenido/a, ${name}!`;
-        } else {
+        
+        if (snapshot.empty) {
           welcomeEl.textContent = "¡Bienvenido a FlorentIA!";
+          advanceContent.innerHTML = '<p class="no-topics-message">Usuario no encontrado</p>';
+          return;
         }
-      } catch (err) {
-        console.error("Error al cargar nombre:", err);
+        
+        const userData = snapshot.docs[0].data();
+        welcomeEl.textContent = `¡Bienvenido/a, ${userData.name || `${userData.firstName} ${userData.lastName}`}!`;
+
+        // 2. Determinar el grado del docente
+        const teacherGrade = userData.course || "";
+        let gradeFolder = "";
+        
+        if (teacherGrade.includes("6") || teacherGrade.toLowerCase().includes("sexto")) {
+          gradeFolder = "sixth";
+        } else if (teacherGrade.includes("7") || teacherGrade.toLowerCase().includes("septimo")) {
+          gradeFolder = "seventh";
+        } else {
+          advanceContent.innerHTML = '<p class="no-topics-message">No se pudo determinar tu grado</p>';
+          return;
+        }
+
+        // 3. Obtener los módulos correspondientes al grado
+        advanceContent.innerHTML = '<p class="loading-message">Calculando progreso general...</p>';
+        
+        const moduleRef = doc(db, "modules", "moduleId", gradeFolder, `module${capitalize(gradeFolder)}`);
+        const moduleSnap = await getDoc(moduleRef);
+        
+        if (!moduleSnap.exists()) {
+          advanceContent.innerHTML = `<p class="no-topics-message">No hay temas disponibles para ${gradeFolder === "sixth" ? "sexto" : "séptimo"} grado</p>`;
+          return;
+        }
+
+        const moduleData = moduleSnap.data();
+        const topics = moduleData.topics || [];
+        
+        if (topics.length === 0) {
+          advanceContent.innerHTML = `<p class="no-topics-message">No hay temas configurados para ${gradeFolder === "sixth" ? "sexto" : "séptimo"} grado</p>`;
+          return;
+        }
+
+        // 4. Mostrar los temas con progreso promedio
+        advanceContent.innerHTML = '';
+        
+        for (const topic of topics) {
+          const averageProgress = await getAverageProgress(gradeFolder, topic);
+          const card = document.createElement('div');
+          card.className = 'card-tema';
+          
+          card.appendChild(createProgressCircle(averageProgress));
+          
+          const title = document.createElement('h2');
+          title.className = 'tema-titulo';
+          title.textContent = topic;
+          card.appendChild(title);
+          
+          const subtitle = document.createElement('p');
+          subtitle.className = 'tema-subtitulo';
+          subtitle.textContent = moduleData.subject || 'Inglés';
+          card.appendChild(subtitle);
+          
+          const description = document.createElement('p');
+          description.className = 'progress-description';
+          description.textContent = `Progreso promedio de la clase`;
+          card.appendChild(description);
+          
+          const gradeBadge = document.createElement('div');
+          gradeBadge.className = 'grade-badge';
+          gradeBadge.textContent = gradeFolder === "sixth" ? "6° Grado" : "7° Grado";
+          card.appendChild(gradeBadge);
+          
+          advanceContent.appendChild(card);
+        }
+
+      } catch (error) {
+        console.error("Error al cargar datos:", error);
         welcomeEl.textContent = "¡Bienvenido a FlorentIA!";
+        advanceContent.innerHTML = '<p class="no-topics-message">Error al cargar el progreso</p>';
       }
     })();
+
+    function capitalize(str) {
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    }
   </script>
-</html>
 
-<style>
+  <style>
+    /* Estilos base */
     html, body {
-        margin: 0;
-        padding: 0;
-        height: 100vh;
-        width: 100vw;
-        overflow: hidden;
-        background-color: #FFFFF0;
-        /* @apply w-screen h-screen m-0 p-0 overflow-hidden; */
+      margin: 0; 
+      padding: 0;
+      width: 100vw; 
+      height: 100vh;
+      overflow: hidden;
+      background-color: #FFFFF0;
+      font-family: sans-serif;
     }
-
+    
     .container {
-        @apply flex h-screen bg-[#FFFFF0] w-full;
+      display: flex;
+      height: 100%;
     }
-
+    
     .menu {
-        @apply w-[300px] h-full;
+      width: 300px;
+      height: 100%;
+      background: #fff;
+      border-right: 1px solid #e0e0e0;
     }
-
+    
     .information {
-        @apply w-[1500px] flex-col h-full flex items-center justify-center;
-}   
-
-
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 0;
+      overflow-y: auto;
+    }
+    
+    /* Sección de bienvenida */
     .welcome {
-        @apply w-full p-[10%] flex flex-col h-[50%] items-center justify-center text-[#333];
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 2rem;
+      text-align: center;
     }
-
-    .welcome > h1{
-        font-size: 28px;
-        font-weight: 400
+    
+    .welcome h1 {
+      font-size: 2rem;
+      font-weight: 400;
+      color: #333;
+      margin: 1rem 0 0;
     }
-
-    .welcome > p{
-        font-size: 34px;
-        margin-top: 15px;
-        font-weight: 700
-        margin-bottom: -24px;
+    
+    .welcome p {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #333;
+      margin: 0.5rem 0 2rem;
     }
-
+    
     .child-image {
-        @apply w-[200px] h-[200px] flex flex-col rounded-full mb-[15px];
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid #f8dcb0;
     }
-
-    .child-image > img {
-        @apply w-full h-full rounded-full;
+    
+    .child-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
-
-    .advance-content {
-        @apply w-full h-[50%] p-[10%] flex items-center justify-center space-x-[24px] mt-[-120px];
-    }
-
-    .progress > h2{
-        @apply h-[50%]  text-[30px]  items-end flex justify-center 
-    }
-    .progress > span{
-        @apply h-[50%] text-[20px] justify-center flex items-start
-    }
-</style>
+  </style>
+</body>
+</html>
