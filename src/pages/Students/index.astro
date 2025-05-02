@@ -195,7 +195,7 @@ import Progress from "../../components/Progress.astro";
   // Función principal
   async function cargarEstudiantes() {
     try {
-      // 1. Verificar código del docente
+      // 1. Verificar código del docente (CORRECCIÓN: cambiar a codigoDocente)
       const codigoDocente = localStorage.getItem("codigoEstudiante");
       if (!codigoDocente) {
         mostrarError("No se encontró el código del docente. Por favor inicie sesión nuevamente.");
@@ -254,7 +254,7 @@ import Progress from "../../components/Progress.astro";
               </a>
             </td>
             <td>
-              <img src="${estudiante.photoUrl || 'https://via.placeholder.com/60'}" 
+              <img src="${estudiante.photoUrl || 'https://media.istockphoto.com/id/1411562782/es/vector/lindos-ni%C3%B1os-de-la-escuela-dibujos-animados-agitando-las-manos.jpg?s=1024x1024&w=is&k=20&c=t62QsHZOwohs7Gjxr_SzUID__f5OdFK1rQ29jdqzuzs='}" 
                    alt="${estudiante.firstName}" width="60">
             </td>
           </tr>
@@ -266,6 +266,56 @@ import Progress from "../../components/Progress.astro";
       mostrarError("Error al cargar los datos. Por favor recarga la página.");
     }
   }
+  
+  // Función para enviar mensajes (CORREGIDA)
+  async function sendMessage() {
+    const studentId = document.getElementById("studentModal").getAttribute("data-current-student");
+    const messageText = document.getElementById("messageText").value.trim();
+    
+    if (!messageText || !studentId) {
+      alert("Por favor selecciona un estudiante y escribe un mensaje");
+      return;
+    }
+  
+    try {
+      // Obtener ID del docente
+      const codigoDocente = localStorage.getItem("codigoEstudiante");
+      if (!codigoDocente) {
+        alert("No se pudo identificar al docente");
+        return;
+      }
+  
+      const docentesRef = collection(db, "users");
+      const q = query(docentesRef, where("code", "==", codigoDocente));
+      const querySnapshot = await getDocs(q);
+      
+      if (querySnapshot.empty) {
+        alert("Docente no encontrado en la base de datos");
+        return;
+      }
+  
+      const docenteId = querySnapshot.docs[0].id;
+  
+      // Guardar mensaje en Firestore
+      await addDoc(collection(db, "messages"), {
+        from: docenteId,
+        to: studentId,
+        message: messageText,
+        timestamp: new Date(),
+        read: false
+      });
+  
+      alert("✅ Mensaje enviado con éxito");
+      document.getElementById("messageText").value = "";
+      
+    } catch (error) {
+      console.error("Error al enviar mensaje:", error);
+      alert("❌ Error al enviar el mensaje");
+    }
+  }
+  
+  // Event listener para el botón de enviar (FUERA de cualquier función)
+  document.getElementById("sendMessageBtn").addEventListener("click", sendMessage);
   
   // Manejar clic en estudiantes
   document.addEventListener("click", async (e) => {
@@ -295,9 +345,11 @@ import Progress from "../../components/Progress.astro";
       document.getElementById("modalStudentCode").textContent = studentData.code;
       document.getElementById("modalStudentCourse").textContent = studentData.course;
       
+      // Guardar ID del estudiante en el modal
+      document.getElementById("studentModal").setAttribute("data-current-student", studentId);
+      
       // Mostrar modal
       document.getElementById("studentModal").style.display = "block";
-      document.getElementById("studentModal").setAttribute("data-current-student", studentId);
     } catch (error) {
       console.error("Error:", error);
       alert("Error al cargar información del estudiante");
@@ -311,59 +363,6 @@ import Progress from "../../components/Progress.astro";
   
   // Iniciar cuando el DOM esté listo
   document.addEventListener("DOMContentLoaded", cargarEstudiantes);
-
-
-
-  // Añade esta función para enviar mensajes
-async function sendMessage(studentId) {
-  const messageText = document.getElementById("messageText").value.trim();
-  
-  if (!messageText) {
-    alert("Por favor escribe un mensaje");
-    return;
-  }
-
-  try {
-    // Obtener ID del docente
-    const codigoDocente = localStorage.getItem("codigoDocente");
-    const docentesRef = collection(db, "users");
-    const q = query(docentesRef, where("code", "==", codigoDocente));
-    const querySnapshot = await getDocs(q);
-    
-    if (querySnapshot.empty) {
-      alert("No se pudo identificar al docente");
-      return;
-    }
-
-    const docenteId = querySnapshot.docs[0].id;
-
-    // Guardar mensaje en Firestore
-    await addDoc(collection(db, "messages"), {
-      from: docenteId,
-      to: studentId,
-      message: messageText,
-      timestamp: new Date(),
-      read: false
-    });
-
-    alert("Mensaje enviado con éxito");
-    document.getElementById("messageText").value = "";
-    
-  } catch (error) {
-    console.error("Error al enviar mensaje:", error);
-    alert("Error al enviar el mensaje");
-  }
-
-  // Modificar el event listener del botón
-document.getElementById("sendMessageBtn").addEventListener("click", async () => {
-  const studentId = document.querySelector("#studentModal").getAttribute("data-current-student");
-  if (studentId) {
-    await sendMessage(studentId);
-  }
-});
-
-
-}
   </script>
 </html>
 <style>
