@@ -27,7 +27,7 @@ import { onMount } from "astro";
     const codigo = localStorage.getItem("codigoEstudiante");
 
     async function cargarNotas() {
-        const q = query(collection(db, "notas"), where("codigo", "==", codigo));
+        const q = query(collection(db, "notes"), where("codigo", "==", codigo));
         const querySnapshot = await getDocs(q);
 
         const contenedor = document.getElementById("notasContainer");

@@ -1,62 +1,36 @@
-// /src/scripts/saveNote.js
+import { db } from "/src/scripts/firebaseConfig.js";
+import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
 
-import { collection, query, where, getDocs, addDoc } from "firebase/firestore";
-import { db } from "./firebaseConfig.js";
-
-/**
- * Reads all form fields, prevents multiple notes per day, and stores note in Firestore.
- */
 export async function saveDiaryEntry() {
-    // Build ISO date string for today (YYYY-MM-DD)
-    const today = new Date().toISOString().split('T')[0];
-
-    // Query Firestore for any note with fecha on today's date
-    const notesRef = collection(db, "notes");
-    const start = today + "T00:00:00.000Z";
-    const end = today + "T23:59:59.999Z";
-    const q = query(notesRef,
-        where("fecha", ">=", start),
-        where("fecha", "<=", end)
-    );
-    const existing = await getDocs(q);
-    if (!existing.empty) {
-        alert("Ya hiciste tu nota del día");
+    const code = localStorage.getItem("codigoEstudiante");
+    if (!code) {
+        alert("Debes iniciar sesión primero");
         return;
     }
 
-    // Read form values
-    const now = new Date().toISOString();
-    const learning = document.getElementById("aprendizaje").value;
-    const emotion = document.getElementById("emocion").value;
-    const reason = document.getElementById("motivo").value;
-    const achievement = document.getElementById("logro").value;
-    const thoughts = document.getElementById("pensamientos").value;
-    const drawingInput = document.getElementById("dibujo");
-    const drawingFileName = drawingInput.files[0]?.name || null;
-
-    // Build note object matching Firestore fields
     const noteData = {
-        aprendizaje: learning,
-        emocion: emotion,
-        motivo: reason,
-        logro: achievement,
-        pensamientos: thoughts,
-        urlDibujo: drawingFileName,
-        fecha: now,
-        codigoEstudiante: String(Date.now())
+        aprendizaje: document.getElementById("aprendizaje").value,
+        emocion: document.getElementById("emocion").value,
+        logro: document.getElementById("logro").value,
+        pensamientos: document.getElementById("pensamientos").value,
+        code: code,
+        fecha: new Date().toLocaleString("es-ES", { // Formato legible
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            timeZoneName: 'short'
+        })
     };
 
     try {
-        await addDoc(notesRef, noteData);
-        window.location.href = "/Diary";
-    } catch (e) {
-        console.error("Error guardando nota en Firestore: ", e);
-        alert("Error al guardar la nota. Intenta de nuevo.");
+        await addDoc(collection(db, "users", code, "notes"), noteData);
+        window.location.href = "/Diary?refresh=true";
+    } catch (error) {
+        console.error("Error al guardar:", error);
+        alert("No se pudo guardar la nota");
     }
 }
 
-// Expose function globally so onclick can find it
-if (typeof window !== "undefined") {
-    window.saveDiaryEntry = saveDiaryEntry;
-}
-
+window.saveDiaryEntry = saveDiaryEntry;

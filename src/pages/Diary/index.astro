@@ -62,32 +62,89 @@ import Menu from "../../components/Menu.astro";
                 </div>
             </div>
         </div>
+        
 
         <!-- Firebase, Load and Delete Scripts -->
-        <script type="module" src="/src/scripts/firebaseConfig.js"></script>
-        <script
-            type="module"
-            src="/src/scripts/loadNotes.js"
-            onload="renderNotes()"></script>
         <script type="module">
+            // 1. Importaciones esenciales (usando CDN compatible)
             import { db } from "/src/scripts/firebaseConfig.js";
-            import {
-                collection,
-                getDocs,
-                deleteDoc,
-                doc,
-            } from "firebase/firestore";
-
-            window.clearAllNotes = async function () {
-                if (!confirm("¿Seguro que quieres eliminar todas las notas?"))
-                    return;
-                const notesRef = collection(db, "notes");
-                const snapshot = await getDocs(notesRef);
-                for (const snap of snapshot.docs) {
-                    await deleteDoc(doc(db, "notes", snap.id));
+            import { renderNotes } from "/src/scripts/loadNotes.js";
+            import { 
+                collection, 
+                getDocs, 
+                deleteDoc, 
+                doc 
+            } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+        
+            // 2. Función para eliminar notas (mejorada)
+            window.clearAllNotes = async function() {
+                if (!confirm("¿Eliminar TODAS tus notas permanentemente?")) return;
+                
+                try {
+                    const codigo = localStorage.getItem("codigoEstudiante");
+                    if (!codigo) {
+                        throw new Error("No se encontró el código del estudiante");
+                    }
+                    
+                    // Referencia a la colección de notas del usuario
+                    const notasRef = collection(db, "users", codigo, "notes");
+                    const snapshot = await getDocs(notasRef);
+                    
+                    // Eliminar todas las notas en paralelo
+                    const operaciones = snapshot.docs.map(nota => 
+                        deleteDoc(doc(db, "users", codigo, "notes", nota.id))
+                    );
+                    
+                    await Promise.all(operaciones);
+                    alert("¡Todas las notas fueron eliminadas!");
+                    await renderNotes(); // Actualizar la vista
+                    
+                } catch (error) {
+                    console.error("Error al eliminar notas:", error);
+                    alert("Ocurrió un error. Verifica la consola.");
                 }
-                document.getElementById("notes-container").innerHTML = "";
             };
+        
+            // 3. Carga inicial con manejo robusto
+            document.addEventListener("DOMContentLoaded", async () => {
+                try {
+                    // Forzar recarga si viene de guardar una nota
+                    const parametros = new URLSearchParams(window.location.search);
+                    if (parametros.has('refresh')) {
+                        console.log("Recargando notas...");
+                        localStorage.removeItem("cacheNotas");
+                    }
+                    
+                    // Verificar que el usuario esté "autenticado"
+                    const codigo = localStorage.getItem("codigoEstudiante");
+                    if (!codigo) {
+                        console.warn("Usuario no identificado");
+                        document.getElementById("notes-container").innerHTML = `
+                            <p class="error">Inicia sesión para ver tus notas</p>
+                        `;
+                        return;
+                    }
+                    
+                    // Cargar notas
+                    await renderNotes();
+                    
+                } catch (error) {
+                    console.error("Error grave al cargar:", error);
+                    const contenedor = document.getElementById("notes-container");
+                    if (contenedor) {
+                        contenedor.innerHTML = `
+                            <p class="error">
+                                Error al cargar notas. 
+                                <button onclick="location.reload()">Reintentar</button>
+                            </p>
+                        `;
+                    }
+                }
+            });
+        
+            // Debug: Verificar conexión
+            console.log("Firebase configurado correctamente");
+            console.log("Código de estudiante:", localStorage.getItem("codigoEstudiante"));
         </script>
 
         <style>
@@ -105,7 +162,7 @@ import Menu from "../../components/Menu.astro";
             .main-title {
                 font-size: 48px;
                 font-weight: 800;
-                color: #184D6D;
+                color: #184d6d;
             }
 
             .activities-column {
@@ -213,7 +270,7 @@ import Menu from "../../components/Menu.astro";
             }
 
             .boton-eliminar:hover {
-                background-color: #184D6D;
+                background-color: #184d6d;
             }
 
             .delete-wrapper {

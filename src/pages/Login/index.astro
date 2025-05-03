@@ -609,5 +609,67 @@ const sign_in_btn = document.querySelector("#sign-in-btn");
   });
 });
     </script>
+    <script>
+      const sign_in_btn = document.querySelector("#sign-in-btn");
+      const sign_up_btn = document.querySelector("#sign-up-btn");
+      const container = document.querySelector(".container");
+      
+      sign_up_btn.addEventListener("click", () => {
+          container.classList.add("sign-up-mode");
+      });
+      
+      sign_in_btn.addEventListener("click", () => {
+          container.classList.remove("sign-up-mode");
+      });
+      
+      // Configuración e inicialización de Firebase
+      const firebaseConfig = {
+          apiKey: "AIzaSyCgq36r1pfgHplUt7-HSIY_qNJiEybaIJc",
+          authDomain: "florentia-f47b9.firebaseapp.com",
+          projectId: "florentia-f47b9",
+          storageBucket: "florentia-f47b9.appspot.com",
+          messagingSenderId: "59886187087",
+          appId: "1:59886187087:web:d274071e62e43f00b5b03a"
+      };
+      
+      // Inicializa Firebase
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.firestore();
+      const auth = firebase.auth(); // Añade esto para obtener el módulo de autenticación
+      
+      // Función para manejar el login
+      const handleLogin = async (e) => {
+          e.preventDefault();
+          const username = document.getElementById("username").value.trim();
+          const password = document.getElementById("password").value.trim();
+      
+          try {
+              // 1. Primero autenticar con Firebase Auth
+              const userCredential = await auth.signInWithEmailAndPassword(username + "@florentia.com", password);
+              
+              // 2. Luego verificar en Firestore
+              const snap = await db.collection("users")
+                  .where("code", "==", username)
+                  .where("password", "==", password)
+                  .get();
+      
+              if (!snap.empty) {
+                  localStorage.setItem("codigoEstudiante", snap.docs[0].data().code);
+                  const dest = snap.docs[0].data().role === "estudiante" ? "/Home/" : "/Teacher/";
+                  window.location.replace(dest);
+              } else {
+                  await auth.signOut(); // Cerrar sesión si no coincide en Firestore
+                  alert("Usuario o contraseña incorrectos.");
+              }
+          } catch (err) {
+              console.error("Error en login:", err);
+              alert("Error al iniciar sesión. Verifica tus credenciales.");
+          }
+      };
+      
+      // Asignar el event listener al formulario
+      document.getElementById("login-form").addEventListener("submit", handleLogin);
+      </script>
+      Cambios realizados:
   </body>
 </html>

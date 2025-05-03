@@ -28,11 +28,97 @@ const { noteId } = Astro.props;
             <p id="seeThoughts" class="section-text"></p>
         </div>
 
-        <div id="seeDrawingSection" class="see-note-section" style="display:none">
+        <!-- <div id="seeDrawingSection" class="see-note-section" style="display:none">
             <h3 class="section-title">Dibujo</h3>
             <p id="seeDrawing" class="section-text"></p>
-        </div>
+        </div> -->
     </div>
+    <!-- <script is:inline>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const noteContainer = document.getElementById('see-note');
+            const noteId = noteContainer.dataset.noteId;
+            const userCode = localStorage.getItem('codigoEstudiante');
+            
+            if (!noteId || !userCode) {
+                console.error("Missing noteId or userCode");
+                return;
+            }
+    
+            try {
+                // Importaciones compatibles con Astro
+                const { db } = await import("/src/scripts/firebaseConfig.js");
+                const { doc, getDoc } = await import("https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js");
+                
+                const noteRef = doc(db, "users", userCode, "notes", noteId);
+                const noteSnap = await getDoc(noteRef);
+    
+                if (noteSnap.exists()) {
+                    const note = noteSnap.data();
+                    // Formatear fecha legible
+                    const fechaLegible = new Date(note.fecha).toLocaleDateString('es-ES', {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric'
+                    });
+                    
+                    // Asignar datos a los elementos
+                    document.getElementById('seeDate').textContent = fechaLegible;
+                    document.getElementById('seeLearning').textContent = note.aprendizaje || "Sin contenido";
+                    document.getElementById('seeEmotion').textContent = note.emocion || "Sin especificar";
+                    document.getElementById('seeAchievement').textContent = note.logro || "Sin logro";
+                    document.getElementById('seeThoughts').textContent = note.pensamientos || "Sin pensamientos";
+                } else {
+                    console.error("Documento no encontrado en Firestore");
+                }
+            } catch (error) {
+                console.error("Error loading note:", error);
+                noteContainer.innerHTML = `<p class="error">Error al cargar la nota. Recarga la página.</p>`;
+            }
+        });
+    </script> -->
+    <script is:inline>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const formatDate = (dateString) => {
+                try {
+                    // Si es Timestamp de Firestore (object)
+                    if (typeof dateString === 'object' && dateString.toDate) {
+                        return dateString.toDate().toLocaleDateString('es-ES', {
+                            day: '2-digit',
+                            month: 'long',
+                            year: 'numeric'
+                        });
+                    }
+                    // Si es string ISO (ej: "2025-05-03T03:29:23.762Z")
+                    return new Date(dateString).toLocaleDateString('es-ES', {
+                        day: '2-digit',
+                        month: 'long',
+                        year: 'numeric'
+                    });
+                } catch (e) {
+                    console.error("Error formateando fecha:", dateString, e);
+                    return "Fecha no disponible";
+                }
+            };
+    
+            try {
+                const noteId = document.getElementById('see-note').dataset.noteId;
+                const userCode = localStorage.getItem('codigoEstudiante');
+                const { db } = await import("/src/scripts/firebaseConfig.js");
+                const { doc, getDoc } = await import("firebase/firestore");
+    
+                const noteRef = doc(db, "users", userCode, "notes", noteId);
+                const noteSnap = await getDoc(noteRef);
+    
+                if (noteSnap.exists()) {
+                    const note = noteSnap.data();
+                    document.getElementById('seeDate').textContent = formatDate(note.fecha);
+                    // ... (otros campos)
+                }
+            } catch (error) {
+                console.error("Error:", error);
+            }
+        });
+    </script>
 </div>
 
 <style>
