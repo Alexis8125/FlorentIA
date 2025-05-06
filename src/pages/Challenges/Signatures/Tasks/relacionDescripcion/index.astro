@@ -1,0 +1,90 @@
+---
+import "../../../../../styles/global.css";
+import Menu from "../../../../../components/Menu.astro";
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="icon"
+            type="image/svg+xml"
+            href="../../../public/logo-fondo.jpg"
+        />
+        <title>¡FlorentIA! - Subir Actividades</title>
+    </head>
+    <body>
+        <div class="container">
+            <div class="menu">
+                <Menu />
+            </div>
+            <div class="information" id="activityContainer">
+                <!-- El contenido se cargará dinámicamente desde el script -->
+            </div>
+        </div>
+
+        <script>
+            const codigosPermitidos = ["2019011", "166", "168", "2022040", "2024027"];
+            const codigoEstudiante = localStorage.getItem("codigoEstudiante");
+            const container = document.getElementById("activityContainer");
+
+            if (codigosPermitidos.includes(codigoEstudiante)) {
+                container.innerHTML = `
+                    <h2>Actividad Interactiva</h2>
+                   <iframe style="max-width:100%" src="https://wordwall.net/es/embed/1822afdff49443ddb512d78c1b2b2fe1?themeId=1&templateId=3&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>
+                `;
+            } else {
+                container.innerHTML = `
+                    <h2>Acceso denegado</h2>
+                    <p>Tu código de estudiante no tiene acceso a esta actividad.</p>
+                `;
+            }
+        </script>
+    </body>
+</html>
+
+<style>
+    html,
+    body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden;
+        background-color: #fffff0;
+    }
+
+    .container {
+        @apply flex h-screen bg-[#FFFFF0] w-full;
+    }
+
+    .menu {
+        @apply w-[300px] h-full;
+    }
+
+    .information {
+        @apply w-[1500px] flex-col h-full flex items-center justify-center;
+        padding: 2rem;
+        background-color: #fef9f4;
+        border-radius: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 500px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .information h2 {
+        color: #ff7f50;
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    .information p {
+        font-size: 1rem;
+        margin-bottom: 1rem;
+        color: #555;
+    }
+</style>
+
