@@ -1,158 +1,139 @@
 ---
-import "../../styles/global.css"
+import "../../styles/global.css";
 import Achievement from "../../components/Achievement.astro";
 import Menu from "../../components/Menu.astro";
 ---
-<!DOCTYPE html>
+
+<!doctype html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <div class="container">
-        <div class="menu">
-            <Menu></Menu>
-        </div>
-        <div class="information">
-            <p>✨ ¡Es hora de aprender cosas nuevas! Explora el material disponible, acepta el reto y diviértete mientras aprendes. 📚🌟</p>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <div class="container">
+            <div class="menu">
+                <Menu />
+            </div>
+            <div class="information">
+                <p>
+                    ✨ ¡Es hora de aprender cosas nuevas! Explora el material
+                    disponible, acepta el reto y diviértete mientras aprendes.
+                    📚🌟
+                </p>
 
+                <div class="achievement-content">
+                    <div class="content">
+                        <h3>Ingles</h3>
+                    </div>
+                </div>
 
+                <!-- Contenedor de logros -->
+                <!-- Contenedor de logros -->
+                <div class="achievement-information">
+                    <div class="achievement-information">
+                        <Achievement>
+                            <div class="achievement-wrapper">
+                                <div class="achievement-icons">
+                                    <img
+                                        src="../../../public/tarea.png"
+                                        alt="Estrella"
+                                        class="achievement-icon"
+                                    />
+                                </div>
+                                <p class="achievement-text">Tema A</p>
+                                <p class="achievement-text">
+                                    Shapes and Colors in English
+                                </p>
+                                <a href="https://youtu.be/...">Ver</a>
+                            </div>
+                        </Achievement>
+                    </div>
 
-            <div class="achievement-content">
-                <div class="content">
-                    <h3>Ingles</h3>
+                    <div class="achievement-information"></div>
                 </div>
             </div>
-
-            <!-- Contenedor de logros -->
-            <div class="achievement-information">
-                <Achievement>
-                    <div class="achievement-icons">
-                        <img src="../../../public/tarea.png" alt="Estrella" class="achievement-icon">
-                        
-                    </div>
-                    <p class="achievement-text">Tema A</p>
-                    <p class="achievement-text">Verbo To Be</p>
-                    <a href="#" class="achievement-link">Ver</a>
-                    
-                </Achievement>
-                <Achievement>
-                    <div class="achievement-icons">
-                        <img src="../../../public/tarea.png" alt="Estrella" class="achievement-icon">
-                        
-                    </div>
-                    <p class="achievement-text">Tema B</p>
-                    <p class="achievement-text">Personal Pronouns</p>
-                    <a href="#" class="achievement-link">Ver</a>
-                    
-                </Achievement>
-                <Achievement>
-                    <div class="achievement-icons">
-                        <img src="../../../public/tarea.png" alt="Estrella" class="achievement-icon">
-                        
-                    </div>
-                    <p class="achievement-text">Tema C</p>
-                    <p class="achievement-text">Colors</p>
-                    <a href="#" class="achievement-link">Ver</a>
-
-                </Achievement>
-            </div>
-            
-            <div class="achievement-information">
-                <Achievement>
-                    <div class="achievement-icons">
-                        <img src="../../../public/tarea.png" alt="Estrella" class="achievement-icon">
-                        
-                    </div>
-                    <p class="achievement-text">Tema D</p>
-                    <p class="achievement-text">Numbers</p>
-                    <a href="#" class="achievement-link">Ver</a>
-                </Achievement>
-                <Achievement>
-                    <div class="achievement-icons">
-                        <img src="../../../public/tarea.png" alt="Estrella" class="achievement-icon">
-                        
-                    </div>
-                    <p class="achievement-text">Tema E</p>
-                    <p class="achievement-text">Days of the Week</p>
-                    <a href="#" class="achievement-link">Ver</a>
-                </Achievement>
-                <Achievement>
-                    <div class="achievement-icons">
-                        <img src="../../../public/tarea.png" alt="Estrella" class="achievement-icon">
-                        
-                    </div>
-                    <p class="achievement-text">Tema C</p>
-                    <p class="achievement-text">Greetings</p>
-                    <a href="#" class="achievement-link">Ver</a>
-
-                </Achievement>
-            </div>
-            
         </div>
-    </div>
-</body>
 
-<style>
-    html, body {
-        margin: 0;
-        padding: 0;
-        height: 100vh;
-        width: 100vw;
-        overflow: hidden;
-        background-color: #FFFFF0;
-    }
+        <style>
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+                height: 100vh;
+                width: 100vw;
+                overflow: hidden;
+                background-color: #fffff0;
+            }
 
-    .container {
-        @apply flex h-screen bg-[#FFFFF0] w-full;
-    }
+            .container {
+                @apply flex h-screen bg-[#FFFFF0] w-full;
+            }
 
-    .menu {
-        @apply w-[300px] h-full;
-    }
+            .menu {
+                @apply w-[300px] h-full;
+            }
 
-    .information {
-        @apply w-[1500px] flex-col h-full flex items-center justify-center;
-    }
-    .information > p{
-        @apply text-[20px] text-center flex mb-[10px] mt-[40px];
-        
-    }
+            .information {
+                @apply w-[1500px] flex-col h-full flex items-center justify-center;
+            }
+            .information > p {
+                @apply text-[20px] text-center flex mb-[10px] mt-[40px];
+            }
 
-    .information > h1 {
-        @apply text-[40px] mt-[40px];
-    }
+            .information > h1 {
+                @apply text-[40px] mt-[40px];
+            }
 
-    .achievement-content {
-        @apply w-full h-[1%] p-[5%] flex items-center justify-center space-x-[45px] bg-[#FFFFF0];
-    }
+            .achievement-content {
+                @apply w-full h-[1%] p-[5%] flex items-center justify-center space-x-[45px] bg-[#FFFFF0];
+            }
 
-    .content {
-        @apply rounded-full bg-[#ffec1d] h-[30px] w-[100px] text-center;
-    }
-    .content > p {
-        @apply rounded-full text-[11px] text-center;
-    }
+            .content {
+                @apply rounded-full bg-[#ffec1d] h-[30px] w-[100px] text-center;
+            }
+            .content > p {
+                @apply rounded-full text-[11px] text-center;
+            }
 
-    .achievement-information {
-        @apply w-full p-[1%] flex items-center justify-center bg-[#FFFFF0];
-    }
-    .achievement-icons {
-        @apply flex items-center justify-center space-x-[12px];
-    }
+            .achievement-information {
+                @apply w-full p-[1%] flex items-center justify-center bg-[#FFFFF0];
+            }
+            .achievement-icons {
+                @apply flex items-center justify-center space-x-[12px];
+            }
 
-    .achievement-icon {
-        @apply h-[50px] w-[50px];
+            .achievement-icon {
+                @apply h-[50px] w-[50px];
+            }
+            .achievement-text {
+                @apply text-center;
+            }
+            .achievement-link {
+                @apply text-[#288b98] underline hover:text-[#288b98];
+            }
+        </style>
+    </body>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+  const codigosPermitidos = ['2025029','2025021','2025020','2024012','2024028','2021016','2024144'];
+  const codigoEstudiante = localStorage.getItem('codigoEstudiante');
+
+  // Selecciona todos los wrappers de logro
+  const wrappers = document.querySelectorAll('.achievement-wrapper');
+
+  wrappers.forEach(wrapper => {
+    // dentro de cada wrapper busca el <p> que diga "Tema A"
+    const tema = wrapper.querySelector('p.achievement-text');
+    if (tema && tema.textContent.trim() === 'Tema A') {
+      // si el código NO está en la lista, lo oculto
+      if (!codigosPermitidos.includes(codigoEstudiante)) {
+        wrapper.style.display = 'none';
+      }
     }
-    .achievement-text {
-        @apply text-center
-    }
-    .achievement-link {
-    @apply text-[#288b98] underline hover:text-[#288b98];
-}
-</style>
+  });
+});
+
+    </script>
 </html>
-
-

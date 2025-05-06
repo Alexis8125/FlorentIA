@@ -43,28 +43,6 @@ import Challenges from "../../Challenges/index.astro";
                                 </div>
                             </Signature>                            
                         </div>
-                        <div class="signature">
-                            <Signature>
-                                <span class="text">Tarea 2</span>
-                                <p class="text">Descripción</p>
-                                <span class="text">Hecha</span>
-                                <div class="button flex flex-col items-center justify-center h-[50px] w-[100px] bg-[#184D6D] hover:bg-[#EF8535] transition-colors rounded-lg text-white text-[15px] cursor-pointer mt-[20px]">
-                                    <a href="/Challenges/Signatures/Tasks/" class="text-[17px] underline">Subir Tarea</a>
-                                </div>
-                            </Signature>
-                            
-                        </div>
-                        <div class="signature">
-                            <Signature>
-                                <span class="text">Tarea 3</span>
-                                <p class="text">Descripción</p>
-                                <span class="text">Hecha</span>
-                                <div class="button flex flex-col items-center justify-center h-[50px] w-[100px] bg-[#184D6D] hover:bg-[#EF8535] transition-colors rounded-lg text-white text-[15px] cursor-pointer mt-[20px]">
-                                    <a href="/Challenges/Signatures/Tasks/" class="text-[17px] underline">Subir Tarea</a>
-                                </div>
-                            </Signature>
-                            
-                        </div>
                     </div>
                 </div>
                 <div class="evaluations">
@@ -76,9 +54,9 @@ import Challenges from "../../Challenges/index.astro";
                             <Signature>
                                 <span>Evaluacion 1</span>
                                 <p>Descripción</p>
-                                <span>Hecha</span>
+                                <span></span>
                                 <div class="button flex flex-col items-center justify-center h-[50px] w-[100px] bg-[#184D6D] hover:bg-[#EF8535] transition-colors rounded-lg text-white text-[15px] cursor-pointer mt-[20px]">
-                                    <a href="/Challenges/Signatures/Tasks/" class="text-[17px] underline">Subir Tarea</a>
+                                    <a href="/Challenges/Signatures/Tasks/" class="text-[17px] underline">Realizar</a>
                                 </div>
                             </Signature>
                         </div>
@@ -86,9 +64,10 @@ import Challenges from "../../Challenges/index.astro";
                             <Signature>
                                 <span>Evaluacion</span>
                                 <p>Descripción</p>
-                                <span>Hecha</span>
+                                <span></span>
                                 <div class="button flex flex-col items-center justify-center h-[50px] w-[100px] bg-[#184D6D] hover:bg-[#EF8535] transition-colors rounded-lg text-white text-[15px] cursor-pointer mt-[20px]">
                                     <a href="/Challenges/Signatures/Tasks/relacionDescripcion/" class="text-[17px] underline">Subir Tarea</a>
+
                                 </div>
                             </Signature>
                         </div>
@@ -192,5 +171,33 @@ import Challenges from "../../Challenges/index.astro";
         }
     </style>
     <script type="module" src="/scripts/taskStatus.js" defer></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const codigo = localStorage.getItem("codigoEstudiante");
+    
+            const tareaYEvaluacion = ["2024027", "166", "2022040", "168", "2019011"];
+            const evaluacion1 = ["2025029", "2025021", "2025020", "2024012", "2024028", "2021016", "2024144"];
+    
+            // Selecciona todas las tarjetas Signature
+            const signatureCards = document.querySelectorAll(".signature");
+    
+            signatureCards.forEach(card => {
+                const title = card.querySelector("span")?.textContent?.trim();
+    
+                if (title === "Tarea" || title === "Evaluacion") {
+                    if (!tareaYEvaluacion.includes(codigo)) {
+                        card.style.display = "none";
+                    }
+                }
+    
+                if (title === "Evaluacion 1") {
+                    if (!evaluacion1.includes(codigo)) {
+                        card.style.display = "none";
+                    }
+                }
+            });
+        });
+    </script>
+    
 </html>
 
