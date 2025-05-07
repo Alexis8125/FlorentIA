@@ -1,0 +1,53 @@
+<!DOCTYPE html><script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+    import {
+        getFirestore,
+        collection,
+        query,
+        where,
+        getDocs,
+    } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyCgq36r1pfgHplUt7-HSIY_qNJiEybaIJc",
+        authDomain: "florentia-f47b9.firebaseapp.com",
+        projectId: "florentia-f47b9",
+        storageBucket: "florentia-f47b9.appspot.com",
+        messagingSenderId: "59886187087",
+        appId: "1:59886187087:web:d274071e62e43f00b5b03a",
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const codigo = localStorage.getItem("codigoEstudiante");
+
+    async function cargarNotas() {
+        const q = query(collection(db, "notes"), where("codigo", "==", codigo));
+        const querySnapshot = await getDocs(q);
+
+        const contenedor = document.getElementById("notasContainer");
+        contenedor.innerHTML = "";
+
+        querySnapshot.forEach((doc) => {
+            const nota = doc.data();
+            const div = document.createElement("div");
+            div.className = "rounded-xl shadow-md bg-white p-4 mb-4";
+            div.innerHTML = ` 
+        <h3 class="text-lg font-bold">${nota.titulo}</h3>
+        <p class="text-sm text-gray-500">${nota.fecha}</p>
+        <p class="mt-2">${nota.texto}</p>
+        <button onclick="verNota('${doc.id}')" class="text-green-700 hover:underline mt-2">Ver más</button>`;
+            contenedor.appendChild(div);
+        });
+    }
+
+    onMount(() => {
+        cargarNotas();
+    });
+
+    window.verNota = function (id) {
+        localStorage.setItem("notaSeleccionada", id);
+        window.location.href = "/seeNote/";
+    };
+</script>

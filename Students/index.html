@@ -1,0 +1,220 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-zokitbco> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Mis Estudiantes - FlorentIA</title><link rel="icon" type="image/svg+xml" href="../../../public/logo-fondo.jpg"><link rel="stylesheet" href="/FlorentIA/_astro/index.big6w6kN.css">
+<style>/*! tailwindcss v4.0.15 | MIT License | https://tailwindcss.com */.container-menu[data-astro-cid-6zuhhkrv]{border-style:var(--tw-border-style);background-color:ivory;border-width:.5px;flex-direction:column;width:300px;height:100vh;display:flex}.container-logo[data-astro-cid-6zuhhkrv]{justify-content:center;align-items:center;width:100%;height:180px;display:flex}.logo[data-astro-cid-6zuhhkrv]{height:280px}.option[data-astro-cid-6zuhhkrv]{border-style:var(--tw-border-style);border-width:.5px;justify-content:center;align-items:center;width:100%;height:85px;display:flex}@media (hover:hover){.option[data-astro-cid-6zuhhkrv]:hover{cursor:pointer;background-color:beige}}.text[data-astro-cid-6zuhhkrv]{font-size:24px}@property --tw-border-style{syntax:"*";inherits:false;initial-value:solid}
+</style>
+<link rel="stylesheet" href="/FlorentIA/_astro/index.DJNvHvkb.css"></head> <body data-astro-cid-zokitbco> <div class="container" data-astro-cid-zokitbco> <div class="menu" data-astro-cid-zokitbco> <div class="container-menu" data-astro-cid-6zuhhkrv> <div class="container-logo" data-astro-cid-6zuhhkrv> <a href="/Teacher" class="content-home" data-astro-cid-6zuhhkrv> <img src="../../public/logo.png" alt="" class="logo" data-astro-cid-6zuhhkrv> </a> </div> <div class="option" data-astro-cid-6zuhhkrv> <a href="/Students" class="selection" data-astro-cid-6zuhhkrv> <span class="text" data-astro-cid-6zuhhkrv>
+Mis Estudiantes
+</span> </a> </div> <div class="option" data-astro-cid-6zuhhkrv> <a href="/Activities" class="selection" data-astro-cid-6zuhhkrv> <span class="text" data-astro-cid-6zuhhkrv>
+Actividades
+</span> </a> </div> <div class="option" data-astro-cid-6zuhhkrv> <a href="/Reports" class="selection" data-astro-cid-6zuhhkrv> <span class="text" data-astro-cid-6zuhhkrv>
+Reportes
+</span> </a> </div> </div>  </div> <div class="information" data-astro-cid-zokitbco> <h2 data-astro-cid-zokitbco>Estudiantes</h2> <div class="list-container" data-astro-cid-zokitbco> <table data-astro-cid-zokitbco> <thead data-astro-cid-zokitbco> <tr data-astro-cid-zokitbco> <th data-astro-cid-zokitbco>Código</th> <th data-astro-cid-zokitbco>Nombre</th> <th data-astro-cid-zokitbco>Fotografía</th> </tr> </thead> <tbody data-astro-cid-zokitbco> <tr data-astro-cid-zokitbco> <td data-label="Código" data-astro-cid-zokitbco>Cargando...</td> <td data-label="Nombre" data-astro-cid-zokitbco><a href="#" data-astro-cid-zokitbco>Cargando...</a></td> <td data-label="Fotografía" data-astro-cid-zokitbco><img src="https://watermark.lovepik.com/photo/20211208/large/lovepik-junior-high-school-students-writing-homework-picture_501603943.jpg" alt="Foto de Juan Pérez" data-astro-cid-zokitbco></td> </tr> <tr data-astro-cid-zokitbco> <td data-label="Código" data-astro-cid-zokitbco>Cargando...</td> <td data-label="Nombre" data-astro-cid-zokitbco> <a href="" data-astro-cid-zokitbco>Cargando...</a></td> <td data-label="Fotografía" data-astro-cid-zokitbco><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2IzOezlV1Umi99uaEF4af3mlkeLD7Hzb3cQ&s" alt="Foto de María García" data-astro-cid-zokitbco></td> </tr> <tr data-astro-cid-zokitbco> <td data-label="Código" data-astro-cid-zokitbco>Cargando...</td> <td data-label="Nombre" data-astro-cid-zokitbco> <a href="" data-astro-cid-zokitbco>Cargando...</a></td> <td data-label="Fotografía" data-astro-cid-zokitbco><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQVy2VlktL3aB7lqZmBp8trLVs1CU59GjU4A&s" alt="Foto de Carlos López" data-astro-cid-zokitbco></td> </tr> </tbody> </table> </div> <!-- Modal para mostrar información del estudiante --> <div id="studentModal" class="modal" data-astro-cid-zokitbco> <div class="modal-content" data-astro-cid-zokitbco> <span class="close" data-astro-cid-zokitbco>&times;</span> <div class="student-info" data-astro-cid-zokitbco> <img id="modalStudentImage" src="" alt="Foto del estudiante" data-astro-cid-zokitbco> <h2 id="modalStudentName" data-astro-cid-zokitbco></h2> <p data-astro-cid-zokitbco>Código: <span id="modalStudentCode" data-astro-cid-zokitbco></span></p> <p data-astro-cid-zokitbco>Curso: <span id="modalStudentCourse" data-astro-cid-zokitbco></span></p> </div> <div class="student-progress" data-astro-cid-zokitbco> <h3 data-astro-cid-zokitbco>Avances</h3> <div id="progressContainer" data-astro-cid-zokitbco></div> </div> <div class="message-section" data-astro-cid-zokitbco> <h3 data-astro-cid-zokitbco>Enviar mensaje</h3> <textarea id="messageText" placeholder="Escribe tu mensaje o recomendación..." data-astro-cid-zokitbco></textarea> <button id="sendMessageBtn" data-astro-cid-zokitbco>Enviar</button> </div> </div> </div> </div> </div> <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { 
+    getFirestore, 
+    collection, 
+    query, 
+    where, 
+    getDocs,
+    doc,
+    getDoc,
+    addDoc
+  } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+  
+  // Configuración Firebase
+  const firebaseConfig = {
+    apiKey: "AIzaSyCgq36r1pfgHplUt7-HSIY_qNJiEybaIJc",
+    authDomain: "florentia-f47b9.firebaseapp.com",
+    projectId: "florentia-f47b9",
+    storageBucket: "florentia-f47b9.firebasestorage.app",
+    messagingSenderId: "59886187087",
+    appId: "1:59886187087:web:d274071e62e43f00b5b03a"
+  };
+  
+  // Inicializar Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  
+  // Función para mostrar errores
+  function mostrarError(mensaje) {
+    const tbody = document.querySelector("tbody");
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="3" style="color: red; text-align: center; padding: 20px;">
+          ${mensaje}
+        </td>
+      </tr>
+    `;
+  }
+  
+  // Función principal
+  async function cargarEstudiantes() {
+    try {
+      // 1. Verificar código del docente (CORRECCIÓN: cambiar a codigoDocente)
+      const codigoDocente = localStorage.getItem("codigoEstudiante");
+      if (!codigoDocente) {
+        mostrarError("No se encontró el código del docente. Por favor inicie sesión nuevamente.");
+        return;
+      }
+  
+      // 2. Obtener curso del docente
+      const docentesRef = collection(db, "users");
+      const qDocente = query(docentesRef, where("code", "==", codigoDocente));
+      const queryDocenteSnap = await getDocs(qDocente);
+  
+      if (queryDocenteSnap.empty) {
+        mostrarError("Docente no registrado en la base de datos");
+        return;
+      }
+  
+      const docenteData = queryDocenteSnap.docs[0].data();
+      const cursoDocente = docenteData.course;
+  
+      // 3. Determinar cursos permitidos
+      let cursosPermitidos = [];
+      if (cursoDocente === "600") cursosPermitidos = ["601", "602"];
+      else if (cursoDocente === "700") cursosPermitidos = ["701", "702"];
+      else {
+        mostrarError("El docente no tiene un curso válido asignado");
+        return;
+      }
+  
+      // 4. Obtener estudiantes
+      const estudiantesRef = collection(db, "users");
+      const qEstudiantes = query(
+        estudiantesRef, 
+        where("course", "in", cursosPermitidos),
+        where("role", "==", "estudiante")
+      );
+  
+      const querySnapshot = await getDocs(qEstudiantes);
+      
+      if (querySnapshot.empty) {
+        mostrarError("No se encontraron estudiantes en estos cursos");
+        return;
+      }
+  
+      // 5. Mostrar estudiantes en tabla
+      const tbody = document.querySelector("tbody");
+      tbody.innerHTML = "";
+  
+      querySnapshot.forEach((doc) => {
+        const estudiante = doc.data();
+        tbody.innerHTML += `
+          <tr>
+            <td>${estudiante.code || 'N/A'}</td>
+            <td>
+              <a href="#" class="student-link" data-id="${doc.id}">
+                ${estudiante.firstName} ${estudiante.lastName}
+              </a>
+            </td>
+            <td>
+              <img src="${estudiante.photoUrl || 'https://media.istockphoto.com/id/1411562782/es/vector/lindos-ni%C3%B1os-de-la-escuela-dibujos-animados-agitando-las-manos.jpg?s=1024x1024&w=is&k=20&c=t62QsHZOwohs7Gjxr_SzUID__f5OdFK1rQ29jdqzuzs='}" 
+                   alt="${estudiante.firstName}" width="60">
+            </td>
+          </tr>
+        `;
+      });
+  
+    } catch (error) {
+      console.error("Error:", error);
+      mostrarError("Error al cargar los datos. Por favor recarga la página.");
+    }
+  }
+  
+  // Función para enviar mensajes (CORREGIDA)
+  async function sendMessage() {
+    const studentId = document.getElementById("studentModal").getAttribute("data-current-student");
+    const messageText = document.getElementById("messageText").value.trim();
+    
+    if (!messageText || !studentId) {
+      alert("Por favor selecciona un estudiante y escribe un mensaje");
+      return;
+    }
+  
+    try {
+      // Obtener ID del docente
+      const codigoDocente = localStorage.getItem("codigoEstudiante");
+      if (!codigoDocente) {
+        alert("No se pudo identificar al docente");
+        return;
+      }
+  
+      const docentesRef = collection(db, "users");
+      const q = query(docentesRef, where("code", "==", codigoDocente));
+      const querySnapshot = await getDocs(q);
+      
+      if (querySnapshot.empty) {
+        alert("Docente no encontrado en la base de datos");
+        return;
+      }
+  
+      const docenteId = querySnapshot.docs[0].id;
+  
+      // Guardar mensaje en Firestore
+      await addDoc(collection(db, "messages"), {
+        from: docenteId,
+        to: studentId,
+        message: messageText,
+        timestamp: new Date(),
+        read: false
+      });
+  
+      alert("✅ Mensaje enviado con éxito");
+      document.getElementById("messageText").value = "";
+      
+    } catch (error) {
+      console.error("Error al enviar mensaje:", error);
+      alert("❌ Error al enviar el mensaje");
+    }
+  }
+  
+  // Event listener para el botón de enviar (FUERA de cualquier función)
+  document.getElementById("sendMessageBtn").addEventListener("click", sendMessage);
+  
+  // Manejar clic en estudiantes
+  document.addEventListener("click", async (e) => {
+    if (e.target.classList.contains("student-link")) {
+      e.preventDefault();
+      const studentId = e.target.getAttribute("data-id");
+      if (studentId) await mostrarInfoEstudiante(studentId);
+    }
+  });
+  
+  // Función para mostrar info del estudiante (modal)
+  async function mostrarInfoEstudiante(studentId) {
+    try {
+      const studentRef = doc(db, "users", studentId);
+      const studentSnap = await getDoc(studentRef);
+      
+      if (!studentSnap.exists()) {
+        alert("Estudiante no encontrado");
+        return;
+      }
+      
+      const studentData = studentSnap.data();
+      
+      // Actualizar modal
+      document.getElementById("modalStudentImage").src = studentData.photoUrl || 'https://via.placeholder.com/100';
+      document.getElementById("modalStudentName").textContent = `${studentData.firstName} ${studentData.lastName}`;
+      document.getElementById("modalStudentCode").textContent = studentData.code;
+      document.getElementById("modalStudentCourse").textContent = studentData.course;
+      
+      // Guardar ID del estudiante en el modal
+      document.getElementById("studentModal").setAttribute("data-current-student", studentId);
+      
+      // Mostrar modal
+      document.getElementById("studentModal").style.display = "block";
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Error al cargar información del estudiante");
+    }
+  }
+  
+  // Cerrar modal
+  document.querySelector(".close").addEventListener("click", () => {
+    document.getElementById("studentModal").style.display = "none";
+  });
+  
+  // Iniciar cuando el DOM esté listo
+  document.addEventListener("DOMContentLoaded", cargarEstudiantes);
+  </script> </body> </html>
