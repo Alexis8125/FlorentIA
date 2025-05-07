@@ -33,7 +33,8 @@ import Menu from "../../../../../components/Menu.astro";
             if (codigosPermitidos.includes(codigoEstudiante)) {
                 container.innerHTML = `
                     <h2>Actividad Interactiva</h2>
-                   <iframe style="max-width:100%" src="https://wordwall.net/embed/e5ff38c02b6343a7ae1887c924c913f0?themeId=1&templateId=3&fontStackId=12" width="500" height="380" frameborder="0" allowfullscreen></iframe>
+                    <p>Por favor, una vez termines la evaluación, <strong>da click en Tabla de Clasificación</strong>, ingresa tu nombre y apellido para poder guardar tu progreso
+                   <iframe style="max-width:100%" src="https://wordwall.net/es/embed/e5ff38c02b6343a7ae1887c924c913f0?themeId=1&templateId=3&fontStackId=12" width="500" height="380" frameborder="0" allowfullscreen></iframe>
                 `;
             } else {
                 container.innerHTML = `
