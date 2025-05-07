@@ -4,21 +4,24 @@ import tailwindcss from '@tailwindcss/vite';
 import vue from '@astrojs/vue';
 
 export default defineConfig({
+  // Configuración para GitHub Pages (NUEVO)
+  site: 'https://Alexis8125.github.io', // Reemplaza con tu nombre de usuario
+  base: '/FlorentIA', // Nombre exacto de tu repositorio (case sensitive)
+  
+  // Tu configuración existente
   output: 'static',
   build: {
     format: 'directory',
-    // Opciones adicionales para mejor rendimiento
     inlineStylesheets: 'auto',
     assetsPrefix: '',
   },
   vite: {
     plugins: [tailwindcss()],
     build: {
-      chunkSizeWarningLimit: 1500, // Aumentamos el límite para evitar warnings
+      chunkSizeWarningLimit: 1500,
       rollupOptions: {
         output: {
           manualChunks: {
-            // Optimización de chunks para Vue y Firebase
             vue: ['vue'],
             firebase: ['firebase/app', 'firebase/firestore']
           }
@@ -27,8 +30,5 @@ export default defineConfig({
     }
   },
   integrations: [vue()],
-  // Opción importante para rutas dinámicas
   trailingSlash: 'ignore',
 });
-
-
