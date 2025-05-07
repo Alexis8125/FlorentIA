@@ -1,5 +1,6 @@
-import { db } from "/src/scripts/firebaseConfig.js";
-import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+// /src/scripts/saveNote.js
+import { db } from "./firebaseConfig.js";
+import { collection, addDoc } from "firebase/firestore";
 
 export async function saveDiaryEntry() {
     const code = localStorage.getItem("codigoEstudiante");
@@ -9,12 +10,14 @@ export async function saveDiaryEntry() {
     }
 
     const noteData = {
+        titulo: "Nota del " + new Date().toLocaleDateString('es-ES'),
         aprendizaje: document.getElementById("aprendizaje").value,
         emocion: document.getElementById("emocion").value,
+        motivo: document.getElementById("motivo").value,
         logro: document.getElementById("logro").value,
         pensamientos: document.getElementById("pensamientos").value,
-        code: code,
-        fecha: new Date().toLocaleString("es-ES", { // Formato legible
+        codigo: code,
+        fecha: new Date().toLocaleString("es-ES", {
             day: 'numeric',
             month: 'long',
             year: 'numeric',

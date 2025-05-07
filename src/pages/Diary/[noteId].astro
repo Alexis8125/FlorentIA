@@ -1,12 +1,28 @@
 ---
-export const prerender = false;
 import "../../styles/global.css";
 import Menu from "../../components/Menu.astro";
-import SeeNote from "../../components/SeeNote.astro";
+import { db } from "../../scripts/firebaseConfig.js";
+import { getDoc, doc } from "firebase/firestore";
 
 const { noteId } = Astro.params;
+
+// Obtener los datos de la nota durante el build (opcional)
+let noteData = null;
+try {
+  const code = localStorage.getItem("codigoEstudiante"); // Esto solo funciona en el cliente
+  if (code) {
+    const noteRef = doc(db, "users", code, "notes", noteId);
+    const noteSnap = await getDoc(noteRef);
+    if (noteSnap.exists()) {
+      noteData = noteSnap.data();
+    }
+  }
+} catch (error) {
+  console.log("No se pudo cargar la nota durante el build:", error);
+}
 ---
 
+<!doctype html>
 <html lang="es">
 <head>
     <meta charset="UTF-8" />
@@ -19,20 +35,69 @@ const { noteId } = Astro.params;
             <Menu />
         </div>
         <div class="information">
-            <!-- Botón de Volver SOLO CON ICONO -->
+            <!-- Botón de Volver -->
             <button class="back-button" onclick="history.back()" aria-label="Volver">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon-arrow" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                 </svg>
             </button>
 
-            <SeeNote noteId={noteId} />
+            <!-- Contenedor de la nota -->
+            <div id="note-container" class="note-content">
+                {noteData ? (
+                    <>
+                        <h2>{noteData.titulo || 'Nota'}</h2>
+                        <p class="note-date">{noteData.fecha?.split(',')[0] || ''}</p>
+                        <div class="note-text">
+                            {noteData.texto || noteData.aprendizaje || 'Cargando contenido...'}
+                        </div>
+                    </>
+                ) : (
+                    <p>Cargando nota...</p>
+                )}
+            </div>
         </div>
     </div>
 
-    <script type="module" src="/src/scripts/firebaseConfig.js"></script>
-    <script type="module" src="/src/scripts/storage.js"></script>
-    <script type="module" src="/src/scripts/seeNote.js"></script>
+    <!-- Scripts que se ejecutan en el cliente -->
+    <script type="module">
+        import { db } from "/src/scripts/firebaseConfig.js";
+        import { doc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+
+        document.addEventListener("DOMContentLoaded", async () => {
+            try {
+                const code = localStorage.getItem("codigoEstudiante");
+                if (!code) {
+                    console.warn("Usuario no identificado");
+                    return;
+                }
+
+                const noteId = window.location.pathname.split('/').pop();
+                const noteRef = doc(db, "users", code, "notes", noteId);
+                const noteSnap = await getDoc(noteRef);
+
+                if (noteSnap.exists()) {
+                    const noteData = noteSnap.data();
+                    const container = document.getElementById("note-container");
+                    
+                    container.innerHTML = `
+                        <h2>${noteData.titulo || 'Nota'}</h2>
+                        <p class="note-date">${noteData.fecha?.split(',')[0] || ''}</p>
+                        <div class="note-text">
+                            ${noteData.texto || noteData.aprendizaje || 'Contenido no disponible'}
+                        </div>
+                    `;
+                } else {
+                    document.getElementById("note-container").innerHTML = 
+                        '<p class="error">La nota no existe o no tienes permiso para verla</p>';
+                }
+            } catch (error) {
+                console.error("Error al cargar la nota:", error);
+                document.getElementById("note-container").innerHTML = 
+                    '<p class="error">Error al cargar la nota. Intenta recargar la página.</p>';
+            }
+        });
+    </script>
 
     <style>
         body, html {
@@ -89,6 +154,32 @@ const { noteId } = Astro.params;
         .icon-arrow {
             width: 24px;
             height: 24px;
+        }
+
+        .note-content {
+            width: 100%;
+            max-width: 800px;
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .note-date {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .note-text {
+            line-height: 1.6;
+            white-space: pre-line;
+        }
+
+        .error {
+            color: #e53e3e;
+            text-align: center;
+            padding: 2rem;
         }
     </style>
 </body>
