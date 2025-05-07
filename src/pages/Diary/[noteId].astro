@@ -2,24 +2,80 @@
 import "../../styles/global.css";
 import Menu from "../../components/Menu.astro";
 import { db } from "../../scripts/firebaseConfig.js";
-import { getDoc, doc } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
+
+export async function getStaticPaths() {
+  try {
+    // 1. Obtener todos los usuarios
+    const usersSnapshot = await getDocs(collection(db, "users"));
+    const paths = [];
+    
+    // 2. Para cada usuario, obtener sus notas
+    for (const userDoc of usersSnapshot.docs) {
+      const userCode = userDoc.id;
+      const notesRef = collection(db, "users", userCode, "notes");
+      const notesSnapshot = await getDocs(notesRef);
+      
+      // 3. Crear ruta para cada nota
+      notesSnapshot.forEach((noteDoc) => {
+        const noteData = noteDoc.data();
+        paths.push({
+          params: { noteId: noteDoc.id },
+          props: {
+            noteData: {
+              titulo: noteData.titulo || "Nota sin título",
+              fecha: noteData.fecha || new Date().toLocaleString("es-ES"),
+              texto: noteData.texto || noteData.aprendizaje || "Contenido no disponible",
+              emocion: noteData.emocion || "",
+              logro: noteData.logro || ""
+            },
+            userCode: userCode
+          }
+        });
+      });
+    }
+
+    // 4. Si no hay notas, crear una de ejemplo
+    if (paths.length === 0) {
+      paths.push({
+        params: { noteId: 'ejemplo' },
+        props: {
+          noteData: {
+            titulo: 'Ejemplo de nota',
+            fecha: new Date().toLocaleString("es-ES"),
+            texto: 'Esta es una nota de ejemplo generada durante el build',
+            emocion: '😊 Feliz',
+            logro: 'Configurar mi diario'
+          },
+          userCode: 'default'
+        }
+      });
+    }
+
+    return paths;
+  } catch (error) {
+    console.error("Error en getStaticPaths:", error);
+    // Retornar al menos una ruta de ejemplo si hay error
+    return [
+      {
+        params: { noteId: 'ejemplo' },
+        props: {
+          noteData: {
+            titulo: 'Nota de ejemplo',
+            fecha: new Date().toLocaleString("es-ES"),
+            texto: 'Error al cargar notas. Esta es una nota de ejemplo.',
+            emocion: '🤔 Pensativo',
+            logro: 'Solucionar problemas'
+          },
+          userCode: 'default'
+        }
+      }
+    ];
+  }
+}
 
 const { noteId } = Astro.params;
-
-// Obtener los datos de la nota durante el build (opcional)
-let noteData = null;
-try {
-  const code = localStorage.getItem("codigoEstudiante"); // Esto solo funciona en el cliente
-  if (code) {
-    const noteRef = doc(db, "users", code, "notes", noteId);
-    const noteSnap = await getDoc(noteRef);
-    if (noteSnap.exists()) {
-      noteData = noteSnap.data();
-    }
-  }
-} catch (error) {
-  console.log("No se pudo cargar la nota durante el build:", error);
-}
+const { noteData } = Astro.props;
 ---
 
 <!doctype html>
@@ -27,7 +83,7 @@ try {
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mi Diario - Ver Nota</title>
+    <title>Mi Diario - {noteData.titulo}</title>
 </head>
 <body>
     <div class="container">
@@ -35,69 +91,37 @@ try {
             <Menu />
         </div>
         <div class="information">
-            <!-- Botón de Volver -->
             <button class="back-button" onclick="history.back()" aria-label="Volver">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon-arrow" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                 </svg>
             </button>
 
-            <!-- Contenedor de la nota -->
-            <div id="note-container" class="note-content">
-                {noteData ? (
-                    <>
-                        <h2>{noteData.titulo || 'Nota'}</h2>
-                        <p class="note-date">{noteData.fecha?.split(',')[0] || ''}</p>
-                        <div class="note-text">
-                            {noteData.texto || noteData.aprendizaje || 'Cargando contenido...'}
-                        </div>
-                    </>
-                ) : (
-                    <p>Cargando nota...</p>
+            <div class="note-content">
+                <h2>{noteData.titulo}</h2>
+                <p class="note-date">{noteData.fecha.split(',')[0]}</p>
+                
+                {noteData.emocion && (
+                  <div class="note-section">
+                    <h3>Emoción:</h3>
+                    <p>{noteData.emocion}</p>
+                  </div>
+                )}
+                
+                <div class="note-section">
+                  <h3>Contenido:</h3>
+                  <p class="note-text">{noteData.texto}</p>
+                </div>
+                
+                {noteData.logro && (
+                  <div class="note-section">
+                    <h3>Logro:</h3>
+                    <p>{noteData.logro}</p>
+                  </div>
                 )}
             </div>
         </div>
     </div>
-
-    <!-- Scripts que se ejecutan en el cliente -->
-    <script type="module">
-        import { db } from "/src/scripts/firebaseConfig.js";
-        import { doc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
-
-        document.addEventListener("DOMContentLoaded", async () => {
-            try {
-                const code = localStorage.getItem("codigoEstudiante");
-                if (!code) {
-                    console.warn("Usuario no identificado");
-                    return;
-                }
-
-                const noteId = window.location.pathname.split('/').pop();
-                const noteRef = doc(db, "users", code, "notes", noteId);
-                const noteSnap = await getDoc(noteRef);
-
-                if (noteSnap.exists()) {
-                    const noteData = noteSnap.data();
-                    const container = document.getElementById("note-container");
-                    
-                    container.innerHTML = `
-                        <h2>${noteData.titulo || 'Nota'}</h2>
-                        <p class="note-date">${noteData.fecha?.split(',')[0] || ''}</p>
-                        <div class="note-text">
-                            ${noteData.texto || noteData.aprendizaje || 'Contenido no disponible'}
-                        </div>
-                    `;
-                } else {
-                    document.getElementById("note-container").innerHTML = 
-                        '<p class="error">La nota no existe o no tienes permiso para verla</p>';
-                }
-            } catch (error) {
-                console.error("Error al cargar la nota:", error);
-                document.getElementById("note-container").innerHTML = 
-                    '<p class="error">Error al cargar la nota. Intenta recargar la página.</p>';
-            }
-        });
-    </script>
 
     <style>
         body, html {
@@ -107,79 +131,56 @@ try {
             font-family: 'Inter', sans-serif;
             background-color: #f9fafb;
         }
-
         .container {
             display: flex;
             height: 100vh;
             width: 100%;
         }
-
         .menu {
-            width: 250px; 
-            box-sizing: border-box;
+            width: 250px;
+            background-color: #184D6D;
+            color: white;
         }
-
         .information {
             flex: 1;
-            padding: 60px;
+            padding: 2rem;
             overflow-y: auto;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
-            gap: 20px;
         }
-
         .back-button {
             background-color: #184D6D;
             color: white;
             border: none;
-            padding: 10px;
+            padding: 0.5rem;
             border-radius: 50%;
             cursor: pointer;
-            align-self: flex-start;
+            margin-bottom: 1rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 45px;
-            height: 45px;
-            transition: background-color 0.3s;
         }
-
-        .back-button:hover {
-            background-color: #123954;
-        }
-
-        .icon-arrow {
-            width: 24px;
-            height: 24px;
-        }
-
         .note-content {
-            width: 100%;
             max-width: 800px;
+            margin: 0 auto;
             background: white;
             padding: 2rem;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-
         .note-date {
             color: #666;
-            font-size: 0.9rem;
+            font-style: italic;
             margin-bottom: 1.5rem;
         }
-
+        .note-section {
+            margin-bottom: 1.5rem;
+        }
+        .note-section h3 {
+            color: #184D6D;
+            margin-bottom: 0.5rem;
+        }
         .note-text {
             line-height: 1.6;
             white-space: pre-line;
-        }
-
-        .error {
-            color: #e53e3e;
-            text-align: center;
-            padding: 2rem;
         }
     </style>
 </body>
