@@ -1,93 +1,585 @@
-<!DOCTYPE html><html lang="en" data-astro-cid-qi6rkanx> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="icon" type="image/svg+xml" href="../../../public/logo-fondo.jpg"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"><title>Mis profesores</title><link rel="stylesheet" href="/FlorentIA/_astro/index.BAo4qkVl.css">
-<style>/*! tailwindcss v4.0.15 | MIT License | https://tailwindcss.com */.container-menu[data-astro-cid-2j44jlrm]{border-style:var(--tw-border-style);background-color:ivory;border-width:.5px;flex-direction:column;width:300px;height:100vh;display:flex}.container-logo[data-astro-cid-2j44jlrm]{justify-content:center;align-items:center;width:100%;height:180px;display:flex}.logo[data-astro-cid-2j44jlrm]{height:280px}.option[data-astro-cid-2j44jlrm]{border-style:var(--tw-border-style);border-width:.5px;justify-content:center;align-items:center;width:100%;height:85px;display:flex}@media (hover:hover){.option[data-astro-cid-2j44jlrm]:hover{cursor:pointer;background-color:beige}}.text[data-astro-cid-2j44jlrm]{font-size:24px}@property --tw-border-style{syntax:"*";inherits:false;initial-value:solid}
-</style>
-<link rel="stylesheet" href="/FlorentIA/_astro/index.DJNvHvkb.css"></head> <body data-astro-cid-qi6rkanx> <div class="container" data-astro-cid-qi6rkanx> <div class="menu" data-astro-cid-qi6rkanx> <div class="container-menu" data-astro-cid-2j44jlrm> <div class="container-logo" data-astro-cid-2j44jlrm> <a href="/Home" class="content-home" data-astro-cid-2j44jlrm> <img src="../../public/logo.png" alt="" class="logo" data-astro-cid-2j44jlrm> </a> </div> <div class="option" data-astro-cid-2j44jlrm> <a href="/Garden" class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> <span class="text text-center" data-astro-cid-2j44jlrm>
-Mí Jardín
-</span> </a> </div> <div class="option" data-astro-cid-2j44jlrm> <a href="/Challenges" class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> <span class="text" data-astro-cid-2j44jlrm>
-Mis Retos
-</span> </a> </div> <div class="option" data-astro-cid-2j44jlrm> <a href="/Achievements" class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> <span class="text" data-astro-cid-2j44jlrm>Mis Logros</span> </a> </div> <div class="option" data-astro-cid-2j44jlrm> <a href="/Explore" class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> <span class="text" style="font-family: 'Poppins', sans-serif;" data-astro-cid-2j44jlrm>
-Explorar
-</span> </a> </div> <div class="option" data-astro-cid-2j44jlrm> <a href="/Diary" class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> <span class="text" style="font-family: 'Poppins', sans-serif;" data-astro-cid-2j44jlrm>
-Mí Diario
-</span> </a> </div> <div class="option" data-astro-cid-2j44jlrm> <a href="/My-teachers" class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> <span class="text" style="font-family: 'Poppins', sans-serif;" data-astro-cid-2j44jlrm>
-Mis Profesores
-</span> </a> </div> </div>  </div> <div class="information" data-astro-cid-qi6rkanx> <div class="section-title" data-astro-cid-qi6rkanx> <h2 data-astro-cid-qi6rkanx>Mis profesores</h2> </div> <div class="teacher-profile" data-astro-cid-qi6rkanx> <div class="teacher-card" data-astro-cid-qi6rkanx> <img id="fotoProfesor" class="teacher-avatar" src="" alt="Foto de la profesor@" data-astro-cid-qi6rkanx> <div class="teacher-details" data-astro-cid-qi6rkanx> <h2 id="nombreProfesor" data-astro-cid-qi6rkanx>Profe</h2> <h3 id="gradoProfesor" data-astro-cid-qi6rkanx>Inglés</h3> </div> <button class="profile-button" data-astro-cid-qi6rkanx>Ver perfil</button> </div> </div> <div class="teacher-sections" data-astro-cid-qi6rkanx> <div class="teacher-card-section" data-astro-cid-qi6rkanx> <h2 data-astro-cid-qi6rkanx>Mensajes del profesor</h2> <div id="mensajes-container" class="mensajes-container" data-astro-cid-qi6rkanx> <!-- Los mensajes se cargarán aquí dinámicamente --> </div> </div> </div> </div> </div> <div id="teacher-modal" class="modal" data-astro-cid-qi6rkanx> <div class="modal-content" data-astro-cid-qi6rkanx> <span class="close-modal" data-astro-cid-qi6rkanx>&times;</span> <div class="modal-header" data-astro-cid-qi6rkanx> <img id="modal-teacher-avatar" class="modal-avatar" src="" alt="Foto del profesor" data-astro-cid-qi6rkanx> <div class="modal-title" data-astro-cid-qi6rkanx> <h2 id="modal-teacher-name" data-astro-cid-qi6rkanx></h2> <h3 id="modal-teacher-course" data-astro-cid-qi6rkanx></h3> </div> </div> <div class="modal-body" data-astro-cid-qi6rkanx> <div class="modal-section" data-astro-cid-qi6rkanx> <h4 data-astro-cid-qi6rkanx>Descripción</h4> <p id="modal-teacher-description" data-astro-cid-qi6rkanx></p> </div> <div class="modal-section" data-astro-cid-qi6rkanx> <h4 data-astro-cid-qi6rkanx>Rol</h4> <p id="modal-teacher-role" data-astro-cid-qi6rkanx></p> </div> </div> </div> </div> <script type="module">
- import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { 
-        getFirestore, 
-        collection, 
-        query, 
-        where, 
-        getDocs, 
-        orderBy 
-    } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+<!DOCTYPE html>
+<html lang="en" data-astro-cid-qi6rkanx>
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyCgq36r1pfgHplUt7-HSIY_qNJiEybaIJc",
-        authDomain: "florentia-f47b9.firebaseapp.com",
-        projectId: "florentia-f47b9",
-        storageBucket: "florentia-f47b9.firebasestorage.app",
-        messagingSenderId: "59886187087",
-        appId: "1:59886187087:web:d274071e62e43f00b5b03a"
-    };
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="../../../public/logo-fondo.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <title>Mis profesores</title>
+    <link rel="stylesheet" href="/FlorentIA/_astro/index.BAo4qkVl.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+        body{
+            font-family: 'Poppins';
+        }
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+        .container{
+            display: flex;
+        }
 
-    async function cargarMensajes() {
-        const mensajesContainer = document.getElementById("mensajes-container");
-        
-        try {
-            // Usa el mismo identificador que cargarProfesor()
-            const codigoEstudiante = localStorage.getItem("codigoEstudiante");
-            if (!codigoEstudiante) {
-                throw new Error("No se encontró código de estudiante");
+        a{
+            text-decoration: none;
+            color: black;
+        }
+        /*! tailwindcss v4.0.15 | MIT License | https://tailwindcss.com */
+        .menu{
+            width: 300px;
+        }
+        .container-menu[data-astro-cid-2j44jlrm] {
+            border-style: var(--tw-border-style);
+            background-color: ivory;
+            border-width: .5px;
+            flex-direction: column;
+            width: 300px;
+            height: 100vh;
+            display: flex
+        }
+
+        .container-logo[data-astro-cid-2j44jlrm] {
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 180px;
+            display: flex
+        }
+
+        .logo[data-astro-cid-2j44jlrm] {
+            height: 280px
+        }
+
+        .option[data-astro-cid-2j44jlrm] {
+            border-style: var(--tw-border-style);
+            border-width: .5px;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 85px;
+            display: flex
+        }
+
+        @media (hover:hover) {
+            .option[data-astro-cid-2j44jlrm]:hover {
+                cursor: pointer;
+                background-color: beige
             }
+        }
 
-            // 1. Obtener ID del estudiante (documento en Firestore)
-            const studentQuery = query(
-                collection(db, "users"),
-                where("code", "==", codigoEstudiante)
-            );
-            const studentSnap = await getDocs(studentQuery);
-            
-            if (studentSnap.empty) {
-                throw new Error("Estudiante no registrado");
-            }
-            
-            const studentId = studentSnap.docs[0].id; // ID del documento Firestore
+        .text[data-astro-cid-2j44jlrm] {
+            font-size: 24px
+        }
 
-            // 2. Buscar mensajes
-            const q = query(
-                collection(db, "messages"),
-                where("to", "==", studentId), // Usa el ID del documento, no el código
-                orderBy("timestamp", "desc")
-            );
+        @property --tw-border-style {
+            syntax: "*";
+            inherits: false;
+            initial-value: solid
+        }
+    </style>
+    <style>
+         .information {
+        /* @apply w-[1500px] flex-col h-full flex items-center justify-center; */
+        width: 1500px;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+    }   
 
-            mensajesContainer.innerHTML = "<p class='loading'>Cargando mensajes...</p>";
-            const querySnapshot = await getDocs(q);
+    .section-title{
+        /* @apply w-full h-[25%]  flex justify-center items-center; */
+        width: 100%;
+        height: 25%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
-            // 3. Mostrar resultados
-            mensajesContainer.innerHTML = "";
-            
-            if (querySnapshot.empty) {
-                mensajesContainer.innerHTML = "<p class='no-messages'>No tienes mensajes aún</p>";
-                return;
-            }
+    .section-title >h2{
+        /* @apply text-[#184D6D] text-[40px]; */
+        color:#184D6D;
+        font-size: 40px;
+    }
 
-            // 4. Mostrar mensajes
-            const nombreProfesor = document.getElementById("nombreProfesor").textContent;
-            
-            querySnapshot.forEach((doc) => {
-                const msg = doc.data();
-                const fecha = msg.timestamp?.toDate()?.toLocaleString('es-ES', {
-                    day: '2-digit',
-                    month: 'short',
-                    hour: '2-digit',
-                    minute: '2-digit'
-                }) || "Fecha desconocida";
+    .teacher-profile {
+    /* @apply w-full flex justify-center items-center ; */
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
-                mensajesContainer.innerHTML += `
+    .teacher-card {
+    /* @apply w-full max-w-[620px] bg-[#fefee2] rounded-[12px] flex items-center justify-between px-[16px] py-[8px] shadow-[0_4px_6px_rgba(0,0,0,0.1)] border border-[#cccccc40]; */
+        width: 100%;
+        max-width: 620px;
+        background-color:#fefee2;
+        border-radius: 12px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-left: 16px;
+        padding-right: 16px;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        border-color: #cccccc40;
+    }
+
+
+    .avatar-wrapper {
+  background-color: #e9aa61;
+  border-radius: 50%;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+    .teacher-avatar {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+}
+
+    /* Teacher Details */
+.teacher-details {
+    display: flex;
+    flex-direction: column;
+    margin-left: 16px;
+    flex: 1;
+}
+
+.teacher-details h2 {
+    color: #184D6D;
+    font-size: 18px;
+}
+
+.teacher-details h3 {
+    color: #538802;
+    font-size: 14px;
+}
+
+/* Profile Button */
+.profile-button {
+    background-color: #538802;
+    color: #f3ebeb;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+    cursor: pointer;
+}
+
+.profile-button:hover {
+    background-color: #406a01;
+}
+
+/* Teacher Sections */
+.teacher-sections {
+    width: 100%;
+    height: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 25px;
+}
+
+/* Teacher Card Section */
+.teacher-card-section {
+    width: 40%;
+    height: 250px;
+    background-color: #FDE0A3;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 60px;
+    padding: 20px;
+}
+
+.teacher-card-section > h2 {
+    font-size: 20px;
+    color: #184D6D;
+}
+
+/* Student Response */
+.student-response {
+    width: 100%;
+    height: 25%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+/* Send Note Button */
+.send-note {
+    width: 200px;
+    height: 40px;
+    background-color: #f4b860;
+    border-radius: 4px;
+    color: #140404;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Send Audio Button */
+.send-audio {
+    width: 200px;
+    height: 40px;
+    background-color: #538802;
+    border-radius: 4px;
+    color: #f3ebeb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Note Form */
+.note-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 16px;
+}
+
+/* Textarea Message */
+.textarea-message {
+    width: 300px;
+    height: 100px;
+    padding: 8px;
+    border: 1px solid #d1d5dc;
+    border-radius: 6px;
+    resize: none;
+    margin-bottom: 8px;
+}
+
+/* Submit Message Button */
+.submit-message {
+    background-color: #538802;
+    color: #fff;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border-radius: 6px;
+    transition: background-color 0.3s;
+}
+
+.submit-message:hover {
+    background-color: #406a01;
+}
+
+.mensajes-container {
+        width: 100%;
+        max-height: 300px;
+        overflow-y: auto;
+        padding: 10px;
+        background: white;
+        border-radius: 8px;
+        margin-top: 10px;
+    }
+
+    .mensaje {
+        padding: 12px;
+        margin-bottom: 12px;
+        background: #f8f9fa;
+        border-radius: 6px;
+        border-left: 3px solid #288b98;
+    }
+
+    .mensaje-cabecera {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+        font-size: 14px;
+    }
+
+    .mensaje-cabecera strong {
+        color: #184D6D;
+    }
+
+    .mensaje-cabecera .fecha {
+        color: #6c757d;
+        font-size: 12px;
+    }
+
+    .mensaje-texto {
+        color: #333;
+        line-height: 1.5;
+    }
+
+    .loading, .no-messages {
+        text-align: center;
+        padding: 20px;
+        color: #6c757d;
+    }
+
+    .error {
+        text-align: center;
+        padding: 20px;
+        color: #dc3545;
+    }
+
+    .error button {
+        background: #288b98;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        margin-top: 5px;
+        cursor: pointer;
+    }
+
+
+    .modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #FFFFF0;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 50%;
+    max-width: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 15px;
+}
+
+.modal-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 20px;
+}
+
+.modal-title h2 {
+    color: #184D6D;
+    margin: 0;
+    font-size: 24px;
+}
+
+.modal-title h3 {
+    color: #538802;
+    margin: 5px 0 0 0;
+    font-size: 18px;
+}
+
+.modal-body {
+    padding: 10px 0;
+}
+
+.modal-section {
+    margin-bottom: 15px;
+}
+
+.modal-section h4 {
+    color: #184D6D;
+    margin-bottom: 5px;
+    font-size: 16px;
+}
+
+.modal-section p {
+    color: #333;
+    margin: 0;
+    font-size: 14px;
+}
+
+.close-modal {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-modal:hover {
+    color: black;
+}
+    
+    </style>
+    <link rel="stylesheet" href="/FlorentIA/_astro/index.DJNvHvkb.css">
+</head>
+
+<body data-astro-cid-qi6rkanx>
+    <div class="container" data-astro-cid-qi6rkanx>
+        <div class="menu" data-astro-cid-qi6rkanx>
+            <div class="container-menu" data-astro-cid-2j44jlrm>
+                <div class="container-logo" data-astro-cid-2j44jlrm> <a href="/Home" class="content-home"
+                        data-astro-cid-2j44jlrm> <img src="../../../logo.png" alt="" class="logo"
+                            data-astro-cid-2j44jlrm> </a> </div>
+                <div class="option" data-astro-cid-2j44jlrm> <a href="/Garden"
+                        class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> <span
+                            class="text text-center" data-astro-cid-2j44jlrm>
+                            Mí Jardín
+                        </span> </a> </div>
+                <div class="option" data-astro-cid-2j44jlrm> <a href="/Challenges"
+                        class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> <span
+                            class="text" data-astro-cid-2j44jlrm>
+                            Mis Retos
+                        </span> </a> </div>
+                <div class="option" data-astro-cid-2j44jlrm> <a href="/Achievements"
+                        class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> <span
+                            class="text" data-astro-cid-2j44jlrm>Mis Logros</span> </a> </div>
+                <div class="option" data-astro-cid-2j44jlrm> <a href="/Explore"
+                        class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> <span
+                            class="text" style="font-family: 'Poppins', sans-serif;" data-astro-cid-2j44jlrm>
+                            Explorar
+                        </span> </a> </div>
+                <div class="option" data-astro-cid-2j44jlrm> <a href="/Diary"
+                        class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> <span
+                            class="text" style="font-family: 'Poppins', sans-serif;" data-astro-cid-2j44jlrm>
+                            Mí Diario
+                        </span> </a> </div>
+                <div class="option" data-astro-cid-2j44jlrm> <a href="/My-teachers"
+                        class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> <span
+                            class="text" style="font-family: 'Poppins', sans-serif;" data-astro-cid-2j44jlrm>
+                            Mis Profesores
+                        </span> </a> </div>
+            </div>
+        </div>
+        <div class="information" data-astro-cid-qi6rkanx>
+            <div class="section-title" data-astro-cid-qi6rkanx>
+                <h2 data-astro-cid-qi6rkanx>Mis profesores</h2>
+            </div>
+            <div class="teacher-profile" data-astro-cid-qi6rkanx>
+                <div class="teacher-card" data-astro-cid-qi6rkanx> <img id="fotoProfesor" class="teacher-avatar" src=""
+                        alt="Foto de la profesor@" data-astro-cid-qi6rkanx>
+                    <div class="teacher-details" data-astro-cid-qi6rkanx>
+                        <h2 id="nombreProfesor" data-astro-cid-qi6rkanx>Profe</h2>
+                        <h3 id="gradoProfesor" data-astro-cid-qi6rkanx>Inglés</h3>
+                    </div> <button class="profile-button" data-astro-cid-qi6rkanx>Ver perfil</button>
+                </div>
+            </div>
+            <div class="teacher-sections" data-astro-cid-qi6rkanx>
+                <div class="teacher-card-section" data-astro-cid-qi6rkanx>
+                    <h2 data-astro-cid-qi6rkanx>Mensajes del profesor</h2>
+                    <div id="mensajes-container" class="mensajes-container" data-astro-cid-qi6rkanx>
+                        <!-- Los mensajes se cargarán aquí dinámicamente --> </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="teacher-modal" class="modal" data-astro-cid-qi6rkanx>
+        <div class="modal-content" data-astro-cid-qi6rkanx> <span class="close-modal"
+                data-astro-cid-qi6rkanx>&times;</span>
+            <div class="modal-header" data-astro-cid-qi6rkanx> <img id="modal-teacher-avatar" class="modal-avatar"
+                    src="" alt="Foto del profesor" data-astro-cid-qi6rkanx>
+                <div class="modal-title" data-astro-cid-qi6rkanx>
+                    <h2 id="modal-teacher-name" data-astro-cid-qi6rkanx></h2>
+                    <h3 id="modal-teacher-course" data-astro-cid-qi6rkanx></h3>
+                </div>
+            </div>
+            <div class="modal-body" data-astro-cid-qi6rkanx>
+                <div class="modal-section" data-astro-cid-qi6rkanx>
+                    <h4 data-astro-cid-qi6rkanx>Descripción</h4>
+                    <p id="modal-teacher-description" data-astro-cid-qi6rkanx></p>
+                </div>
+                <div class="modal-section" data-astro-cid-qi6rkanx>
+                    <h4 data-astro-cid-qi6rkanx>Rol</h4>
+                    <p id="modal-teacher-role" data-astro-cid-qi6rkanx></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import {
+            getFirestore,
+            collection,
+            query,
+            where,
+            getDocs,
+            orderBy
+        } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCgq36r1pfgHplUt7-HSIY_qNJiEybaIJc",
+            authDomain: "florentia-f47b9.firebaseapp.com",
+            projectId: "florentia-f47b9",
+            storageBucket: "florentia-f47b9.firebasestorage.app",
+            messagingSenderId: "59886187087",
+            appId: "1:59886187087:web:d274071e62e43f00b5b03a"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        async function cargarMensajes() {
+            const mensajesContainer = document.getElementById("mensajes-container");
+
+            try {
+                // Usa el mismo identificador que cargarProfesor()
+                const codigoEstudiante = localStorage.getItem("codigoEstudiante");
+                if (!codigoEstudiante) {
+                    throw new Error("No se encontró código de estudiante");
+                }
+
+                // 1. Obtener ID del estudiante (documento en Firestore)
+                const studentQuery = query(
+                    collection(db, "users"),
+                    where("code", "==", codigoEstudiante)
+                );
+                const studentSnap = await getDocs(studentQuery);
+
+                if (studentSnap.empty) {
+                    throw new Error("Estudiante no registrado");
+                }
+
+                const studentId = studentSnap.docs[0].id; // ID del documento Firestore
+
+                // 2. Buscar mensajes
+                const q = query(
+                    collection(db, "messages"),
+                    where("to", "==", studentId), // Usa el ID del documento, no el código
+                    orderBy("timestamp", "desc")
+                );
+
+                mensajesContainer.innerHTML = "<p class='loading'>Cargando mensajes...</p>";
+                const querySnapshot = await getDocs(q);
+
+                // 3. Mostrar resultados
+                mensajesContainer.innerHTML = "";
+
+                if (querySnapshot.empty) {
+                    mensajesContainer.innerHTML = "<p class='no-messages'>No tienes mensajes aún</p>";
+                    return;
+                }
+
+                // 4. Mostrar mensajes
+                const nombreProfesor = document.getElementById("nombreProfesor").textContent;
+
+                querySnapshot.forEach((doc) => {
+                    const msg = doc.data();
+                    const fecha = msg.timestamp?.toDate()?.toLocaleString('es-ES', {
+                        day: '2-digit',
+                        month: 'short',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    }) || "Fecha desconocida";
+
+                    mensajesContainer.innerHTML += `
                     <div class="mensaje">
                         <div class="mensaje-cabecera">
                             <strong>${nombreProfesor}</strong>
@@ -96,107 +588,114 @@ Mis Profesores
                         <div class="mensaje-texto">${msg.message || "Sin contenido"}</div>
                     </div>
                 `;
-            });
+                });
 
-        } catch (error) {
-            console.error("Error en cargarMensajes():", error);
-            mensajesContainer.innerHTML = `
+            } catch (error) {
+                console.error("Error en cargarMensajes():", error);
+                mensajesContainer.innerHTML = `
                 <p class="error">
                     Error al cargar mensajes: ${error.message}
                 </p>
             `;
+            }
         }
-    }
 
-    async function cargarProfesor() {
-    const codigoEstudiante = localStorage.getItem("codigoEstudiante");
-  
-    if (!codigoEstudiante) {
-        window.location.href = "/login";
-        return;
-    }
-  
-    const studentQuery = query(
-        collection(db, "users"),
-        where("code", "==", codigoEstudiante)
-    );
-    const studentSnap = await getDocs(studentQuery);
-  
-    if (studentSnap.empty) {
-        alert("No se encontró el estudiante");
-        return;
-    }
-  
-    const studentData = studentSnap.docs[0].data();
-    const studentCourse = studentData.course;
-  
-    let courseProfesor = null;
-    if (studentCourse === "601" || studentCourse === "602") {
-        courseProfesor = "600";
-    } else if (studentCourse === "701" || studentCourse === "702") {
-        courseProfesor = "700";
-    }
-  
-    if (!courseProfesor) {
-        alert("Curso no válido");
-        return;
-    }
-  
-    const profesorQuery = query(
-        collection(db, "users"),
-        where("course", "==", courseProfesor.toString()),
-        where("role", "==", "docente")
-    );
-    const profesorSnap = await getDocs(profesorQuery);
-  
-    if (profesorSnap.empty) {
-        alert("No se encontraron profesores");
-        return;
-    }
-  
-    const profesorData = profesorSnap.docs[0].data();
-  
-    // Llenar datos en la tarjeta principal
-    document.getElementById("nombreProfesor").textContent = profesorData.firstName + " " + profesorData.lastName;
-    document.getElementById("gradoProfesor").textContent = (courseProfesor == "600") ? "Sexto" : "Séptimo";
-  
-    const fotoProfesor = profesorData.photoUrl || "https://cdn-icons-png.freepik.com/256/14024/14024680.png?semt=ais_hybrid";
-    document.getElementById("fotoProfesor").src = fotoProfesor;
-    
-    // Configurar el modal con los datos completos
-    document.getElementById("modal-teacher-name").textContent = profesorData.firstName + " " + profesorData.lastName;
-    document.getElementById("modal-teacher-course").textContent = (courseProfesor == "600") ? "Sexto" : "Séptimo";
-    document.getElementById("modal-teacher-description").textContent = profesorData.description || "No hay descripción disponible";
-    document.getElementById("modal-teacher-role").textContent = "Docente";
-    document.getElementById("modal-teacher-avatar").src = fotoProfesor;
-}
+        async function cargarProfesor() {
+            const codigoEstudiante = localStorage.getItem("codigoEstudiante");
 
-// Agrega el manejo del modal
-document.addEventListener("DOMContentLoaded", () => {
-    cargarProfesor();
-    cargarMensajes();
-    
-    // Obtener elementos del modal
-    const modal = document.getElementById("teacher-modal");
-    const btn = document.querySelector(".profile-button");
-    const span = document.querySelector(".close-modal");
-    
-    // Cuando se hace clic en el botón, mostrar el modal
-    btn.onclick = function() {
-        modal.style.display = "block";
-    }
-    
-    // Cuando se hace clic en la X, cerrar el modal
-    span.onclick = function() {
-        modal.style.display = "none";
-    }
-    
-    // Cuando se hace clic fuera del modal, cerrarlo
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
+            if (!codigoEstudiante) {
+                window.location.href = "/login";
+                return;
+            }
+
+            const studentQuery = query(
+                collection(db, "users"),
+                where("code", "==", codigoEstudiante)
+            );
+            const studentSnap = await getDocs(studentQuery);
+
+            if (studentSnap.empty) {
+                alert("No se encontró el estudiante");
+                return;
+            }
+
+            const studentData = studentSnap.docs[0].data();
+            const studentCourse = studentData.course;
+
+            let courseProfesor = null;
+            if (studentCourse === "601" || studentCourse === "602") {
+                courseProfesor = "600";
+            } else if (studentCourse === "701" || studentCourse === "702") {
+                courseProfesor = "700";
+            }
+
+            if (!courseProfesor) {
+                alert("Curso no válido");
+                return;
+            }
+
+            const profesorQuery = query(
+                collection(db, "users"),
+                where("course", "==", courseProfesor.toString()),
+                where("role", "==", "docente")
+            );
+            const profesorSnap = await getDocs(profesorQuery);
+
+            if (profesorSnap.empty) {
+                alert("No se encontraron profesores");
+                return;
+            }
+
+            const profesorData = profesorSnap.docs[0].data();
+
+            // Llenar datos en la tarjeta principal
+            document.getElementById("nombreProfesor").textContent = profesorData.firstName + " " + profesorData.lastName;
+            document.getElementById("gradoProfesor").textContent = (courseProfesor == "600") ? "Sexto" : "Séptimo";
+
+            const fotoProfesor = profesorData.photoUrl || "https://cdn-icons-png.freepik.com/256/14024/14024680.png?semt=ais_hybrid";
+            document.getElementById("fotoProfesor").src = fotoProfesor;
+
+            // Configurar el modal con los datos completos
+            document.getElementById("modal-teacher-name").textContent = profesorData.firstName + " " + profesorData.lastName;
+            document.getElementById("modal-teacher-course").textContent = (courseProfesor == "600") ? "Sexto" : "Séptimo";
+            document.getElementById("modal-teacher-description").textContent = profesorData.description || "No hay descripción disponible";
+            document.getElementById("modal-teacher-role").textContent = "Docente";
+            document.getElementById("modal-teacher-avatar").src = fotoProfesor;
         }
-    }
-});
-    
-  </script> <script type="module">const s=document.getElementById("open-note"),e=document.getElementById("note-form");s.addEventListener("click",()=>{e.style.display==="none"?e.style.display="flex":e.style.display="none"});const o=document.getElementById("send-message-button");o.addEventListener("click",n=>{n.preventDefault();const t=document.getElementById("student-message").value;t.trim()!==""?(alert("Mensaje enviado: "+t),document.getElementById("student-message").value="",e.style.display="none"):alert("Por favor escribe un mensaje antes de enviar.")});</script> </body> </html>
+
+        // Agrega el manejo del modal
+        document.addEventListener("DOMContentLoaded", () => {
+            cargarProfesor();
+            cargarMensajes();
+
+            // Obtener elementos del modal
+            const modal = document.getElementById("teacher-modal");
+            const btn = document.querySelector(".profile-button");
+            const span = document.querySelector(".close-modal");
+
+            // Cuando se hace clic en el botón, mostrar el modal
+            btn.onclick = function () {
+                modal.style.display = "block";
+            }
+
+            // Cuando se hace clic en la X, cerrar el modal
+            span.onclick = function () {
+                modal.style.display = "none";
+            }
+
+            // Cuando se hace clic fuera del modal, cerrarlo
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        });
+
+    </script>
+    <script
+        type="module">const s = document.getElementById("open-note"), e = document.getElementById("note-form"); s.addEventListener("click", () => { e.style.display === "none" ? e.style.display = "flex" : e.style.display = "none" }); const o = document.getElementById("send-message-button"); o.addEventListener("click", n => { n.preventDefault(); const t = document.getElementById("student-message").value; t.trim() !== "" ? (alert("Mensaje enviado: " + t), document.getElementById("student-message").value = "", e.style.display = "none") : alert("Por favor escribe un mensaje antes de enviar.") });
+        
+    </script>
+</body>
+
+</html>

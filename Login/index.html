@@ -1,12 +1,756 @@
-<!DOCTYPE html><html lang="en" data-astro-cid-o22p5jyt> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- 1) Firebase App (compat) --><script type="module">const c=document.querySelector("#sign-in-btn"),d=document.querySelector("#sign-up-btn"),s=document.querySelector(".container");d.addEventListener("click",()=>{s.classList.add("sign-up-mode")});c.addEventListener("click",()=>{s.classList.remove("sign-up-mode")});const l={apiKey:"AIzaSyCgq36r1pfgHplUt7-HSIY_qNJiEybaIJc",authDomain:"florentia-f47b9.firebaseapp.com",projectId:"florentia-f47b9",storageBucket:"florentia-f47b9.appspot.com",messagingSenderId:"59886187087",appId:"1:59886187087:web:d274071e62e43f00b5b03a"};firebase.initializeApp(l);const u=firebase.firestore(),o=firebase.auth(),m=async r=>{r.preventDefault();const t=document.getElementById("username").value.trim(),n=document.getElementById("password").value.trim();try{const a=await o.signInWithEmailAndPassword(t+"@florentia.com",n),e=await u.collection("users").where("code","==",t).where("password","==",n).get();if(e.empty)await o.signOut(),alert("Usuario o contraseña incorrectos.");else{localStorage.setItem("codigoEstudiante",e.docs[0].data().code);const i=e.docs[0].data().role==="estudiante"?"/Home/":"/Teacher/";window.location.replace(i)}}catch(a){console.error("Error en login:",a),alert("Error al iniciar sesión. Verifica tus credenciales.")}};document.getElementById("login-form").addEventListener("submit",m);</script><!-- 2) Firestore (compat) --><script type="module" src="/FlorentIA/_astro/index.astro_astro_type_script_index_1_lang.1AXGbDYq.js"></script><!-- 3) Auth (compat) --><!-- 4) Tu FontAwesome (opcional: si sigues con error 403, usa el CDN oficial o añade "localhost" en tu panel de FontAwesome) --><script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" integrity="sha512-…" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- 5) TU CONFIG e INICIALIZACIÓN --><script type="module" src="/FlorentIA/_astro/index.astro_astro_type_script_index_3_lang.OK_KsdrB.js"></script><title>Inicia Sesión & Crea tu Cuenta - FlorentIA</title><link rel="icon" type="image/svg+xml" href="../../../public/logo-fondo.jpg"><link rel="stylesheet" href="/FlorentIA/_astro/index.BGzY8rse.css">
-<link rel="stylesheet" href="/FlorentIA/_astro/index.DJNvHvkb.css"></head> <body data-astro-cid-o22p5jyt> <div class="container" data-astro-cid-o22p5jyt> <div class="forms-container" data-astro-cid-o22p5jyt> <div class="signin-signup" data-astro-cid-o22p5jyt> <!-- FORMULARIO SIGN IN --> <form id="login-form" method="post" class="sign-in-form" data-astro-cid-o22p5jyt> <h2 class="title" data-astro-cid-o22p5jyt>Iniciar Sesión</h2> <div class="input-field" data-astro-cid-o22p5jyt> <i class="fas fa-user" data-astro-cid-o22p5jyt></i> <input id="username" type="text" placeholder="Usuario" required data-astro-cid-o22p5jyt> </div> <div class="input-field" data-astro-cid-o22p5jyt> <i class="fas fa-lock" data-astro-cid-o22p5jyt></i> <input id="password" type="password" placeholder="Contraseña" required data-astro-cid-o22p5jyt> </div> <input type="submit" value="Login" class="btn solid" data-astro-cid-o22p5jyt> <p class="social-text" data-astro-cid-o22p5jyt>O inicia sesión con plataformas sociales</p> <div class="social-media" data-astro-cid-o22p5jyt> <a href="#" class="social-icon" data-astro-cid-o22p5jyt> <i class="fab fa-facebook-f" data-astro-cid-o22p5jyt></i> </a> <a href="#" class="social-icon" data-astro-cid-o22p5jyt> <i class="fab fa-twitter" data-astro-cid-o22p5jyt></i> </a> <a href="#" class="social-icon" data-astro-cid-o22p5jyt> <i class="fab fa-google" data-astro-cid-o22p5jyt></i> </a> <a href="#" class="social-icon" data-astro-cid-o22p5jyt> <i class="fab fa-linkedin-in" data-astro-cid-o22p5jyt></i> </a> </div> </form> <!-- FORMULARIO SIGN UP (sin lógica de validación en este ejemplo) --> <form action="#" class="sign-up-form" data-astro-cid-o22p5jyt> <h2 class="title" data-astro-cid-o22p5jyt>Crear Cuenta</h2> <div class="input-field" data-astro-cid-o22p5jyt> <i class="fas fa-user" data-astro-cid-o22p5jyt></i> <input type="text" placeholder="Usuario" data-astro-cid-o22p5jyt> </div> <div class="input-field" data-astro-cid-o22p5jyt> <i class="fas fa-envelope" data-astro-cid-o22p5jyt></i> <input type="email" placeholder="Correo Electronico" data-astro-cid-o22p5jyt> </div> <div class="input-field" data-astro-cid-o22p5jyt> <i class="fas fa-lock" data-astro-cid-o22p5jyt></i> <input type="password" placeholder="Contraseña" data-astro-cid-o22p5jyt> </div> <input type="submit" class="btn" value="Sign up" data-astro-cid-o22p5jyt> <p class="social-text" data-astro-cid-o22p5jyt>O regístrate en plataformas sociales</p> <div class="social-media" data-astro-cid-o22p5jyt> <a href="#" class="social-icon" data-astro-cid-o22p5jyt> <i class="fab fa-facebook-f" data-astro-cid-o22p5jyt></i> </a> <a href="#" class="social-icon" data-astro-cid-o22p5jyt> <i class="fab fa-twitter" data-astro-cid-o22p5jyt></i> </a> <a href="#" class="social-icon" data-astro-cid-o22p5jyt> <i class="fab fa-google" data-astro-cid-o22p5jyt></i> </a> <a href="#" class="social-icon" data-astro-cid-o22p5jyt> <i class="fab fa-linkedin-in" data-astro-cid-o22p5jyt></i> </a> </div> </form> </div> </div> <div class="panels-container" data-astro-cid-o22p5jyt> <div class="panel left-panel" data-astro-cid-o22p5jyt> <div class="content" data-astro-cid-o22p5jyt> <h3 data-astro-cid-o22p5jyt>¿Nuevo aquí?</h3> <p data-astro-cid-o22p5jyt>
-¡Entonces aún no has visto lo increíble que es ver tu jardín crecer con cada aprendizaje!
-</p> <button class="btn transparent" id="sign-up-btn" data-astro-cid-o22p5jyt>
-Crear Cuenta
-</button> </div> <img src="../../../public/mascota.png" class="image" alt="" data-astro-cid-o22p5jyt> </div> <div class="panel right-panel" data-astro-cid-o22p5jyt> <div class="content" data-astro-cid-o22p5jyt> <h3 data-astro-cid-o22p5jyt>¿Tú de nuevo?</h3> <p data-astro-cid-o22p5jyt>
-¡Qué emoción verte regresar! Tu jardín te espera para seguir creciendo contigo.
-</p> <button class="btn transparent" id="sign-in-btn" data-astro-cid-o22p5jyt>
-Sign in
-</button> </div> <img src="../../../public/mascota.png" class="image" alt="" data-astro-cid-o22p5jyt> </div> </div> </div> <script type="module" src="/FlorentIA/_astro/index.astro_astro_type_script_index_4_lang.CS8X4Zza.js"></script> <script type="module" src="/FlorentIA/_astro/index.astro_astro_type_script_index_5_lang.AFBvr7-H.js"></script>
-Cambios realizados:
-</body> </html>
+<!DOCTYPE html>
+<html lang="en" data-astro-cid-o22p5jyt>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <script type="module" src="/FlorentIA/_astro/index.astro_astro_type_script_index_1_lang.1AXGbDYq.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" integrity="sha512-…"
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="module" src="/FlorentIA/_astro/index.astro_astro_type_script_index_3_lang.OK_KsdrB.js"></script> -->
+    <title>Inicia Sesión & Crea tu Cuenta - FlorentIA</title>
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <!-- FontAwesome -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="../../../logo-fondo.jpg">
+    <link rel="stylesheet" href="/FlorentIA/_astro/index.BGzY8rse.css">
+    <link rel="stylesheet" href="/FlorentIA/_astro/index.DJNvHvkb.css">
+    <!-- <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" integrity="sha512-…" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+</head>
+
+<body data-astro-cid-o22p5jyt>
+    <div class="container" data-astro-cid-o22p5jyt>
+        <div class="forms-container" data-astro-cid-o22p5jyt>
+            <div class="signin-signup" data-astro-cid-o22p5jyt> <!-- FORMULARIO SIGN IN -->
+                <form id="login-form" method="post" class="sign-in-form" data-astro-cid-o22p5jyt>
+                    <h2 class="title" data-astro-cid-o22p5jyt>Iniciar Sesión</h2>
+                    <div class="input-field" data-astro-cid-o22p5jyt> <i class="fas fa-user"
+                            data-astro-cid-o22p5jyt></i> <input id="username" type="text" placeholder="Usuario" required
+                            data-astro-cid-o22p5jyt> </div>
+                    <div class="input-field" data-astro-cid-o22p5jyt> <i class="fas fa-lock"
+                            data-astro-cid-o22p5jyt></i> <input id="password" type="password" placeholder="Contraseña"
+                            required data-astro-cid-o22p5jyt> </div> <input type="submit" value="Login"
+                        class="btn solid" data-astro-cid-o22p5jyt>
+                    <p class="social-text" data-astro-cid-o22p5jyt>O inicia sesión con plataformas sociales</p>
+                    <div class="social-media" data-astro-cid-o22p5jyt> <a href="#" class="social-icon"
+                            data-astro-cid-o22p5jyt> <i class="fab fa-facebook-f" data-astro-cid-o22p5jyt></i> </a> <a
+                            href="#" class="social-icon" data-astro-cid-o22p5jyt> <i class="fab fa-twitter"
+                                data-astro-cid-o22p5jyt></i> </a> <a href="#" class="social-icon"
+                            data-astro-cid-o22p5jyt> <i class="fab fa-google" data-astro-cid-o22p5jyt></i> </a> <a
+                            href="#" class="social-icon" data-astro-cid-o22p5jyt> <i class="fab fa-linkedin-in"
+                                data-astro-cid-o22p5jyt></i> </a> </div>
+                </form> <!-- FORMULARIO SIGN UP (sin lógica de validación en este ejemplo) -->
+                <form action="#" class="sign-up-form" data-astro-cid-o22p5jyt>
+                    <h2 class="title" data-astro-cid-o22p5jyt>Crear Cuenta</h2>
+                    <div class="input-field" data-astro-cid-o22p5jyt> <i class="fas fa-user"
+                            data-astro-cid-o22p5jyt></i> <input type="text" placeholder="Usuario"
+                            data-astro-cid-o22p5jyt> </div>
+                    <div class="input-field" data-astro-cid-o22p5jyt> <i class="fas fa-envelope"
+                            data-astro-cid-o22p5jyt></i> <input type="email" placeholder="Correo Electronico"
+                            data-astro-cid-o22p5jyt> </div>
+                    <div class="input-field" data-astro-cid-o22p5jyt> <i class="fas fa-lock"
+                            data-astro-cid-o22p5jyt></i> <input type="password" placeholder="Contraseña"
+                            data-astro-cid-o22p5jyt> </div> <input type="submit" class="btn" value="Sign up"
+                        data-astro-cid-o22p5jyt>
+                    <p class="social-text" data-astro-cid-o22p5jyt>O regístrate en plataformas sociales</p>
+                    <div class="social-media" data-astro-cid-o22p5jyt> <a href="#" class="social-icon"
+                            data-astro-cid-o22p5jyt> <i class="fab fa-facebook-f" data-astro-cid-o22p5jyt></i> </a> <a
+                            href="#" class="social-icon" data-astro-cid-o22p5jyt> <i class="fab fa-twitter"
+                                data-astro-cid-o22p5jyt></i> </a> <a href="#" class="social-icon"
+                            data-astro-cid-o22p5jyt> <i class="fab fa-google" data-astro-cid-o22p5jyt></i> </a> <a
+                            href="#" class="social-icon" data-astro-cid-o22p5jyt> <i class="fab fa-linkedin-in"
+                                data-astro-cid-o22p5jyt></i> </a> </div>
+                </form>
+            </div>
+        </div>
+        <div class="panels-container" data-astro-cid-o22p5jyt>
+            <div class="panel left-panel" data-astro-cid-o22p5jyt>
+                <div class="content" data-astro-cid-o22p5jyt>
+                    <h3 data-astro-cid-o22p5jyt>¿Nuevo aquí?</h3>
+                    <p data-astro-cid-o22p5jyt>
+                        ¡Entonces aún no has visto lo increíble que es ver tu jardín crecer con cada aprendizaje!
+                    </p> <button class="btn transparent" id="sign-up-btn" data-astro-cid-o22p5jyt>
+                        Crear Cuenta
+                    </button>
+                </div> <img src="../../../public/mascota.png" class="image" alt="" data-astro-cid-o22p5jyt>
+            </div>
+            <div class="panel right-panel" data-astro-cid-o22p5jyt>
+                <div class="content" data-astro-cid-o22p5jyt>
+                    <h3 data-astro-cid-o22p5jyt>¿Tú de nuevo?</h3>
+                    <p data-astro-cid-o22p5jyt>
+                        ¡Qué emoción verte regresar! Tu jardín te espera para seguir creciendo contigo.
+                    </p> <button class="btn transparent" id="sign-in-btn" data-astro-cid-o22p5jyt>
+                        Sign in
+                    </button>
+                </div> <img src="../../../public/mascota.png" class="image" alt="" data-astro-cid-o22p5jyt>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="/FlorentIA/_astro/index.astro_astro_type_script_index_4_lang.CS8X4Zza.js"></script>
+    <script type="module" src="/FlorentIA/_astro/index.astro_astro_type_script_index_5_lang.AFBvr7-H.js"></script>
+    Cambios realizados:
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body,
+        input {
+            font-family: "Poppins", sans-serif;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            background-color: #fff;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .forms-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        .signin-signup {
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            left: 75%;
+            width: 50%;
+            transition: 1s 0.7s ease-in-out;
+            display: grid;
+            grid-template-columns: 1fr;
+            z-index: 5;
+        }
+
+        form {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 0rem 5rem;
+            transition: all 0.2s 0.7s;
+            overflow: hidden;
+            grid-column: 1 / 2;
+            grid-row: 1 / 2;
+        }
+
+        form.sign-up-form {
+            opacity: 0;
+            z-index: 1;
+        }
+
+        form.sign-in-form {
+            z-index: 2;
+        }
+
+        .title {
+            font-size: 2.2rem;
+            color: #444;
+            margin-bottom: 10px;
+        }
+
+        .input-field {
+            max-width: 380px;
+            width: 100%;
+            background-color: #f0f0f0;
+            margin: 10px 0;
+            height: 55px;
+            border-radius: 55px;
+            display: grid;
+            grid-template-columns: 15% 85%;
+            padding: 0 0.4rem;
+            position: relative;
+        }
+
+        .input-field i {
+            text-align: center;
+            line-height: 55px;
+            color: #acacac;
+            transition: 0.5s;
+            font-size: 1.1rem;
+        }
+
+        .input-field input {
+            background: none;
+            outline: none;
+            border: none;
+            line-height: 1;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #333;
+        }
+
+        .input-field input::placeholder {
+            color: #aaa;
+            font-weight: 500;
+        }
+
+        .social-text {
+            padding: 0.7rem 0;
+            font-size: 1rem;
+        }
+
+        .social-media {
+            display: flex;
+            justify-content: center;
+        }
+
+        .social-icon {
+            height: 46px;
+            width: 46px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 0.45rem;
+            color: #333;
+            border-radius: 50%;
+            border: 1px solid #333;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: 0.3s;
+        }
+
+        .social-icon:hover {
+            color: #3E6600;
+            border-color: #3E6600;
+        }
+
+        .btn {
+            width: 150px;
+            background-color: #538802;
+            border: none;
+            outline: none;
+            height: 49px;
+            border-radius: 49px;
+            color: #fff;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin: 10px 0;
+            cursor: pointer;
+            transition: 0.5s;
+        }
+
+        .btn:hover {
+            background-color: #3E6600;
+        }
+
+        .panels-container {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            top: 0;
+            left: 0;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .container:before {
+            content: "";
+            position: absolute;
+            height: 2000px;
+            width: 2000px;
+            top: -10%;
+            right: 48%;
+            transform: translateY(-50%);
+            background-image: linear-gradient(-45deg, #3E6600 0%, #A2C523 100%);
+            transition: 1.8s ease-in-out;
+            border-radius: 50%;
+            z-index: 6;
+        }
+
+        .image {
+            width: 100%;
+            transition: transform 1.1s ease-in-out;
+            transition-delay: 0.4s;
+        }
+
+        .panel {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: space-around;
+            text-align: center;
+            z-index: 6;
+        }
+
+        .left-panel {
+            pointer-events: all;
+            padding: 3rem 17% 2rem 12%;
+        }
+
+        .right-panel {
+            pointer-events: none;
+            padding: 3rem 12% 2rem 17%;
+        }
+
+        .panel .content {
+            color: #fff;
+            transition: transform 0.9s ease-in-out;
+            transition-delay: 0.6s;
+        }
+
+        .panel h3 {
+            font-weight: 600;
+            line-height: 1;
+            font-size: 1.5rem;
+        }
+
+        .panel p {
+            font-size: 0.95rem;
+            padding: 0.7rem 0;
+        }
+
+        .btn.transparent {
+            margin: 0;
+            background: none;
+            border: 2px solid #fff;
+            width: 130px;
+            height: 41px;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        .right-panel .image,
+        .right-panel .content {
+            transform: translateX(800px);
+        }
+
+        /* ANIMATION */
+
+        .container.sign-up-mode:before {
+            transform: translate(100%, -50%);
+            right: 52%;
+        }
+
+        .container.sign-up-mode .left-panel .image,
+        .container.sign-up-mode .left-panel .content {
+            transform: translateX(-800px);
+        }
+
+        .container.sign-up-mode .signin-signup {
+            left: 25%;
+        }
+
+        .container.sign-up-mode form.sign-up-form {
+            opacity: 1;
+            z-index: 2;
+        }
+
+        .container.sign-up-mode form.sign-in-form {
+            opacity: 0;
+            z-index: 1;
+        }
+
+        .container.sign-up-mode .right-panel .image,
+        .container.sign-up-mode .right-panel .content {
+            transform: translateX(0%);
+        }
+
+        .container.sign-up-mode .left-panel {
+            pointer-events: none;
+        }
+
+        .container.sign-up-mode .right-panel {
+            pointer-events: all;
+        }
+
+        @media (max-width: 870px) {
+            .container {
+                min-height: 800px;
+                height: 100vh;
+            }
+
+            .signin-signup {
+                width: 100%;
+                top: 95%;
+                transform: translate(-50%, -100%);
+                transition: 1s 0.8s ease-in-out;
+            }
+
+            .signin-signup,
+            .container.sign-up-mode .signin-signup {
+                left: 50%;
+            }
+
+            .panels-container {
+                grid-template-columns: 1fr;
+                grid-template-rows: 1fr 2fr 1fr;
+            }
+
+            .panel {
+                flex-direction: row;
+                justify-content: space-around;
+                align-items: center;
+                padding: 2.5rem 8%;
+                grid-column: 1 / 2;
+            }
+
+            .right-panel {
+                grid-row: 3 / 4;
+            }
+
+            .left-panel {
+                grid-row: 1 / 2;
+            }
+
+            .image {
+                width: 200px;
+                transition: transform 0.9s ease-in-out;
+                transition-delay: 0.6s;
+            }
+
+            .panel .content {
+                padding-right: 15%;
+                transition: transform 0.9s ease-in-out;
+                transition-delay: 0.8s;
+            }
+
+            .panel h3 {
+                font-size: 1.2rem;
+            }
+
+            .panel p {
+                font-size: 0.7rem;
+                padding: 0.5rem 0;
+            }
+
+            .btn.transparent {
+                width: 110px;
+                height: 35px;
+                font-size: 0.7rem;
+            }
+
+            .container:before {
+                width: 1500px;
+                height: 1500px;
+                transform: translateX(-50%);
+                left: 30%;
+                bottom: 68%;
+                right: initial;
+                top: initial;
+                transition: 2s ease-in-out;
+            }
+
+            .container.sign-up-mode:before {
+                transform: translate(-50%, 100%);
+                bottom: 32%;
+                right: initial;
+            }
+
+            .container.sign-up-mode .left-panel .image,
+            .container.sign-up-mode .left-panel .content {
+                transform: translateY(-300px);
+            }
+
+            .container.sign-up-mode .right-panel .image,
+            .container.sign-up-mode .right-panel .content {
+                transform: translateY(0px);
+            }
+
+            .right-panel .image,
+            .right-panel .content {
+                transform: translateY(300px);
+            }
+
+            .container.sign-up-mode .signin-signup {
+                top: 5%;
+                transform: translate(-50%, 0);
+            }
+        }
+
+        @media (max-width: 570px) {
+            form {
+                padding: 0 1.5rem;
+            }
+
+            .image {
+                display: none;
+            }
+
+            .panel .content {
+                padding: 0.5rem 1rem;
+            }
+
+            .container {
+                padding: 1.5rem;
+            }
+
+            .container:before {
+                bottom: 72%;
+                left: 50%;
+            }
+
+            .container.sign-up-mode:before {
+                bottom: 28%;
+                left: 50%;
+            }
+        }
+    </style>
+
+
+    <!-- <script>
+
+
+        const sign_in_btn = document.querySelector("#sign-in-btn");
+        const sign_up_btn = document.querySelector("#sign-up-btn");
+        const container = document.querySelector(".container");
+
+        sign_up_btn.addEventListener("click", () => {
+            container.classList.add("sign-up-mode");
+        });
+
+        sign_in_btn.addEventListener("click", () => {
+            container.classList.remove("sign-up-mode");
+        });
+
+        import firebase from "firebase/compat/app";
+        import "firebase/compat/auth";
+        import "firebase/compat/firestore";
+        console.log("Primera linea script");
+
+
+
+        document.addEventListener("DOMContentLoaded", () => {
+            console.log("Primer listener");
+
+            const firebaseConfig = {
+                apiKey: "AIzaSyCgq36r1pfgHplUt7-HSIY_qNJiEybaIJc",
+                authDomain: "florentia-f47b9.firebaseapp.com",
+                projectId: "florentia-f47b9",
+                storageBucket: "florentia-f47b9.appspot.com",      // <- ojo: .appspot.com
+                messagingSenderId: "59886187087",
+                appId: "1:59886187087:web:d274071e62e43f00b5b03a"
+            };
+
+            firebase.initializeApp(firebaseConfig);
+            const db = firebase.firestore();
+            console.log("Debajo de la inicializacion");
+
+
+            // 2) Toma el formulario, asegúrate de que exista
+            const loginForm = document.getElementById("login-form");
+            console.log("¿Existe loginForm?", !!loginForm);
+
+            loginForm.addEventListener("submit", async e => {
+                console.log("Hola vvs, si entro al listener");
+                e.preventDefault();
+                console.log("Submit interceptado");
+
+                const username = document.getElementById("username").value.trim();
+                const password = document.getElementById("password").value.trim();
+                console.log("Credenciales:", username, password);
+
+                try {
+                    console.log("Hola vvs, si sirvo");
+                    const snap = await db
+
+
+                        .collection("users")
+                        .where("code", "==", username)
+                        .where("password", "==", password)
+                        .get();
+                    console.log("Docs matches:", snap.size);
+
+
+                    if (!snap.empty) {
+
+                        localStorage.setItem("codigoEstudiante", snap.docs[0].data().code);
+
+
+                        const dest = snap.docs[0].data().role === "estudiante"
+                            ? "../Home/index.html"
+                            : "/Teacher/";
+                        console.log("Redirigiendo a", dest);
+                        // 3) Redirección
+                        window.location.replace(dest);
+                        return;
+                    } else {
+                        alert("Usuario o contraseña incorrectos.");
+                    }
+                } catch (err) {
+                    console.error("Error en login:", err);
+                }
+            });
+        });
+    </script> -->
+
+
+<!--     
+    <script>
+        const sign_in_btn = document.querySelector("#sign-in-btn");
+        const sign_up_btn = document.querySelector("#sign-up-btn");
+        const container = document.querySelector(".container");
+
+        sign_up_btn.addEventListener("click", () => {
+            container.classList.add("sign-up-mode");
+        });
+
+        sign_in_btn.addEventListener("click", () => {
+            container.classList.remove("sign-up-mode");
+        });
+
+        // Configuración e inicialización de Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyCgq36r1pfgHplUt7-HSIY_qNJiEybaIJc",
+            authDomain: "florentia-f47b9.firebaseapp.com",
+            projectId: "florentia-f47b9",
+            storageBucket: "florentia-f47b9.appspot.com",
+            messagingSenderId: "59886187087",
+            appId: "1:59886187087:web:d274071e62e43f00b5b03a"
+        };
+
+        // Inicializa Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const auth = firebase.auth(); // Añade esto para obtener el módulo de autenticación
+
+        // Función para manejar el login
+        const handleLogin = async (e) => {
+            e.preventDefault();
+            const username = document.getElementById("username").value.trim();
+            const password = document.getElementById("password").value.trim();
+
+            try {
+                // 1. Primero autenticar con Firebase Auth
+                const userCredential = await auth.signInWithEmailAndPassword(username + "@florentia.com", password);
+
+                // 2. Luego verificar en Firestore
+                const snap = await db.collection("users")
+                    .where("code", "==", username)
+                    .where("password", "==", password)
+                    .get();
+
+                if (!snap.empty) {
+                    localStorage.setItem("codigoEstudiante", snap.docs[0].data().code);
+                    const dest = snap.docs[0].data().role === "estudiante" ? "/Home/" : "/Teacher/";
+                    window.location.replace(dest);
+                } else {
+                    await auth.signOut(); // Cerrar sesión si no coincide en Firestore
+                    alert("Usuario o contraseña incorrectos.");
+                }
+            } catch (err) {
+                console.error("Error en login:", err);
+                alert("Error al iniciar sesión. Verifica tus credenciales.");
+            }
+        };
+
+        // Asignar el event listener al formulario
+        document.getElementById("login-form").addEventListener("submit", handleLogin);
+    </script> -->
+
+
+    <!-- SCRIPT ÚNICO CORREGIDO -->
+    <script>
+    // 1. Configuración e inicialización de Firebase
+    const firebaseConfig = {
+        apiKey: "AIzaSyCgq36r1pfgHplUt7-HSIY_qNJiEybaIJc",
+        authDomain: "florentia-f47b9.firebaseapp.com",
+        projectId: "florentia-f47b9",
+        storageBucket: "florentia-f47b9.appspot.com",
+        messagingSenderId: "59886187087",
+        appId: "1:59886187087:web:d274071e62e43f00b5b03a"
+    };
+
+    // Inicialización segura
+    if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+    }
+    const db = firebase.firestore();
+
+    // 2. Animación de formularios
+    document.addEventListener("DOMContentLoaded", () => {
+        const sign_in_btn = document.querySelector("#sign-in-btn");
+        const sign_up_btn = document.querySelector("#sign-up-btn");
+        const container = document.querySelector(".container");
+
+        if (sign_up_btn) {
+            sign_up_btn.addEventListener("click", () => {
+                container.classList.add("sign-up-mode");
+            });
+        }
+
+        if (sign_in_btn) {
+            sign_in_btn.addEventListener("click", () => {
+                container.classList.remove("sign-up-mode");
+            });
+        }
+
+        // 3. Login funcional
+        const loginForm = document.getElementById("login-form");
+        if (loginForm) {
+            loginForm.addEventListener("submit", async (e) => {
+                e.preventDefault();
+                
+                const username = document.getElementById("username").value.trim();
+                const password = document.getElementById("password").value.trim();
+
+                if (!username || !password) {
+                    alert("Por favor completa todos los campos");
+                    return;
+                }
+
+                try {
+                    // Feedback visual
+                    const submitBtn = loginForm.querySelector('input[type="submit"]');
+                    const originalText = submitBtn.value;
+                    submitBtn.value = "Verificando...";
+                    submitBtn.disabled = true;
+
+                    // Consulta Firestore
+                    const snapshot = await db.collection("users")
+                        .where("code", "==", username)
+                        .where("password", "==", password)
+                        .get();
+
+                    if (snapshot.empty) {
+                        throw new Error("Usuario o contraseña incorrectos");
+                    }
+
+                    // Almacenamiento y redirección
+                    const userData = snapshot.docs[0].data();
+                    localStorage.setItem("codigoEstudiante", userData.code);
+                    localStorage.setItem("userRole", userData.role);
+
+                    // Redirección absoluta para producción
+                    const baseUrl = window.location.origin;
+                    const destination = userData.role === "estudiante" 
+                        ? "/Home/index.html" 
+                        : "/Teacher/index.html";
+                    
+                    window.location.href = baseUrl + destination;
+
+                } catch (error) {
+                    console.error("Error en login:", error);
+                    alert(error.message || "Error al iniciar sesión");
+                    
+                    // Restaurar botón
+                    const submitBtn = loginForm.querySelector('input[type="submit"]');
+                    if (submitBtn) {
+                        submitBtn.value = originalText;
+                        submitBtn.disabled = false;
+                    }
+                }
+            });
+        }
+    });
+    </script>
+</body>
+
+</html>

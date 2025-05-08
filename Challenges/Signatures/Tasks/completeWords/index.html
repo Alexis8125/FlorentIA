@@ -1,20 +1,171 @@
-<!DOCTYPE html><html lang="en" data-astro-cid-76wwh2vc> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="icon" type="image/svg+xml" href="../../../public/logo-fondo.jpg"><title>¡FlorentIA! - Subir Actividades</title><style>/*! tailwindcss v4.0.15 | MIT License | https://tailwindcss.com */html,body{background-color:ivory;width:100vw;height:100vh;margin:0;padding:0;overflow:hidden}.container[data-astro-cid-76wwh2vc]{background-color:ivory;width:100%;height:100vh;display:flex}.menu[data-astro-cid-76wwh2vc]{width:300px;height:100%}.information[data-astro-cid-76wwh2vc]{text-align:center;background-color:#fef9f4;border-radius:20px;flex-direction:column;justify-content:center;align-items:center;width:1500px;max-width:800px;height:100%;margin:0 auto;padding:2rem;display:flex;box-shadow:0 4px 8px #0000001a}.information[data-astro-cid-76wwh2vc] h2[data-astro-cid-76wwh2vc]{color:coral;margin-bottom:1rem;font-size:2rem}.information[data-astro-cid-76wwh2vc] p[data-astro-cid-76wwh2vc]{color:#555;margin-bottom:1rem;font-size:1rem}
-/*! tailwindcss v4.0.15 | MIT License | https://tailwindcss.com */.container-menu[data-astro-cid-2j44jlrm]{border-style:var(--tw-border-style);background-color:ivory;border-width:.5px;flex-direction:column;width:300px;height:100vh;display:flex}.container-logo[data-astro-cid-2j44jlrm]{justify-content:center;align-items:center;width:100%;height:180px;display:flex}.logo[data-astro-cid-2j44jlrm]{height:280px}.option[data-astro-cid-2j44jlrm]{border-style:var(--tw-border-style);border-width:.5px;justify-content:center;align-items:center;width:100%;height:85px;display:flex}@media (hover:hover){.option[data-astro-cid-2j44jlrm]:hover{cursor:pointer;background-color:beige}}.text[data-astro-cid-2j44jlrm]{font-size:24px}@property --tw-border-style{syntax:"*";inherits:false;initial-value:solid}
-</style>
-<link rel="stylesheet" href="/FlorentIA/_astro/index.DJNvHvkb.css"></head> <body data-astro-cid-76wwh2vc> <div class="container" data-astro-cid-76wwh2vc> <div class="menu" data-astro-cid-76wwh2vc> <div class="container-menu" data-astro-cid-2j44jlrm> <div class="container-logo" data-astro-cid-2j44jlrm> <a href="/Home" class="content-home" data-astro-cid-2j44jlrm> <img src="../../public/logo.png" alt="" class="logo" data-astro-cid-2j44jlrm> </a> </div> <div class="option" data-astro-cid-2j44jlrm> <a href="/Garden" class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> <span class="text text-center" data-astro-cid-2j44jlrm>
-Mí Jardín
-</span> </a> </div> <div class="option" data-astro-cid-2j44jlrm> <a href="/Challenges" class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> <span class="text" data-astro-cid-2j44jlrm>
-Mis Retos
-</span> </a> </div> <div class="option" data-astro-cid-2j44jlrm> <a href="/Achievements" class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> <span class="text" data-astro-cid-2j44jlrm>Mis Logros</span> </a> </div> <div class="option" data-astro-cid-2j44jlrm> <a href="/Explore" class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> <span class="text" style="font-family: 'Poppins', sans-serif;" data-astro-cid-2j44jlrm>
-Explorar
-</span> </a> </div> <div class="option" data-astro-cid-2j44jlrm> <a href="/Diary" class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> <span class="text" style="font-family: 'Poppins', sans-serif;" data-astro-cid-2j44jlrm>
-Mí Diario
-</span> </a> </div> <div class="option" data-astro-cid-2j44jlrm> <a href="/My-teachers" class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> <span class="text" style="font-family: 'Poppins', sans-serif;" data-astro-cid-2j44jlrm>
-Mis Profesores
-</span> </a> </div> </div>  </div> <div class="information" id="activityContainer" data-astro-cid-76wwh2vc> <!-- El contenido se cargará dinámicamente desde el script --> </div> </div> <script type="module">const t=["2019011","166","168","2022040","2024027"],a=localStorage.getItem("codigoEstudiante"),e=document.getElementById("activityContainer");t.includes(a)?e.innerHTML=`
+<!DOCTYPE html>
+<html lang="en" data-astro-cid-76wwh2vc>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="../../../public/logo-fondo.jpg">
+    <title>¡FlorentIA! - Subir Actividades</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+        /*! tailwindcss v4.0.15 | MIT License | https://tailwindcss.com */
+        html,
+        body {
+            background-color: ivory;
+            width: 100vw;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Poppins';
+        }
+
+        a{
+            text-decoration: none;
+            color: black;
+        }
+
+        .container[data-astro-cid-76wwh2vc] {
+            background-color: ivory;
+            width: 100%;
+            height: 100vh;
+            display: flex
+        }
+
+        .menu[data-astro-cid-76wwh2vc] {
+            width: 300px;
+            height: 100%
+        }
+
+        .information[data-astro-cid-76wwh2vc] {
+            text-align: center;
+            background-color: #fef9f4;
+            border-radius: 20px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 1500px;
+            max-width: 800px;
+            height: 100%;
+            margin: 0 auto;
+            padding: 2rem;
+            display: flex;
+            box-shadow: 0 4px 8px #0000001a
+        }
+
+        .information[data-astro-cid-76wwh2vc] h2[data-astro-cid-76wwh2vc] {
+            color: coral;
+            margin-bottom: 1rem;
+            font-size: 2rem
+        }
+
+        .information[data-astro-cid-76wwh2vc] p[data-astro-cid-76wwh2vc] {
+            color: #555;
+            margin-bottom: 1rem;
+            font-size: 1rem
+        }
+
+        /*! tailwindcss v4.0.15 | MIT License | https://tailwindcss.com */
+        .container-menu[data-astro-cid-2j44jlrm] {
+            border-style: var(--tw-border-style);
+            background-color: ivory;
+            border-width: .5px;
+            flex-direction: column;
+            width: 300px;
+            height: 100vh;
+            display: flex
+        }
+
+        .container-logo[data-astro-cid-2j44jlrm] {
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 180px;
+            display: flex
+        }
+
+        .logo[data-astro-cid-2j44jlrm] {
+            height: 280px
+        }
+
+        .option[data-astro-cid-2j44jlrm] {
+            border-style: var(--tw-border-style);
+            border-width: .5px;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 85px;
+            display: flex
+        }
+
+        @media (hover:hover) {
+            .option[data-astro-cid-2j44jlrm]:hover {
+                cursor: pointer;
+                background-color: beige
+            }
+        }
+
+        .text[data-astro-cid-2j44jlrm] {
+            font-size: 24px
+        }
+
+        @property --tw-border-style {
+            syntax: "*";
+            inherits: false;
+            initial-value: solid
+        }
+    </style>
+    <link rel="stylesheet" href="/FlorentIA/_astro/index.DJNvHvkb.css">
+</head>
+
+<body data-astro-cid-76wwh2vc>
+    <div class="container" data-astro-cid-76wwh2vc>
+        <div class="menu" data-astro-cid-76wwh2vc>
+            <div class="container-menu" data-astro-cid-2j44jlrm>
+                <div class="container-logo" data-astro-cid-2j44jlrm> <a href="/Home" class="content-home"
+                        data-astro-cid-2j44jlrm> <img src="../../../../logo.png" alt="" class="logo"
+                            data-astro-cid-2j44jlrm> </a> </div>
+                <div class="option" data-astro-cid-2j44jlrm> <a href="/Garden"
+                        class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> <span
+                            class="text text-center" data-astro-cid-2j44jlrm>
+                            Mí Jardín
+                        </span> </a> </div>
+                <div class="option" data-astro-cid-2j44jlrm> <a href="/Challenges"
+                        class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> <span
+                            class="text" data-astro-cid-2j44jlrm>
+                            Mis Retos
+                        </span> </a> </div>
+                <div class="option" data-astro-cid-2j44jlrm> <a href="/Achievements"
+                        class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> <span
+                            class="text" data-astro-cid-2j44jlrm>Mis Logros</span> </a> </div>
+                <div class="option" data-astro-cid-2j44jlrm> <a href="/Explore"
+                        class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> <span
+                            class="text" style="font-family: 'Poppins', sans-serif;" data-astro-cid-2j44jlrm>
+                            Explorar
+                        </span> </a> </div>
+                <div class="option" data-astro-cid-2j44jlrm> <a href="/Diary"
+                        class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> <span
+                            class="text" style="font-family: 'Poppins', sans-serif;" data-astro-cid-2j44jlrm>
+                            Mí Diario
+                        </span> </a> </div>
+                <div class="option" data-astro-cid-2j44jlrm> <a href="/My-teachers"
+                        class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> <span
+                            class="text" style="font-family: 'Poppins', sans-serif;" data-astro-cid-2j44jlrm>
+                            Mis Profesores
+                        </span> </a> </div>
+            </div>
+        </div>
+        <div class="information" id="activityContainer" data-astro-cid-76wwh2vc>
+            <!-- El contenido se cargará dinámicamente desde el script --> </div>
+    </div>
+    <script type="module">const t = ["2019011", "166", "168", "2022040", "2024027"], a = localStorage.getItem("codigoEstudiante"), e = document.getElementById("activityContainer"); t.includes(a) ? e.innerHTML = `
                     <h2>Actividad de Completar Espacios</h2>
+                    <p>Por favor, una vez finalizada la actividad has click en <strong>Tabla de clasificación</strong> pon tu nombre y apellido para así poder registrar tus avances</p>
                     <iframe style="max-width:100%" src="https://wordwall.net/es/embed/fce95c7121c849ef836f9ea07f96aa7d?themeId=1&templateId=36&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>
-                `:e.innerHTML=`
+                `: e.innerHTML = `
                     <h2>Acceso denegado</h2>
                     <p>Tu código de estudiante no tiene acceso a esta actividad.</p>
-                `;</script> </body> </html> 
+                `;</script>
+</body>
+
+</html>

@@ -1,10 +1,227 @@
-<!DOCTYPE html><html lang="en" data-astro-cid-migegqy6> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="icon" type="image/svg+xml" href="../../../public/logo-fondo.jpg"><title>¡FlorentIA! - Subir Actividades</title><style>html,body{margin:0;padding:0;height:100vh;width:100vw;overflow:hidden;background-color:ivory}.container[data-astro-cid-migegqy6]{display:flex;height:100vh;background-color:ivory;width:100%}.menu[data-astro-cid-migegqy6]{width:300px;height:100%}.information[data-astro-cid-migegqy6]{width:100%;max-width:500px;flex-direction:column;height:100%;display:flex;align-items:center;justify-content:center;padding:2rem;background-color:#fef9f4;border-radius:20px;box-shadow:0 4px 8px #0000001a;margin:120px auto 0;text-align:center;max-height:80vh;overflow-y:auto}.information[data-astro-cid-migegqy6] h2[data-astro-cid-migegqy6]{color:coral;font-size:2rem;margin-bottom:1rem}.information[data-astro-cid-migegqy6] p[data-astro-cid-migegqy6]{font-size:1rem;margin-bottom:1rem;color:#555}.information[data-astro-cid-migegqy6] form[data-astro-cid-migegqy6]{display:flex;flex-direction:column;align-items:center}.information[data-astro-cid-migegqy6] label[data-astro-cid-migegqy6]{font-size:1rem;margin-bottom:.5rem;color:#333}.information[data-astro-cid-migegqy6] input[data-astro-cid-migegqy6][type=file],.information[data-astro-cid-migegqy6] input[data-astro-cid-migegqy6][type=date],.information[data-astro-cid-migegqy6] input[data-astro-cid-migegqy6][type=url],.information[data-astro-cid-migegqy6] textarea[data-astro-cid-migegqy6]{margin-bottom:1rem;background-color:#fff;border:2px dashed #ff7f50;padding:1rem;border-radius:10px;cursor:pointer}.information[data-astro-cid-migegqy6] textarea[data-astro-cid-migegqy6]{resize:vertical}.information[data-astro-cid-migegqy6] button[data-astro-cid-migegqy6]{background-color:coral;color:#fff;padding:.8rem 2rem;border:none;border-radius:30px;font-size:1rem;cursor:pointer;transition:background-color .3s ease}.information[data-astro-cid-migegqy6] button[data-astro-cid-migegqy6]:hover{background-color:#ff5722}
-/*! tailwindcss v4.0.15 | MIT License | https://tailwindcss.com */.container-menu[data-astro-cid-6zuhhkrv]{border-style:var(--tw-border-style);background-color:ivory;border-width:.5px;flex-direction:column;width:300px;height:100vh;display:flex}.container-logo[data-astro-cid-6zuhhkrv]{justify-content:center;align-items:center;width:100%;height:180px;display:flex}.logo[data-astro-cid-6zuhhkrv]{height:280px}.option[data-astro-cid-6zuhhkrv]{border-style:var(--tw-border-style);border-width:.5px;justify-content:center;align-items:center;width:100%;height:85px;display:flex}@media (hover:hover){.option[data-astro-cid-6zuhhkrv]:hover{cursor:pointer;background-color:beige}}.text[data-astro-cid-6zuhhkrv]{font-size:24px}@property --tw-border-style{syntax:"*";inherits:false;initial-value:solid}
-</style>
-<link rel="stylesheet" href="/FlorentIA/_astro/index.DJNvHvkb.css"></head> <body data-astro-cid-migegqy6> <div class="container" data-astro-cid-migegqy6> <div class="menu" data-astro-cid-migegqy6> <div class="container-menu" data-astro-cid-6zuhhkrv> <div class="container-logo" data-astro-cid-6zuhhkrv> <a href="/Teacher" class="content-home" data-astro-cid-6zuhhkrv> <img src="../../public/logo.png" alt="" class="logo" data-astro-cid-6zuhhkrv> </a> </div> <div class="option" data-astro-cid-6zuhhkrv> <a href="/Students" class="selection" data-astro-cid-6zuhhkrv> <span class="text" data-astro-cid-6zuhhkrv>
-Mis Estudiantes
-</span> </a> </div> <div class="option" data-astro-cid-6zuhhkrv> <a href="/Activities" class="selection" data-astro-cid-6zuhhkrv> <span class="text" data-astro-cid-6zuhhkrv>
-Actividades
-</span> </a> </div> <div class="option" data-astro-cid-6zuhhkrv> <a href="/Reports" class="selection" data-astro-cid-6zuhhkrv> <span class="text" data-astro-cid-6zuhhkrv>
-Reportes
-</span> </a> </div> </div>  </div> <div class="information" data-astro-cid-migegqy6> <h2 data-astro-cid-migegqy6>Subir Actividad</h2> <p data-astro-cid-migegqy6>Selecciona el tipo de contenido que deseas subir, añade la información necesaria y define una fecha de entrega:</p> <form action="/subir-tarea" method="POST" enctype="multipart/form-data" data-astro-cid-migegqy6> <label for="tipoContenido" data-astro-cid-migegqy6>Tipo de contenido:</label><br data-astro-cid-migegqy6> <select id="tipoContenido" name="tipoContenido" required data-astro-cid-migegqy6> <option value="archivo" data-astro-cid-migegqy6>Subir archivo</option> <option value="enlace" data-astro-cid-migegqy6>Añadir enlace</option> <option value="otro" data-astro-cid-migegqy6>Otro tipo de contenido</option> </select><br data-astro-cid-migegqy6><br data-astro-cid-migegqy6> <!-- Campo para subir archivos --> <div id="campoArchivo" class="campoTipoContenido" data-astro-cid-migegqy6> <label for="fileUpload" data-astro-cid-migegqy6>Selecciona archivo:</label><br data-astro-cid-migegqy6> <input type="file" id="fileUpload" name="tarea" accept=".pdf,.doc,.docx,.jpg,.png" required data-astro-cid-migegqy6><br data-astro-cid-migegqy6><br data-astro-cid-migegqy6> </div> <!-- Campo para añadir enlaces --> <div id="campoEnlace" class="campoTipoContenido" style="display:none;" data-astro-cid-migegqy6> <label for="enlace" data-astro-cid-migegqy6>Añadir enlace:</label><br data-astro-cid-migegqy6> <input type="url" id="enlace" name="enlace" placeholder="https://ejemplo.com" required data-astro-cid-migegqy6><br data-astro-cid-migegqy6><br data-astro-cid-migegqy6> </div> <!-- Campo para otro tipo de contenido --> <div id="campoOtro" class="campoTipoContenido" style="display:none;" data-astro-cid-migegqy6> <label for="contenidoOtro" data-astro-cid-migegqy6>Descripción del contenido:</label><br data-astro-cid-migegqy6> <textarea id="contenidoOtro" name="contenidoOtro" rows="4" cols="50" placeholder="Escribe detalles sobre el contenido..." style="resize: vertical;" data-astro-cid-migegqy6></textarea><br data-astro-cid-migegqy6><br data-astro-cid-migegqy6> </div> <label for="fechaEntrega" data-astro-cid-migegqy6>Fecha de entrega:</label><br data-astro-cid-migegqy6> <input type="date" id="fechaEntrega" name="fechaEntrega" required data-astro-cid-migegqy6><br data-astro-cid-migegqy6><br data-astro-cid-migegqy6> <label for="comentarios" data-astro-cid-migegqy6>Comentarios adicionales:</label><br data-astro-cid-migegqy6> <textarea id="comentarios" name="comentarios" rows="4" cols="50" placeholder="Escribe detalles adicionales de la actividad..." style="resize: vertical;" data-astro-cid-migegqy6></textarea><br data-astro-cid-migegqy6><br data-astro-cid-migegqy6> <button type="submit" data-astro-cid-migegqy6>Subir tarea</button> </form> </div> </div> <script type="module">document.getElementById("tipoContenido").addEventListener("change",function(){var e=this.value,o=document.getElementById("campoArchivo"),t=document.getElementById("campoEnlace"),l=document.getElementById("campoOtro");o.style.display="none",t.style.display="none",l.style.display="none",e==="archivo"?o.style.display="block":e==="enlace"?t.style.display="block":e==="otro"&&(l.style.display="block")});</script> </body> </html> 
+<!DOCTYPE html>
+<html lang="en" data-astro-cid-migegqy6>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="../../../public/logo-fondo.jpg">
+    <title>¡FlorentIA! - Subir Actividades</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            background-color: ivory;
+            font-family: 'Poppins';
+        }
+
+        a{
+            text-decoration: none;
+            color: black;
+        }
+
+        .container[data-astro-cid-migegqy6] {
+            display: flex;
+            height: 100vh;
+            background-color: ivory;
+            width: 100%
+        }
+
+        .menu[data-astro-cid-migegqy6] {
+            width: 300px;
+            height: 100%
+        }
+
+        .information[data-astro-cid-migegqy6] {
+            width: 100%;
+            max-width: 500px;
+            flex-direction: column;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            background-color: #fef9f4;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px #0000001a;
+            margin: 120px auto 0;
+            text-align: center;
+            max-height: 80vh;
+            overflow-y: auto
+        }
+
+        .information[data-astro-cid-migegqy6] h2[data-astro-cid-migegqy6] {
+            color: coral;
+            font-size: 2rem;
+            margin-bottom: 1rem
+        }
+
+        .information[data-astro-cid-migegqy6] p[data-astro-cid-migegqy6] {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: #555
+        }
+
+        .information[data-astro-cid-migegqy6] form[data-astro-cid-migegqy6] {
+            display: flex;
+            flex-direction: column;
+            align-items: center
+        }
+
+        .information[data-astro-cid-migegqy6] label[data-astro-cid-migegqy6] {
+            font-size: 1rem;
+            margin-bottom: .5rem;
+            color: #333
+        }
+
+        .information[data-astro-cid-migegqy6] input[data-astro-cid-migegqy6][type=file],
+        .information[data-astro-cid-migegqy6] input[data-astro-cid-migegqy6][type=date],
+        .information[data-astro-cid-migegqy6] input[data-astro-cid-migegqy6][type=url],
+        .information[data-astro-cid-migegqy6] textarea[data-astro-cid-migegqy6] {
+            margin-bottom: 1rem;
+            background-color: #fff;
+            border: 2px dashed #ff7f50;
+            padding: 1rem;
+            border-radius: 10px;
+            cursor: pointer
+        }
+
+        .information[data-astro-cid-migegqy6] textarea[data-astro-cid-migegqy6] {
+            resize: vertical
+        }
+
+        .information[data-astro-cid-migegqy6] button[data-astro-cid-migegqy6] {
+            background-color: coral;
+            color: #fff;
+            padding: .8rem 2rem;
+            border: none;
+            border-radius: 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color .3s ease
+        }
+
+        .information[data-astro-cid-migegqy6] button[data-astro-cid-migegqy6]:hover {
+            background-color: #ff5722
+        }
+
+        /*! tailwindcss v4.0.15 | MIT License | https://tailwindcss.com */
+        .container-menu[data-astro-cid-6zuhhkrv] {
+            border-style: var(--tw-border-style);
+            background-color: ivory;
+            border-width: .5px;
+            flex-direction: column;
+            width: 300px;
+            height: 100vh;
+            display: flex
+        }
+
+        .container-logo[data-astro-cid-6zuhhkrv] {
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 180px;
+            display: flex
+        }
+
+        .logo[data-astro-cid-6zuhhkrv] {
+            height: 280px
+        }
+
+        .option[data-astro-cid-6zuhhkrv] {
+            border-style: var(--tw-border-style);
+            border-width: .5px;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 85px;
+            display: flex
+        }
+
+        @media (hover:hover) {
+            .option[data-astro-cid-6zuhhkrv]:hover {
+                cursor: pointer;
+                background-color: beige
+            }
+        }
+
+        .text[data-astro-cid-6zuhhkrv] {
+            font-size: 24px
+        }
+
+        @property --tw-border-style {
+            syntax: "*";
+            inherits: false;
+            initial-value: solid
+        }
+    </style>
+    <link rel="stylesheet" href="/FlorentIA/_astro/index.DJNvHvkb.css">
+</head>
+
+<body data-astro-cid-migegqy6>
+    <div class="container" data-astro-cid-migegqy6>
+        <div class="menu" data-astro-cid-migegqy6>
+            <div class="container-menu" data-astro-cid-6zuhhkrv>
+                <div class="container-logo" data-astro-cid-6zuhhkrv> <a href="/Teacher" class="content-home"
+                        data-astro-cid-6zuhhkrv> <img src="../../logo.png" alt="" class="logo"
+                            data-astro-cid-6zuhhkrv> </a> </div>
+                <div class="option" data-astro-cid-6zuhhkrv> <a href="/Students" class="selection"
+                        data-astro-cid-6zuhhkrv> <span class="text" data-astro-cid-6zuhhkrv>
+                            Mis Estudiantes
+                        </span> </a> </div>
+                <div class="option" data-astro-cid-6zuhhkrv> <a href="/Activities" class="selection"
+                        data-astro-cid-6zuhhkrv> <span class="text" data-astro-cid-6zuhhkrv>
+                            Actividades
+                        </span> </a> </div>
+                <div class="option" data-astro-cid-6zuhhkrv> <a href="/Reports" class="selection"
+                        data-astro-cid-6zuhhkrv> <span class="text" data-astro-cid-6zuhhkrv>
+                            Reportes
+                        </span> </a> </div>
+            </div>
+        </div>
+        <div class="information" data-astro-cid-migegqy6>
+            <h2 data-astro-cid-migegqy6>Subir Actividad</h2>
+            <p data-astro-cid-migegqy6>Selecciona el tipo de contenido que deseas subir, añade la información necesaria
+                y define una fecha de entrega:</p>
+            <form action="/subir-tarea" method="POST" enctype="multipart/form-data" data-astro-cid-migegqy6> <label
+                    for="tipoContenido" data-astro-cid-migegqy6>Tipo de contenido:</label><br data-astro-cid-migegqy6>
+                <select id="tipoContenido" name="tipoContenido" required data-astro-cid-migegqy6>
+                    <option value="archivo" data-astro-cid-migegqy6>Subir archivo</option>
+                    <option value="enlace" data-astro-cid-migegqy6>Añadir enlace</option>
+                    <option value="otro" data-astro-cid-migegqy6>Otro tipo de contenido</option>
+                </select><br data-astro-cid-migegqy6><br data-astro-cid-migegqy6> <!-- Campo para subir archivos -->
+                <div id="campoArchivo" class="campoTipoContenido" data-astro-cid-migegqy6> <label for="fileUpload"
+                        data-astro-cid-migegqy6>Selecciona archivo:</label><br data-astro-cid-migegqy6> <input
+                        type="file" id="fileUpload" name="tarea" accept=".pdf,.doc,.docx,.jpg,.png" required
+                        data-astro-cid-migegqy6><br data-astro-cid-migegqy6><br data-astro-cid-migegqy6> </div>
+                <!-- Campo para añadir enlaces -->
+                <div id="campoEnlace" class="campoTipoContenido" style="display:none;" data-astro-cid-migegqy6> <label
+                        for="enlace" data-astro-cid-migegqy6>Añadir enlace:</label><br data-astro-cid-migegqy6> <input
+                        type="url" id="enlace" name="enlace" placeholder="https://ejemplo.com" required
+                        data-astro-cid-migegqy6><br data-astro-cid-migegqy6><br data-astro-cid-migegqy6> </div>
+                <!-- Campo para otro tipo de contenido -->
+                <div id="campoOtro" class="campoTipoContenido" style="display:none;" data-astro-cid-migegqy6> <label
+                        for="contenidoOtro" data-astro-cid-migegqy6>Descripción del contenido:</label><br
+                        data-astro-cid-migegqy6> <textarea id="contenidoOtro" name="contenidoOtro" rows="4" cols="50"
+                        placeholder="Escribe detalles sobre el contenido..." style="resize: vertical;"
+                        data-astro-cid-migegqy6></textarea><br data-astro-cid-migegqy6><br data-astro-cid-migegqy6>
+                </div> <label for="fechaEntrega" data-astro-cid-migegqy6>Fecha de entrega:</label><br
+                    data-astro-cid-migegqy6> <input type="date" id="fechaEntrega" name="fechaEntrega" required
+                    data-astro-cid-migegqy6><br data-astro-cid-migegqy6><br data-astro-cid-migegqy6> <label
+                    for="comentarios" data-astro-cid-migegqy6>Comentarios adicionales:</label><br
+                    data-astro-cid-migegqy6> <textarea id="comentarios" name="comentarios" rows="4" cols="50"
+                    placeholder="Escribe detalles adicionales de la actividad..." style="resize: vertical;"
+                    data-astro-cid-migegqy6></textarea><br data-astro-cid-migegqy6><br data-astro-cid-migegqy6> <button
+                    type="submit" data-astro-cid-migegqy6>Subir tarea</button>
+            </form>
+        </div>
+    </div>
+    <script
+        type="module">document.getElementById("tipoContenido").addEventListener("change", function () { var e = this.value, o = document.getElementById("campoArchivo"), t = document.getElementById("campoEnlace"), l = document.getElementById("campoOtro"); o.style.display = "none", t.style.display = "none", l.style.display = "none", e === "archivo" ? o.style.display = "block" : e === "enlace" ? t.style.display = "block" : e === "otro" && (l.style.display = "block") });</script>
+</body>
+
+</html>
