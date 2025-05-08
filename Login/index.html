@@ -658,99 +658,105 @@
 
     <!-- SCRIPT ÚNICO CORREGIDO -->
     <script>
-    // 1. Configuración e inicialización de Firebase
-    const firebaseConfig = {
-        apiKey: "AIzaSyCgq36r1pfgHplUt7-HSIY_qNJiEybaIJc",
-        authDomain: "florentia-f47b9.firebaseapp.com",
-        projectId: "florentia-f47b9",
-        storageBucket: "florentia-f47b9.appspot.com",
-        messagingSenderId: "59886187087",
-        appId: "1:59886187087:web:d274071e62e43f00b5b03a"
-    };
+// 1. Configuración e inicialización de Firebase
+const firebaseConfig = {
+    apiKey: "AIzaSyCgq36r1pfgHplUt7-HSIY_qNJiEybaIJc",
+    authDomain: "florentia-f47b9.firebaseapp.com",
+    projectId: "florentia-f47b9",
+    storageBucket: "florentia-f47b9.appspot.com",
+    messagingSenderId: "59886187087",
+    appId: "1:59886187087:web:d274071e62e43f00b5b03a"
+};
 
-    // Inicialización segura
-    if (!firebase.apps.length) {
-        firebase.initializeApp(firebaseConfig);
+// Inicialización segura de Firebase
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}
+const db = firebase.firestore();
+
+// 2. Animación de formularios y lógica de login
+document.addEventListener("DOMContentLoaded", () => {
+    // Animación para cambiar entre login y registro
+    const sign_in_btn = document.querySelector("#sign-in-btn");
+    const sign_up_btn = document.querySelector("#sign-up-btn");
+    const container = document.querySelector(".container");
+
+    if (sign_up_btn) {
+        sign_up_btn.addEventListener("click", () => {
+            container.classList.add("sign-up-mode");
+        });
     }
-    const db = firebase.firestore();
 
-    // 2. Animación de formularios
-    document.addEventListener("DOMContentLoaded", () => {
-        const sign_in_btn = document.querySelector("#sign-in-btn");
-        const sign_up_btn = document.querySelector("#sign-up-btn");
-        const container = document.querySelector(".container");
+    if (sign_in_btn) {
+        sign_in_btn.addEventListener("click", () => {
+            container.classList.remove("sign-up-mode");
+        });
+    }
 
-        if (sign_up_btn) {
-            sign_up_btn.addEventListener("click", () => {
-                container.classList.add("sign-up-mode");
-            });
-        }
+    // Lógica de login
+    const loginForm = document.getElementById("login-form");
+    if (loginForm) {
+        loginForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            
+            const username = document.getElementById("username").value.trim();
+            const password = document.getElementById("password").value.trim();
+            const submitBtn = e.target.querySelector('input[type="submit"]');
+            const originalText = submitBtn.value;
 
-        if (sign_in_btn) {
-            sign_in_btn.addEventListener("click", () => {
-                container.classList.remove("sign-up-mode");
-            });
-        }
+            // Validación básica
+            if (!username || !password) {
+                alert("Por favor completa todos los campos");
+                return;
+            }
 
-        // 3. Login funcional
-        const loginForm = document.getElementById("login-form");
-        if (loginForm) {
-            loginForm.addEventListener("submit", async (e) => {
-                e.preventDefault();
+            try {
+                // Feedback visual
+                submitBtn.value = "Verificando...";
+                submitBtn.disabled = true;
+
+                // Consulta a Firestore
+                const snapshot = await db.collection("users")
+                    .where("code", "==", username)
+                    .where("password", "==", password)
+                    .get();
+
+                if (snapshot.empty) {
+                    throw new Error("Usuario o contraseña incorrectos");
+                }
+
+                // Almacenar datos del usuario
+                const userData = snapshot.docs[0].data();
+                localStorage.setItem("codigoEstudiante", userData.code);
+                localStorage.setItem("userRole", userData.role);
+
+                // Redirección compatible con GitHub Pages y estructura dist/
+                const baseUrl = window.location.origin;
+                const isGitHubPages = window.location.host.includes('github.io');
+                const pathPrefix = isGitHubPages ? '/dist' : '';
                 
-                const username = document.getElementById("username").value.trim();
-                const password = document.getElementById("password").value.trim();
+                // Determinar destino basado en el rol
+                const destination = userData.role === "estudiante" 
+                    ? `${pathPrefix}/Home/index.html` 
+                    : `${pathPrefix}/Teacher/index.html`;
+                
+                // Redirigir
+                window.location.href = baseUrl + destination;
 
-                if (!username || !password) {
-                    alert("Por favor completa todos los campos");
-                    return;
+            } catch (error) {
+                console.error("Error en login:", error);
+                alert(error.message || "Error al iniciar sesión");
+                
+                // Restaurar botón
+                if (submitBtn) {
+                    submitBtn.value = originalText;
+                    submitBtn.disabled = false;
                 }
-
-                try {
-                    // Feedback visual
-                    const submitBtn = loginForm.querySelector('input[type="submit"]');
-                    const originalText = submitBtn.value;
-                    submitBtn.value = "Verificando...";
-                    submitBtn.disabled = true;
-
-                    // Consulta Firestore
-                    const snapshot = await db.collection("users")
-                        .where("code", "==", username)
-                        .where("password", "==", password)
-                        .get();
-
-                    if (snapshot.empty) {
-                        throw new Error("Usuario o contraseña incorrectos");
-                    }
-
-                    // Almacenamiento y redirección
-                    const userData = snapshot.docs[0].data();
-                    localStorage.setItem("codigoEstudiante", userData.code);
-                    localStorage.setItem("userRole", userData.role);
-
-                    // Redirección absoluta para producción
-                    const baseUrl = window.location.origin;
-                    const destination = userData.role === "estudiante" 
-                        ? "../Home/index.html" 
-                        : "../Teacher/index.html";
-                    
-                    window.location.href = baseUrl + destination;
-
-                } catch (error) {
-                    console.error("Error en login:", error);
-                    alert(error.message || "Error al iniciar sesión");
-                    
-                    // Restaurar botón
-                    const submitBtn = loginForm.querySelector('input[type="submit"]');
-                    if (submitBtn) {
-                        submitBtn.value = originalText;
-                        submitBtn.disabled = false;
-                    }
-                }
-            });
-        }
-    });
-    </script>
+            }
+        });
+    }
+});
+</script>
 </body>
 
 </html>
