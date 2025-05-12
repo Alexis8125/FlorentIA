@@ -1,14 +1,225 @@
-<!DOCTYPE html><html lang="en" data-astro-cid-aoq4kaa2> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="icon" type="image/svg+xml" href="../../../public/logo-fondo.jpg"><title>¡FlorentIA! - Subir Actividades</title><style>/*! tailwindcss v4.0.15 | MIT License | https://tailwindcss.com */html,body{background-color:ivory;width:100vw;height:100vh;margin:0;padding:0;overflow:hidden}.container[data-astro-cid-aoq4kaa2]{background-color:ivory;width:100%;height:100vh;display:flex}.menu[data-astro-cid-aoq4kaa2]{width:300px;height:100%}.information[data-astro-cid-aoq4kaa2]{text-align:center;background-color:#fef9f4;border-radius:20px;flex-direction:column;justify-content:center;align-items:center;width:1500px;max-width:500px;height:100%;margin:0 auto;padding:2rem;display:flex;box-shadow:0 4px 8px #0000001a}.information[data-astro-cid-aoq4kaa2] h2[data-astro-cid-aoq4kaa2]{color:coral;margin-bottom:1rem;font-size:2rem}.information[data-astro-cid-aoq4kaa2] p[data-astro-cid-aoq4kaa2]{color:#555;margin-bottom:1rem;font-size:1rem}.information[data-astro-cid-aoq4kaa2] form[data-astro-cid-aoq4kaa2]{flex-direction:column;align-items:center;display:flex}.information[data-astro-cid-aoq4kaa2] label[data-astro-cid-aoq4kaa2]{color:#333;margin-bottom:.5rem;font-size:1rem}.information[data-astro-cid-aoq4kaa2] input[data-astro-cid-aoq4kaa2][type=file]{cursor:pointer;background-color:#fff;border:2px dashed coral;border-radius:10px;margin-bottom:1.5rem;padding:1rem}.information[data-astro-cid-aoq4kaa2] button[data-astro-cid-aoq4kaa2]{color:#fff;cursor:pointer;background-color:coral;border:none;border-radius:30px;padding:.8rem 2rem;font-size:1rem;transition:background-color .3s}.information[data-astro-cid-aoq4kaa2] button[data-astro-cid-aoq4kaa2]:hover{background-color:#ff5722}
-/*! tailwindcss v4.0.15 | MIT License | https://tailwindcss.com */.container-menu[data-astro-cid-2j44jlrm]{border-style:var(--tw-border-style);background-color:ivory;border-width:.5px;flex-direction:column;width:300px;height:100vh;display:flex}.container-logo[data-astro-cid-2j44jlrm]{justify-content:center;align-items:center;width:100%;height:180px;display:flex}.logo[data-astro-cid-2j44jlrm]{height:280px}.option[data-astro-cid-2j44jlrm]{border-style:var(--tw-border-style);border-width:.5px;justify-content:center;align-items:center;width:100%;height:85px;display:flex}@media (hover:hover){.option[data-astro-cid-2j44jlrm]:hover{cursor:pointer;background-color:beige}}.text[data-astro-cid-2j44jlrm]{font-size:24px}@property --tw-border-style{syntax:"*";inherits:false;initial-value:solid}
-</style>
-<link rel="stylesheet" href="/FlorentIA/_astro/index.DJNvHvkb.css"></head> <body data-astro-cid-aoq4kaa2> <div class="container" data-astro-cid-aoq4kaa2> <div class="menu" data-astro-cid-aoq4kaa2> <div class="container-menu" data-astro-cid-2j44jlrm> <div class="container-logo" data-astro-cid-2j44jlrm> <a href="/Home" class="content-home" data-astro-cid-2j44jlrm> <img src="../../public/logo.png" alt="" class="logo" data-astro-cid-2j44jlrm> </a> </div> <div class="option" data-astro-cid-2j44jlrm> <a href="/Garden" class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> <span class="text text-center" data-astro-cid-2j44jlrm>
-Mí Jardín
-</span> </a> </div> <div class="option" data-astro-cid-2j44jlrm> <a href="/Challenges" class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> <span class="text" data-astro-cid-2j44jlrm>
-Mis Retos
-</span> </a> </div> <div class="option" data-astro-cid-2j44jlrm> <a href="/Achievements" class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> <span class="text" data-astro-cid-2j44jlrm>Mis Logros</span> </a> </div> <div class="option" data-astro-cid-2j44jlrm> <a href="/Explore" class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> <span class="text" style="font-family: 'Poppins', sans-serif;" data-astro-cid-2j44jlrm>
-Explorar
-</span> </a> </div> <div class="option" data-astro-cid-2j44jlrm> <a href="/Diary" class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> <span class="text" style="font-family: 'Poppins', sans-serif;" data-astro-cid-2j44jlrm>
-Mí Diario
-</span> </a> </div> <div class="option" data-astro-cid-2j44jlrm> <a href="/My-teachers" class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> <span class="text" style="font-family: 'Poppins', sans-serif;" data-astro-cid-2j44jlrm>
-Mis Profesores
-</span> </a> </div> </div>  </div> <div class="information" data-astro-cid-aoq4kaa2> <h2 data-astro-cid-aoq4kaa2>Subir tarea</h2> <p data-astro-cid-aoq4kaa2>Selecciona tu archivo de tarea para enviarlo:</p> <form action="/subir-tarea" method="POST" enctype="multipart/form-data" data-astro-cid-aoq4kaa2> <label for="fileUpload" data-astro-cid-aoq4kaa2>Selecciona archivo:</label><br data-astro-cid-aoq4kaa2> <input type="file" id="fileUpload" name="tarea" accept=".pdf,.doc,.docx,.jpg,.png" required data-astro-cid-aoq4kaa2><br data-astro-cid-aoq4kaa2><br data-astro-cid-aoq4kaa2> <button type="submit" data-astro-cid-aoq4kaa2>Subir tarea</button> </form> </div> </div> </body></html>
+<!DOCTYPE html>
+<html lang="en" data-astro-cid-aoq4kaa2>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="../../../public/logo-fondo.jpg">
+    <title>¡FlorentIA! - Subir Actividades</title>
+    <base href="/FlorentIA/">
+    <style>
+        /*! tailwindcss v4.0.15 | MIT License | https://tailwindcss.com */
+        html,
+        body {
+            background-color: ivory;
+            width: 100vw;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow: hidden
+        }
+
+        .container[data-astro-cid-aoq4kaa2] {
+            background-color: ivory;
+            width: 100%;
+            height: 100vh;
+            display: flex
+        }
+
+        .menu[data-astro-cid-aoq4kaa2] {
+            width: 300px;
+            height: 100%
+        }
+
+        .information[data-astro-cid-aoq4kaa2] {
+            text-align: center;
+            background-color: #fef9f4;
+            border-radius: 20px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 1500px;
+            max-width: 500px;
+            height: 100%;
+            margin: 0 auto;
+            padding: 2rem;
+            display: flex;
+            box-shadow: 0 4px 8px #0000001a
+        }
+
+        .information[data-astro-cid-aoq4kaa2] h2[data-astro-cid-aoq4kaa2] {
+            color: coral;
+            margin-bottom: 1rem;
+            font-size: 2rem
+        }
+
+        .information[data-astro-cid-aoq4kaa2] p[data-astro-cid-aoq4kaa2] {
+            color: #555;
+            margin-bottom: 1rem;
+            font-size: 1rem
+        }
+
+        .information[data-astro-cid-aoq4kaa2] form[data-astro-cid-aoq4kaa2] {
+            flex-direction: column;
+            align-items: center;
+            display: flex
+        }
+
+        .information[data-astro-cid-aoq4kaa2] label[data-astro-cid-aoq4kaa2] {
+            color: #333;
+            margin-bottom: .5rem;
+            font-size: 1rem
+        }
+
+        .information[data-astro-cid-aoq4kaa2] input[data-astro-cid-aoq4kaa2][type=file] {
+            cursor: pointer;
+            background-color: #fff;
+            border: 2px dashed coral;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            padding: 1rem
+        }
+
+        .information[data-astro-cid-aoq4kaa2] button[data-astro-cid-aoq4kaa2] {
+            color: #fff;
+            cursor: pointer;
+            background-color: coral;
+            border: none;
+            border-radius: 30px;
+            padding: .8rem 2rem;
+            font-size: 1rem;
+            transition: background-color .3s
+        }
+
+        .information[data-astro-cid-aoq4kaa2] button[data-astro-cid-aoq4kaa2]:hover {
+            background-color: #ff5722
+        }
+
+        /*! tailwindcss v4.0.15 | MIT License | https://tailwindcss.com */
+        .container-menu[data-astro-cid-2j44jlrm] {
+            border-style: var(--tw-border-style);
+            background-color: ivory;
+            border-width: .5px;
+            flex-direction: column;
+            width: 300px;
+            height: 100vh;
+            display: flex
+        }
+
+        .container-logo[data-astro-cid-2j44jlrm] {
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 180px;
+            display: flex
+        }
+
+        .logo[data-astro-cid-2j44jlrm] {
+            height: 280px
+        }
+
+        .option[data-astro-cid-2j44jlrm] {
+            border-style: var(--tw-border-style);
+            border-width: .5px;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 85px;
+            display: flex
+        }
+
+        @media (hover:hover) {
+            .option[data-astro-cid-2j44jlrm]:hover {
+                cursor: pointer;
+                background-color: beige
+            }
+        }
+
+        .text[data-astro-cid-2j44jlrm] {
+            font-size: 24px
+        }
+
+        @property --tw-border-style {
+            syntax: "*";
+            inherits: false;
+            initial-value: solid
+        }
+    </style>
+    <link rel="stylesheet" href="/FlorentIA/_astro/index.DJNvHvkb.css">
+</head>
+
+<body data-astro-cid-aoq4kaa2>
+    <div class="container" data-astro-cid-aoq4kaa2>
+        <div class="menu" data-astro-cid-aoq4kaa2>
+            <div class="container-menu" data-astro-cid-2j44jlrm>
+                <div class="container-logo" data-astro-cid-2j44jlrm> <a href="/Home/" class="content-home"
+                        data-astro-cid-2j44jlrm> <img src="/logo.png" alt="" class="logo"
+                            data-astro-cid-2j44jlrm> </a> </div>
+                <div class="option" data-astro-cid-2j44jlrm> <a href="/Garden/"
+                        class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> <span
+                            class="text text-center" data-astro-cid-2j44jlrm>
+                            Mí Jardín
+                        </span> </a> </div>
+                <div class="option" data-astro-cid-2j44jlrm> <a href="/Challenges/"
+                        class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> <span
+                            class="text" data-astro-cid-2j44jlrm>
+                            Mis Retos
+                        </span> </a> </div>
+                <div class="option" data-astro-cid-2j44jlrm> <a href="/Achievements/"
+                        class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> <span
+                            class="text" data-astro-cid-2j44jlrm>Mis Logros</span> </a> </div>
+                <div class="option" data-astro-cid-2j44jlrm> <a href="/Explore/"
+                        class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> <span
+                            class="text" style="font-family: 'Poppins', sans-serif;" data-astro-cid-2j44jlrm>
+                            Explorar
+                        </span> </a> </div>
+                <div class="option" data-astro-cid-2j44jlrm> <a href="/Diary/"
+                        class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> <span
+                            class="text" style="font-family: 'Poppins', sans-serif;" data-astro-cid-2j44jlrm>
+                            Mí Diario
+                        </span> </a> </div>
+                <div class="option" data-astro-cid-2j44jlrm> <a href="/My-teachers/"
+                        class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> <span
+                            class="text" style="font-family: 'Poppins', sans-serif;" data-astro-cid-2j44jlrm>
+                            Mis Profesores
+                        </span> </a> </div>
+            </div>
+        </div>
+        <div class="information" data-astro-cid-aoq4kaa2>
+            <h2 data-astro-cid-aoq4kaa2>Subir tarea</h2>
+            <p data-astro-cid-aoq4kaa2>Selecciona tu archivo de tarea para enviarlo:</p>
+            <form action="/subir-tarea" method="POST" enctype="multipart/form-data" data-astro-cid-aoq4kaa2> <label
+                    for="fileUpload" data-astro-cid-aoq4kaa2>Selecciona archivo:</label><br data-astro-cid-aoq4kaa2>
+                <input type="file" id="fileUpload" name="tarea" accept=".pdf,.doc,.docx,.jpg,.png" required
+                    data-astro-cid-aoq4kaa2><br data-astro-cid-aoq4kaa2><br data-astro-cid-aoq4kaa2> <button
+                    type="submit" data-astro-cid-aoq4kaa2>Subir tarea</button> </form>
+        </div>
+    </div>
+</body>
+<script>
+        // Script para ajustar rutas si estás en GitHub Pages
+        document.addEventListener('DOMContentLoaded', function () {
+            if (window.location.hostname.includes('github.io')) {
+                document.querySelectorAll('a[href^="/"]').forEach(link => {
+                    const href = link.getAttribute('href');
+                    if (!href.startsWith('/FlorentIA/')) {
+                        link.setAttribute('href', '/FlorentIA' + href);
+                    }
+                });
+
+                document.querySelectorAll('img[src^="/"]').forEach(img => {
+                    const src = img.getAttribute('src');
+                    if (!src.startsWith('/FlorentIA/')) {
+                        img.setAttribute('src', '/FlorentIA' + src);
+                    }
+                });
+
+                const favicon = document.querySelector('link[rel="icon"]');
+                if (favicon && favicon.getAttribute('href').startsWith('/')) {
+                    favicon.setAttribute('href', '/FlorentIA' + favicon.getAttribute('href'));
+                }
+            }
+        });
+    </script>
+
+</html>

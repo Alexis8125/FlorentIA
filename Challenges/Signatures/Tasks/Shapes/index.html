@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/svg+xml" href="../../../public/logo-fondo.jpg">
-    <title>¡FlorentIA! - Subir Actividades</title>
+    <link rel="icon" type="image/svg+xml" href="/logo-fondo.jpg">
+    <title>¡FlorentIA!</title>
+    <base href="/FlorentIA/">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
         /*! tailwindcss v4.0.15 | MIT License | https://tailwindcss.com */
@@ -122,33 +123,33 @@
     <div class="container" data-astro-cid-fgdut25b>
         <div class="menu" data-astro-cid-fgdut25b>
             <div class="container-menu" data-astro-cid-2j44jlrm>
-                <div class="container-logo" data-astro-cid-2j44jlrm> <a href="/Home" class="content-home"
-                        data-astro-cid-2j44jlrm> <img src="../../public/logo.png" alt="" class="logo"
+                <div class="container-logo" data-astro-cid-2j44jlrm> <a href="/Home/" class="content-home"
+                        data-astro-cid-2j44jlrm> <img src="/public/logo.png" alt="" class="logo"
                             data-astro-cid-2j44jlrm> </a> </div>
-                <div class="option" data-astro-cid-2j44jlrm> <a href="/Garden"
+                <div class="option" data-astro-cid-2j44jlrm> <a href="/Garden/"
                         class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> <span
                             class="text text-center" data-astro-cid-2j44jlrm>
                             Mí Jardín
                         </span> </a> </div>
-                <div class="option" data-astro-cid-2j44jlrm> <a href="/Challenges"
+                <div class="option" data-astro-cid-2j44jlrm> <a href="/Challenges/"
                         class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> <span
                             class="text" data-astro-cid-2j44jlrm>
                             Mis Retos
                         </span> </a> </div>
-                <div class="option" data-astro-cid-2j44jlrm> <a href="/Achievements"
+                <div class="option" data-astro-cid-2j44jlrm> <a href="/Achievements/"
                         class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> <span
                             class="text" data-astro-cid-2j44jlrm>Mis Logros</span> </a> </div>
-                <div class="option" data-astro-cid-2j44jlrm> <a href="/Explore"
+                <div class="option" data-astro-cid-2j44jlrm> <a href="/Explore/"
                         class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> <span
                             class="text" style="font-family: 'Poppins', sans-serif;" data-astro-cid-2j44jlrm>
                             Explorar
                         </span> </a> </div>
-                <div class="option" data-astro-cid-2j44jlrm> <a href="/Diary"
+                <div class="option" data-astro-cid-2j44jlrm> <a href="/Diary/"
                         class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> <span
                             class="text" style="font-family: 'Poppins', sans-serif;" data-astro-cid-2j44jlrm>
                             Mí Diario
                         </span> </a> </div>
-                <div class="option" data-astro-cid-2j44jlrm> <a href="/My-teachers"
+                <div class="option" data-astro-cid-2j44jlrm> <a href="/My-teachers/"
                         class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> <span
                             class="text" style="font-family: 'Poppins', sans-serif;" data-astro-cid-2j44jlrm>
                             Mis Profesores
@@ -166,6 +167,32 @@
                     <h2>Acceso denegado</h2>
                     <p>Tu código de estudiante no tiene acceso a esta actividad.</p>
                 `;</script>
+
+    <script>
+        // Script para ajustar rutas si estás en GitHub Pages
+        document.addEventListener('DOMContentLoaded', function () {
+            if (window.location.hostname.includes('github.io')) {
+                document.querySelectorAll('a[href^="/"]').forEach(link => {
+                    const href = link.getAttribute('href');
+                    if (!href.startsWith('/FlorentIA/')) {
+                        link.setAttribute('href', '/FlorentIA' + href);
+                    }
+                });
+
+                document.querySelectorAll('img[src^="/"]').forEach(img => {
+                    const src = img.getAttribute('src');
+                    if (!src.startsWith('/FlorentIA/')) {
+                        img.setAttribute('src', '/FlorentIA' + src);
+                    }
+                });
+
+                const favicon = document.querySelector('link[rel="icon"]');
+                if (favicon && favicon.getAttribute('href').startsWith('/')) {
+                    favicon.setAttribute('href', '/FlorentIA' + favicon.getAttribute('href'));
+                }
+            }
+        });
+    </script>
 </body>
 
 </html>
