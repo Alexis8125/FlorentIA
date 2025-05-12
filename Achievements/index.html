@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="es" data-astro-cid-inkknpg2>
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/svg+xml" href="../../../public/logo-fondo.jpg">
+    <base href="/FlorentIA/">
+    <link rel="icon" type="image/svg+xml" href="/logo-fondo.jpg">
     <title>Mis Logros</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-        /*! tailwindcss v4.0.15 | MIT License | https://tailwindcss.com */
-        html,
-        body {
+        
+        html, body {
             background-color: ivory;
             width: 100vw;
             height: 100vh;
@@ -20,253 +20,246 @@
             font-family: 'Poppins';
         }
 
-        a{
+        a {
             text-decoration: none;
             color: black;
         }
 
-        .tittle-logros{
-            margin-top: -0.5px;
-        }
-
-        .container[data-astro-cid-inkknpg2] {
+        .container {
             background-color: ivory;
             width: 100%;
             height: 100vh;
-            display: flex
+            display: flex;
         }
 
-        .menu[data-astro-cid-inkknpg2] {
+        .menu {
             width: 300px;
-            height: 100%
-        }
-
-        .information[data-astro-cid-inkknpg2] {
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            width: 1500px;
             height: 100%;
-            display: flex
+            background: #fff;
+            border-right: 1px solid #e0e0e0;
         }
 
-        .information[data-astro-cid-inkknpg2]>h1[data-astro-cid-inkknpg2] {
+        .information {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .information > h1 {
             margin-top: 40px;
-            font-size: 40px
+            font-size: 40px;
+            color: #184D6D;
         }
 
-        .achievement-content[data-astro-cid-inkknpg2] {
-            background-color: ivory;
+        .tittle-logros {
+            margin-top: -0.5px;
+        }
+
+        .achievement-content {
+            display: flex;
             justify-content: center;
             align-items: center;
             width: 100%;
-            height: 1%;
-            
-            display: flex
+            margin: 20px 0;
         }
 
-        :where(.achievement-content[data-astro-cid-inkknpg2]>:not(:last-child)) {
-            --tw-space-x-reverse: 0;
-            margin-inline-start: calc(45px*var(--tw-space-x-reverse));
-            margin-inline-end: calc(45px*calc(1 - var(--tw-space-x-reverse)))
-        }
-
-        .content[data-astro-cid-inkknpg2] {
+        .content {
             text-align: center;
             background-color: #ffec1d;
-            border-radius: 3.40282e38px;
-            width: 100px;
-            height: 17px
-        }
-
-        .content[data-astro-cid-inkknpg2]>h3[data-astro-cid-inkknpg2] {
-            text-align: center;
-            border-radius: 3.40282e38px;
-            font-size: 11px
-        }
-
-        .achievement-information[data-astro-cid-inkknpg2] {
-            background-color: ivory;
+            border-radius: 50px;
+            width: 150px;
+            height: 30px;
+            margin: 0 20px;
+            display: flex;
             justify-content: center;
             align-items: center;
-            width: 99%;
-            display: flex
         }
 
-        .achievement-icons[data-astro-cid-inkknpg2] {
+        .content h3 {
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .achievement-information {
+            display: flex;
             justify-content: center;
             align-items: center;
-            display: flex
+            width: 100%;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 20px;
         }
 
-        :where(.achievement-icons[data-astro-cid-inkknpg2]>:not(:last-child)) {
-            --tw-space-x-reverse: 0;
-            margin-inline-start: calc(12px*var(--tw-space-x-reverse));
-            margin-inline-end: calc(12px*calc(1 - var(--tw-space-x-reverse)))
+        .achievement-icons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
         }
 
-        .achievement-icon[data-astro-cid-inkknpg2] {
+        .achievement-icon {
             width: 50px;
-            height: 50px
+            height: 50px;
         }
 
-        .achievement-text[data-astro-cid-inkknpg2] {
-            text-align: center
+        .achievement-text {
+            text-align: center;
+            margin-top: 10px;
         }
 
-        @property --tw-space-x-reverse {
-            syntax: "*";
-            inherits: false;
-            initial-value: 0
-        }
-
-        /*! tailwindcss v4.0.15 | MIT License | https://tailwindcss.com */
-        .container-menu[data-astro-cid-2j44jlrm] {
-            border-style: var(--tw-border-style);
+        /* Estilos del menú */
+        .container-menu {
+            border-style: solid;
             background-color: ivory;
             border-width: .5px;
             flex-direction: column;
             width: 300px;
             height: 100vh;
-            display: flex
+            display: flex;
         }
 
-        .container-logo[data-astro-cid-2j44jlrm] {
+        .container-logo {
             justify-content: center;
             align-items: center;
             width: 100%;
             height: 180px;
-            display: flex
+            display: flex;
         }
 
-        .logo[data-astro-cid-2j44jlrm] {
-            height: 280px
+        .logo {
+            height: 280px;
+            max-width: 100%;
         }
 
-        .option[data-astro-cid-2j44jlrm] {
-            border-style: var(--tw-border-style);
+        .option {
+            border-style: solid;
             border-width: .5px;
             justify-content: center;
             align-items: center;
             width: 100%;
             height: 85px;
-            display: flex
+            display: flex;
         }
 
         @media (hover:hover) {
-            .option[data-astro-cid-2j44jlrm]:hover {
+            .option:hover {
                 cursor: pointer;
-                background-color: beige
+                background-color: beige;
             }
         }
 
-        .text[data-astro-cid-2j44jlrm] {
-            font-size: 24px
-        }
-
-        @property --tw-border-style {
-            syntax: "*";
-            inherits: false;
-            initial-value: solid
+        .text {
+            font-size: 24px;
         }
     </style>
-    <link rel="stylesheet" href="/FlorentIA/_astro/index.DJNvHvkb.css">
 </head>
 
-<body data-astro-cid-inkknpg2>
-    <div class="container" data-astro-cid-inkknpg2>
-        <div class="menu" data-astro-cid-inkknpg2>
-            <div class="container-menu" data-astro-cid-2j44jlrm>
-                <div class="container-logo" data-astro-cid-2j44jlrm> <a href="/Home" class="content-home"
-                        data-astro-cid-2j44jlrm> <img src="../../../logo.png" alt="" class="logo"
-                            data-astro-cid-2j44jlrm> </a> </div>
-                <div class="option" data-astro-cid-2j44jlrm> <a href="/Garden"
-                        class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> <span
-                            class="text text-center" data-astro-cid-2j44jlrm>
-                            Mí Jardín
-                        </span> </a> </div>
-                <div class="option" data-astro-cid-2j44jlrm> <a href="/Challenges"
-                        class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> <span
-                            class="text" data-astro-cid-2j44jlrm>
-                            Mis Retos
-                        </span> </a> </div>
-                <div class="option" data-astro-cid-2j44jlrm> <a href="/Achievements"
-                        class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> <span
-                            class="text" data-astro-cid-2j44jlrm>Mis Logros</span> </a> </div>
-                <div class="option" data-astro-cid-2j44jlrm> <a href="/Explore"
-                        class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> <span
-                            class="text" style="font-family: 'Poppins', sans-serif;" data-astro-cid-2j44jlrm>
-                            Explorar
-                        </span> </a> </div>
-                <div class="option" data-astro-cid-2j44jlrm> <a href="/Diary"
-                        class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> <span
-                            class="text" style="font-family: 'Poppins', sans-serif;" data-astro-cid-2j44jlrm>
-                            Mí Diario
-                        </span> </a> </div>
-                <div class="option" data-astro-cid-2j44jlrm> <a href="/My-teachers"
-                        class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> <span
-                            class="text" style="font-family: 'Poppins', sans-serif;" data-astro-cid-2j44jlrm>
-                            Mis Profesores
-                        </span> </a> </div>
+<body>
+    <div class="container">
+        <div class="menu">
+            <div class="container-menu">
+                <div class="container-logo"> 
+                    <a href="/Home/" class="content-home"> 
+                        <img src="/logo.png" alt="Logo FlorentIA" class="logo"> 
+                    </a> 
+                </div>
+                <div class="option"> 
+                    <a href="/Garden/" class="selection h-full w-full flex items-center justify-center"> 
+                        <span class="text text-center">Mí Jardín</span> 
+                    </a> 
+                </div>
+                <div class="option"> 
+                    <a href="/Challenges/" class="selection h-full w-full flex items-center justify-center"> 
+                        <span class="text">Mis Retos</span> 
+                    </a> 
+                </div>
+                <div class="option"> 
+                    <a href="/Achievements/" class="selection h-full w-full flex items-center justify-center"> 
+                        <span class="text">Mis Logros</span> 
+                    </a> 
+                </div>
+                <div class="option"> 
+                    <a href="/Explore/" class="selection h-full w-full flex items-center justify-center"> 
+                        <span class="text" style="font-family: 'Poppins', sans-serif;">Explorar</span> 
+                    </a> 
+                </div>
+                <div class="option"> 
+                    <a href="/Diary/" class="selection h-full w-full flex items-center justify-center"> 
+                        <span class="text" style="font-family: 'Poppins', sans-serif;">Mí Diario</span> 
+                    </a> 
+                </div>
+                <div class="option"> 
+                    <a href="/My-teachers/" class="selection h-full w-full flex items-center justify-center"> 
+                        <span class="text" style="font-family: 'Poppins', sans-serif;">Mis Profesores</span> 
+                    </a> 
+                </div>
             </div>
         </div>
-        <div class="information" data-astro-cid-inkknpg2>
-            <h1 data-astro-cid-inkknpg2>Mis Logros</h1>
-            <div class="achievement-content" data-astro-cid-inkknpg2>
-                <div class="content" data-astro-cid-inkknpg2>
-                    <h3 class="tittle-logros" data-astro-cid-inkknpg2>Todos Tus Logros</h3>
-                </div>
-                <div class="content" data-astro-cid-inkknpg2>
-                    <h3 class="tittle-logros" data-astro-cid-inkknpg2>Logros Inglés</h3>
-                </div> <!-- <div class="content">
-                    <h3>Logros Español</h3>
+        <div class="information">
+            <h1>Mis Logros</h1>
+            <div class="achievement-content">
+                <div class="content">
+                    <h3 class="tittle-logros">Todos Tus Logros</h3>
                 </div>
                 <div class="content">
-                    <h3>Logros Sociales</h3>
+                    <h3 class="tittle-logros">Logros Inglés</h3>
+                </div>
+                <!-- Puedes descomentar estos cuando los necesites -->
+                <!-- <div class="content">
+                    <h3 class="tittle-logros">Logros Español</h3>
+                </div>
+                <div class="content">
+                    <h3 class="tittle-logros">Logros Sociales</h3>
                 </div> -->
-            </div> <!-- Contenedor de logros -->
-            <div class="achievement-information" data-astro-cid-inkknpg2> <!-- <Achievement>
+            </div>
+            
+            <!-- Contenedor de logros -->
+            <div class="achievement-information">
+                <!-- Ejemplo de logro (descomenta cuando lo necesites) -->
+                <!-- <div class="achievement">
                     <div class="achievement-icons">
-                        <img src="../../../public/estrella.png" alt="Estrella" class="achievement-icon">
-                        <img src="../../../public/estrella.png" alt="Estrella" class="achievement-icon">
-                        <img src="../../../public/estrella.png" alt="Estrella" class="achievement-icon">
+                        <img src="/estrella.png" alt="Estrella" class="achievement-icon">
+                        <img src="/estrella.png" alt="Estrella" class="achievement-icon">
+                        <img src="/estrella.png" alt="Estrella" class="achievement-icon">
                     </div>
                     <p class="achievement-text">Haz completado la primera unidad</p>
-                </Achievement>
-                <Achievement>
-                    <img src="../../../public/estrella.png" alt="Estrella" class="achievement-icon">
-                    <p class="achievement-text">Has comenzado tu camino, sigue adelante</p>
-                </Achievement>
-                <Achievement>
-                    <div class="achievement-icons">
-                        <img src="../../../public/estrella.png" alt="Estrella" class="achievement-icon">
-                        <img src="../../../public/estrella.png" alt="Estrella" class="achievement-icon">
-                    </div>
-                    <p class="achievement-text">Vas por buen camino, un poco más y lo lograrás</p>
-
-                </Achievement> --> </div>
-            <div class="achievement-information" data-astro-cid-inkknpg2> <!-- <Achievement>
-                    <div class="achievement-icons">
-                        <img src="../../../public/estrella.png" alt="Estrella" class="achievement-icon">
-                        <img src="../../../public/estrella.png" alt="Estrella" class="achievement-icon">
-                    </div>
-                    <p class="achievement-text">Vas por buen camino, un poco más y lo lograrás</p>
-                </Achievement>
-                <Achievement>
-                    <img src="../../../public/estrella.png" alt="Estrella" class="achievement-icon">
-                    <p class="achievement-text">Has comenzado tu camino, sigue adelante</p>
-                </Achievement>
-                <Achievement>
-                    <div class="achievement-icons">
-                        <img src="../../../public/estrella.png" alt="Estrella" class="achievement-icon">
-                        <img src="../../../public/estrella.png" alt="Estrella" class="achievement-icon">
-                        <img src="../../../public/estrella.png" alt="Estrella" class="achievement-icon">
-                    </div>
-                    <p class="achievement-text">Haz completado la primera unidad</p>
-
-                </Achievement> --> </div>
+                </div> -->
+            </div>
+            
+            <div class="achievement-information">
+                <!-- Más logros pueden ir aquí -->
+            </div>
         </div>
     </div>
-</body>
 
+    <script>
+        // Script para manejar rutas en GitHub Pages
+        document.addEventListener('DOMContentLoaded', function() {
+            // Verificar si estamos en GitHub Pages
+            if(window.location.hostname.includes('github.io')) {
+                // Actualizar todas las rutas que comiencen con /
+                document.querySelectorAll('a[href^="/"]').forEach(link => {
+                    const href = link.getAttribute('href');
+                    if(!href.startsWith('/FlorentIA/')) {
+                        link.setAttribute('href', '/FlorentIA' + href);
+                    }
+                });
+                
+                // Actualizar rutas de imágenes
+                document.querySelectorAll('img[src^="/"]').forEach(img => {
+                    const src = img.getAttribute('src');
+                    if(!src.startsWith('/FlorentIA/')) {
+                        img.setAttribute('src', '/FlorentIA' + src);
+                    }
+                });
+            }
+            
+            // Aquí puedes añadir la lógica para cargar los logros dinámicamente
+            // desde Firebase si es necesario
+        });
+    </script>
+</body>
 </html>

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/svg+xml" href="../../../public/logo-fondo.jpg">
     <title>Actividades</title>
+    <base href="/FlorentIA/">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
@@ -181,18 +182,18 @@
     <div class="page-container" data-astro-cid-vfwv2az3>
         <div class="menu" data-astro-cid-vfwv2az3>
             <div class="container-menu" data-astro-cid-6zuhhkrv>
-                <div class="container-logo" data-astro-cid-6zuhhkrv> <a href="/Teacher" class="content-home"
-                        data-astro-cid-6zuhhkrv> <img src="../logo.png" alt="" class="logo"
+                <div class="container-logo" data-astro-cid-6zuhhkrv> <a href="/Teacher/" class="content-home"
+                        data-astro-cid-6zuhhkrv> <img src="/logo.png" alt="" class="logo"
                             data-astro-cid-6zuhhkrv> </a> </div>
-                <div class="option" data-astro-cid-6zuhhkrv> <a href="/Students" class="selection"
+                <div class="option" data-astro-cid-6zuhhkrv> <a href="/Students/" class="selection"
                         data-astro-cid-6zuhhkrv> <span class="text" data-astro-cid-6zuhhkrv>
                             Mis Estudiantes
                         </span> </a> </div>
-                <div class="option" data-astro-cid-6zuhhkrv> <a href="/Activities" class="selection"
+                <div class="option" data-astro-cid-6zuhhkrv> <a href="/Activities/" class="selection"
                         data-astro-cid-6zuhhkrv> <span class="text" data-astro-cid-6zuhhkrv>
                             Actividades
                         </span> </a> </div>
-                <div class="option" data-astro-cid-6zuhhkrv> <a href="/Reports" class="selection"
+                <div class="option" data-astro-cid-6zuhhkrv> <a href="/Reports/" class="selection"
                         data-astro-cid-6zuhhkrv> <span class="text" data-astro-cid-6zuhhkrv>
                             Reportes
                         </span> </a> </div>
@@ -243,5 +244,30 @@
         </div>
     </div>
 </body>
+<script>
+        // Script para ajustar rutas si estás en GitHub Pages
+        document.addEventListener('DOMContentLoaded', function () {
+            if (window.location.hostname.includes('github.io')) {
+                document.querySelectorAll('a[href^="/"]').forEach(link => {
+                    const href = link.getAttribute('href');
+                    if (!href.startsWith('/FlorentIA/')) {
+                        link.setAttribute('href', '/FlorentIA' + href);
+                    }
+                });
+
+                document.querySelectorAll('img[src^="/"]').forEach(img => {
+                    const src = img.getAttribute('src');
+                    if (!src.startsWith('/FlorentIA/')) {
+                        img.setAttribute('src', '/FlorentIA' + src);
+                    }
+                });
+
+                const favicon = document.querySelector('link[rel="icon"]');
+                if (favicon && favicon.getAttribute('href').startsWith('/')) {
+                    favicon.setAttribute('href', '/FlorentIA' + favicon.getAttribute('href'));
+                }
+            }
+        });
+    </script>
 
 </html>

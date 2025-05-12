@@ -1,495 +1,420 @@
 <!DOCTYPE html>
-<html lang="en" data-astro-cid-qi6rkanx>
+<html lang="es" data-astro-cid-qi6rkanx>
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/svg+xml" href="../../../public/logo-fondo.jpg">
+    <base href="/FlorentIA/">
+    <link rel="icon" type="image/svg+xml" href="/logo-fondo.jpg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <title>Mis profesores</title>
-    <link rel="stylesheet" href="/FlorentIA/_astro/index.BAo4qkVl.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
         body{
             font-family: 'Poppins';
+            margin: 0;
+            padding: 0;
+            background-color: ivory;
         }
 
         .container{
             display: flex;
+            height: 100vh;
         }
 
         a{
             text-decoration: none;
             color: black;
         }
-        /*! tailwindcss v4.0.15 | MIT License | https://tailwindcss.com */
+        
         .menu{
             width: 300px;
+            height: 100%;
+            background: #fff;
+            border-right: 1px solid #e0e0e0;
         }
-        .container-menu[data-astro-cid-2j44jlrm] {
-            border-style: var(--tw-border-style);
+        
+        .container-menu {
+            border-style: solid;
             background-color: ivory;
             border-width: .5px;
             flex-direction: column;
             width: 300px;
             height: 100vh;
-            display: flex
+            display: flex;
         }
 
-        .container-logo[data-astro-cid-2j44jlrm] {
+        .container-logo {
             justify-content: center;
             align-items: center;
             width: 100%;
             height: 180px;
-            display: flex
+            display: flex;
         }
 
-        .logo[data-astro-cid-2j44jlrm] {
-            height: 280px
+        .logo {
+            height: 280px;
         }
 
-        .option[data-astro-cid-2j44jlrm] {
-            border-style: var(--tw-border-style);
+        .option {
+            border-style: solid;
             border-width: .5px;
             justify-content: center;
             align-items: center;
             width: 100%;
             height: 85px;
-            display: flex
+            display: flex;
         }
 
         @media (hover:hover) {
-            .option[data-astro-cid-2j44jlrm]:hover {
+            .option:hover {
                 cursor: pointer;
-                background-color: beige
+                background-color: beige;
             }
         }
 
-        .text[data-astro-cid-2j44jlrm] {
-            font-size: 24px
+        .text {
+            font-size: 24px;
         }
 
-        @property --tw-border-style {
-            syntax: "*";
-            inherits: false;
-            initial-value: solid
+        .information {
+            width: calc(100% - 300px);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+            overflow-y: auto;
+            padding: 20px;
+        }   
+
+        .section-title{
+            width: 100%;
+            height: 25%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .section-title >h2{
+            color:#184D6D;
+            font-size: 40px;
+        }
+
+        .teacher-profile {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .teacher-card {
+            width: 100%;
+            max-width: 620px;
+            background-color:#fefee2;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border: 1px solid rgba(204, 204, 204, 0.25);
+        }
+
+        .avatar-wrapper {
+            background-color: #e9aa61;
+            border-radius: 50%;
+            padding: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .teacher-avatar {
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+        }
+
+        .teacher-details {
+            display: flex;
+            flex-direction: column;
+            margin-left: 16px;
+            flex: 1;
+        }
+
+        .teacher-details h2 {
+            color: #184D6D;
+            font-size: 18px;
+            margin: 0;
+        }
+
+        .teacher-details h3 {
+            color: #538802;
+            font-size: 14px;
+            margin: 5px 0 0 0;
+        }
+
+        .profile-button {
+            background-color: #538802;
+            color: #f3ebeb;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+            cursor: pointer;
+            border: none;
+            font-family: 'Poppins';
+        }
+
+        .profile-button:hover {
+            background-color: #406a01;
+        }
+
+        .teacher-sections {
+            width: 100%;
+            height: 25%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 25px;
+        }
+
+        .teacher-card-section {
+            width: 80%;
+            max-width: 800px;
+            height: 250px;
+            background-color: #FDE0A3;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 60px;
+            padding: 20px;
+        }
+
+        .teacher-card-section > h2 {
+            font-size: 20px;
+            color: #184D6D;
+            margin-bottom: 15px;
+        }
+
+        .mensajes-container {
+            width: 100%;
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .mensaje {
+            padding: 12px;
+            margin-bottom: 12px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            border-left: 3px solid #288b98;
+        }
+
+        .mensaje-cabecera {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .mensaje-cabecera strong {
+            color: #184D6D;
+        }
+
+        .mensaje-cabecera .fecha {
+            color: #6c757d;
+            font-size: 12px;
+        }
+
+        .mensaje-texto {
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .loading, .no-messages {
+            text-align: center;
+            padding: 20px;
+            color: #6c757d;
+        }
+
+        .error {
+            text-align: center;
+            padding: 20px;
+            color: #dc3545;
+        }
+
+        .error button {
+            background: #288b98;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            margin-top: 5px;
+            cursor: pointer;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: #FFFFF0;
+            margin: 10% auto;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 500px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 15px;
+        }
+
+        .modal-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 20px;
+        }
+
+        .modal-title h2 {
+            color: #184D6D;
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .modal-title h3 {
+            color: #538802;
+            margin: 5px 0 0 0;
+            font-size: 18px;
+        }
+
+        .modal-body {
+            padding: 10px 0;
+        }
+
+        .modal-section {
+            margin-bottom: 15px;
+        }
+
+        .modal-section h4 {
+            color: #184D6D;
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+
+        .modal-section p {
+            color: #333;
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .close-modal {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-modal:hover {
+            color: black;
         }
     </style>
-    <style>
-         .information {
-        /* @apply w-[1500px] flex-col h-full flex items-center justify-center; */
-        width: 1500px;
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-        justify-content: center;
-        align-items: center;
-    }   
-
-    .section-title{
-        /* @apply w-full h-[25%]  flex justify-center items-center; */
-        width: 100%;
-        height: 25%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .section-title >h2{
-        /* @apply text-[#184D6D] text-[40px]; */
-        color:#184D6D;
-        font-size: 40px;
-    }
-
-    .teacher-profile {
-    /* @apply w-full flex justify-center items-center ; */
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .teacher-card {
-    /* @apply w-full max-w-[620px] bg-[#fefee2] rounded-[12px] flex items-center justify-between px-[16px] py-[8px] shadow-[0_4px_6px_rgba(0,0,0,0.1)] border border-[#cccccc40]; */
-        width: 100%;
-        max-width: 620px;
-        background-color:#fefee2;
-        border-radius: 12px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding-left: 16px;
-        padding-right: 16px;
-        padding-top: 8px;
-        padding-bottom: 8px;
-        border-color: #cccccc40;
-    }
-
-
-    .avatar-wrapper {
-  background-color: #e9aa61;
-  border-radius: 50%;
-  padding: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-    .teacher-avatar {
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-}
-
-    /* Teacher Details */
-.teacher-details {
-    display: flex;
-    flex-direction: column;
-    margin-left: 16px;
-    flex: 1;
-}
-
-.teacher-details h2 {
-    color: #184D6D;
-    font-size: 18px;
-}
-
-.teacher-details h3 {
-    color: #538802;
-    font-size: 14px;
-}
-
-/* Profile Button */
-.profile-button {
-    background-color: #538802;
-    color: #f3ebeb;
-    padding-left: 16px;
-    padding-right: 16px;
-    padding-top: 8px;
-    padding-bottom: 8px;
-    border-radius: 8px;
-    transition: background-color 0.3s;
-    cursor: pointer;
-}
-
-.profile-button:hover {
-    background-color: #406a01;
-}
-
-/* Teacher Sections */
-.teacher-sections {
-    width: 100%;
-    height: 25%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 25px;
-}
-
-/* Teacher Card Section */
-.teacher-card-section {
-    width: 40%;
-    height: 250px;
-    background-color: #FDE0A3;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 60px;
-    padding: 20px;
-}
-
-.teacher-card-section > h2 {
-    font-size: 20px;
-    color: #184D6D;
-}
-
-/* Student Response */
-.student-response {
-    width: 100%;
-    height: 25%;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-}
-
-/* Send Note Button */
-.send-note {
-    width: 200px;
-    height: 40px;
-    background-color: #f4b860;
-    border-radius: 4px;
-    color: #140404;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-}
-
-/* Send Audio Button */
-.send-audio {
-    width: 200px;
-    height: 40px;
-    background-color: #538802;
-    border-radius: 4px;
-    color: #f3ebeb;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-}
-
-/* Note Form */
-.note-form {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 16px;
-}
-
-/* Textarea Message */
-.textarea-message {
-    width: 300px;
-    height: 100px;
-    padding: 8px;
-    border: 1px solid #d1d5dc;
-    border-radius: 6px;
-    resize: none;
-    margin-bottom: 8px;
-}
-
-/* Submit Message Button */
-.submit-message {
-    background-color: #538802;
-    color: #fff;
-    padding-left: 16px;
-    padding-right: 16px;
-    padding-top: 8px;
-    padding-bottom: 8px;
-    border-radius: 6px;
-    transition: background-color 0.3s;
-}
-
-.submit-message:hover {
-    background-color: #406a01;
-}
-
-.mensajes-container {
-        width: 100%;
-        max-height: 300px;
-        overflow-y: auto;
-        padding: 10px;
-        background: white;
-        border-radius: 8px;
-        margin-top: 10px;
-    }
-
-    .mensaje {
-        padding: 12px;
-        margin-bottom: 12px;
-        background: #f8f9fa;
-        border-radius: 6px;
-        border-left: 3px solid #288b98;
-    }
-
-    .mensaje-cabecera {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 8px;
-        font-size: 14px;
-    }
-
-    .mensaje-cabecera strong {
-        color: #184D6D;
-    }
-
-    .mensaje-cabecera .fecha {
-        color: #6c757d;
-        font-size: 12px;
-    }
-
-    .mensaje-texto {
-        color: #333;
-        line-height: 1.5;
-    }
-
-    .loading, .no-messages {
-        text-align: center;
-        padding: 20px;
-        color: #6c757d;
-    }
-
-    .error {
-        text-align: center;
-        padding: 20px;
-        color: #dc3545;
-    }
-
-    .error button {
-        background: #288b98;
-        color: white;
-        border: none;
-        padding: 5px 10px;
-        border-radius: 4px;
-        margin-top: 5px;
-        cursor: pointer;
-    }
-
-
-    .modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-.modal-content {
-    background-color: #FFFFF0;
-    margin: 10% auto;
-    padding: 20px;
-    border-radius: 10px;
-    width: 50%;
-    max-width: 500px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.modal-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 15px;
-}
-
-.modal-avatar {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-right: 20px;
-}
-
-.modal-title h2 {
-    color: #184D6D;
-    margin: 0;
-    font-size: 24px;
-}
-
-.modal-title h3 {
-    color: #538802;
-    margin: 5px 0 0 0;
-    font-size: 18px;
-}
-
-.modal-body {
-    padding: 10px 0;
-}
-
-.modal-section {
-    margin-bottom: 15px;
-}
-
-.modal-section h4 {
-    color: #184D6D;
-    margin-bottom: 5px;
-    font-size: 16px;
-}
-
-.modal-section p {
-    color: #333;
-    margin: 0;
-    font-size: 14px;
-}
-
-.close-modal {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.close-modal:hover {
-    color: black;
-}
-    
-    </style>
-    <link rel="stylesheet" href="/FlorentIA/_astro/index.DJNvHvkb.css">
 </head>
 
 <body data-astro-cid-qi6rkanx>
     <div class="container" data-astro-cid-qi6rkanx>
         <aside class="menu" data-astro-cid-koxvx4t6>
-      <div class="container-menu" data-astro-cid-2j44jlrm>
-        <div class="container-logo" data-astro-cid-2j44jlrm> 
-          <a href="/Home/" class="content-home" data-astro-cid-2j44jlrm> 
-            <img src="/logo-fondo.jpg" alt="" class="logo" data-astro-cid-2j44jlrm> 
-          </a>
-        </div>
-        <div class="option" data-astro-cid-2j44jlrm> 
-          <a href="/Garden/" class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> 
-            <span class="text text-center" data-astro-cid-2j44jlrm>Mí Jardín</span> 
-          </a> 
-        </div>
-        <div class="option" data-astro-cid-2j44jlrm> 
-          <a href="/Challenges/" class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> 
-            <span class="text" data-astro-cid-2j44jlrm>Mis Retos</span> 
-          </a> 
-        </div>
-        <div class="option" data-astro-cid-2j44jlrm> 
-          <a href="/Achievements/" class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> 
-            <span class="text" data-astro-cid-2j44jlrm>Mis Logros</span> 
-          </a> 
-        </div>
-        <div class="option" data-astro-cid-2j44jlrm> 
-          <a href="/Explore/" class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> 
-            <span class="text" style="font-family: 'Poppins', sans-serif;" data-astro-cid-2j44jlrm>Explorar</span> 
-          </a> 
-        </div>
-        <div class="option" data-astro-cid-2j44jlrm> 
-          <a href="/Diary/" class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> 
-            <span class="text" style="font-family: 'Poppins', sans-serif;" data-astro-cid-2j44jlrm>Mí Diario</span> 
-          </a> 
-        </div>
-        <div class="option" data-astro-cid-2j44jlrm> 
-          <a href="/My-teachers/" class="selection h-full w-full flex items-center justify-center" data-astro-cid-2j44jlrm> 
-            <span class="text" style="font-family: 'Poppins', sans-serif;" data-astro-cid-2j44jlrm>Mis Profesores</span> 
-          </a> 
-        </div>
-      </div>
-    </aside>
+            <div class="container-menu">
+                <div class="container-logo"> 
+                    <a href="/Home/" class="content-home"> 
+                        <img src="/logo-fondo.jpg" alt="" class="logo"> 
+                    </a>
+                </div>
+                <div class="option"> 
+                    <a href="/Garden/" class="selection h-full w-full flex items-center justify-center"> 
+                        <span class="text text-center">Mí Jardín</span> 
+                    </a> 
+                </div>
+                <div class="option"> 
+                    <a href="/Challenges/" class="selection h-full w-full flex items-center justify-center"> 
+                        <span class="text">Mis Retos</span> 
+                    </a> 
+                </div>
+                <div class="option"> 
+                    <a href="/Achievements/" class="selection h-full w-full flex items-center justify-center"> 
+                        <span class="text">Mis Logros</span> 
+                    </a> 
+                </div>
+                <div class="option"> 
+                    <a href="/Explore/" class="selection h-full w-full flex items-center justify-center"> 
+                        <span class="text" style="font-family: 'Poppins', sans-serif;">Explorar</span> 
+                    </a> 
+                </div>
+                <div class="option"> 
+                    <a href="/Diary/" class="selection h-full w-full flex items-center justify-center"> 
+                        <span class="text" style="font-family: 'Poppins', sans-serif;">Mí Diario</span> 
+                    </a> 
+                </div>
+                <div class="option"> 
+                    <a href="/My-teachers/" class="selection h-full w-full flex items-center justify-center"> 
+                        <span class="text" style="font-family: 'Poppins', sans-serif;">Mis Profesores</span> 
+                    </a> 
+                </div>
+            </div>
+        </aside>
         <div class="information" data-astro-cid-qi6rkanx>
             <div class="section-title" data-astro-cid-qi6rkanx>
                 <h2 data-astro-cid-qi6rkanx>Mis profesores</h2>
             </div>
             <div class="teacher-profile" data-astro-cid-qi6rkanx>
-                <div class="teacher-card" data-astro-cid-qi6rkanx> <img id="fotoProfesor" class="teacher-avatar" src=""
-                        alt="Foto de la profesor@" data-astro-cid-qi6rkanx>
+                <div class="teacher-card" data-astro-cid-qi6rkanx> 
+                    <div class="avatar-wrapper">
+                        <img id="fotoProfesor" class="teacher-avatar" src="https://cdn-icons-png.freepik.com/256/14024/14024680.png?semt=ais_hybrid" alt="Foto de la profesor@">
+                    </div>
                     <div class="teacher-details" data-astro-cid-qi6rkanx>
                         <h2 id="nombreProfesor" data-astro-cid-qi6rkanx>Profe</h2>
                         <h3 id="gradoProfesor" data-astro-cid-qi6rkanx>Inglés</h3>
-                    </div> <button class="profile-button" data-astro-cid-qi6rkanx>Ver perfil</button>
+                    </div> 
+                    <button class="profile-button" data-astro-cid-qi6rkanx>Ver perfil</button>
                 </div>
             </div>
             <div class="teacher-sections" data-astro-cid-qi6rkanx>
                 <div class="teacher-card-section" data-astro-cid-qi6rkanx>
                     <h2 data-astro-cid-qi6rkanx>Mensajes del profesor</h2>
                     <div id="mensajes-container" class="mensajes-container" data-astro-cid-qi6rkanx>
-                        <!-- Los mensajes se cargarán aquí dinámicamente --> </div>
+                        <p class="loading">Cargando mensajes...</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <div id="teacher-modal" class="modal" data-astro-cid-qi6rkanx>
-        <div class="modal-content" data-astro-cid-qi6rkanx> <span class="close-modal"
-                data-astro-cid-qi6rkanx>&times;</span>
-            <div class="modal-header" data-astro-cid-qi6rkanx> <img id="modal-teacher-avatar" class="modal-avatar"
-                    src="" alt="Foto del profesor" data-astro-cid-qi6rkanx>
+        <div class="modal-content" data-astro-cid-qi6rkanx> 
+            <span class="close-modal">&times;</span>
+            <div class="modal-header" data-astro-cid-qi6rkanx> 
+                <img id="modal-teacher-avatar" class="modal-avatar" src="https://cdn-icons-png.freepik.com/256/14024/14024680.png?semt=ais_hybrid" alt="Foto del profesor">
                 <div class="modal-title" data-astro-cid-qi6rkanx>
                     <h2 id="modal-teacher-name" data-astro-cid-qi6rkanx></h2>
                     <h3 id="modal-teacher-course" data-astro-cid-qi6rkanx></h3>
@@ -534,13 +459,11 @@
             const mensajesContainer = document.getElementById("mensajes-container");
 
             try {
-                // Usa el mismo identificador que cargarProfesor()
                 const codigoEstudiante = localStorage.getItem("codigoEstudiante");
                 if (!codigoEstudiante) {
                     throw new Error("No se encontró código de estudiante");
                 }
 
-                // 1. Obtener ID del estudiante (documento en Firestore)
                 const studentQuery = query(
                     collection(db, "users"),
                     where("code", "==", codigoEstudiante)
@@ -551,19 +474,17 @@
                     throw new Error("Estudiante no registrado");
                 }
 
-                const studentId = studentSnap.docs[0].id; // ID del documento Firestore
+                const studentId = studentSnap.docs[0].id;
 
-                // 2. Buscar mensajes
                 const q = query(
                     collection(db, "messages"),
-                    where("to", "==", studentId), // Usa el ID del documento, no el código
+                    where("to", "==", studentId),
                     orderBy("timestamp", "desc")
                 );
 
                 mensajesContainer.innerHTML = "<p class='loading'>Cargando mensajes...</p>";
                 const querySnapshot = await getDocs(q);
 
-                // 3. Mostrar resultados
                 mensajesContainer.innerHTML = "";
 
                 if (querySnapshot.empty) {
@@ -571,7 +492,6 @@
                     return;
                 }
 
-                // 4. Mostrar mensajes
                 const nombreProfesor = document.getElementById("nombreProfesor").textContent;
 
                 querySnapshot.forEach((doc) => {
@@ -608,7 +528,7 @@
             const codigoEstudiante = localStorage.getItem("codigoEstudiante");
 
             if (!codigoEstudiante) {
-                window.location.href = "/login";
+                window.location.href = "/FlorentIA/";
                 return;
             }
 
@@ -652,14 +572,12 @@
 
             const profesorData = profesorSnap.docs[0].data();
 
-            // Llenar datos en la tarjeta principal
             document.getElementById("nombreProfesor").textContent = profesorData.firstName + " " + profesorData.lastName;
             document.getElementById("gradoProfesor").textContent = (courseProfesor == "600") ? "Sexto" : "Séptimo";
 
             const fotoProfesor = profesorData.photoUrl || "https://cdn-icons-png.freepik.com/256/14024/14024680.png?semt=ais_hybrid";
             document.getElementById("fotoProfesor").src = fotoProfesor;
 
-            // Configurar el modal con los datos completos
             document.getElementById("modal-teacher-name").textContent = profesorData.firstName + " " + profesorData.lastName;
             document.getElementById("modal-teacher-course").textContent = (courseProfesor == "600") ? "Sexto" : "Séptimo";
             document.getElementById("modal-teacher-description").textContent = profesorData.description || "No hay descripción disponible";
@@ -667,60 +585,50 @@
             document.getElementById("modal-teacher-avatar").src = fotoProfesor;
         }
 
-        // Agrega el manejo del modal
         document.addEventListener("DOMContentLoaded", () => {
             cargarProfesor();
             cargarMensajes();
 
-            // Obtener elementos del modal
             const modal = document.getElementById("teacher-modal");
             const btn = document.querySelector(".profile-button");
             const span = document.querySelector(".close-modal");
 
-            // Cuando se hace clic en el botón, mostrar el modal
             btn.onclick = function () {
                 modal.style.display = "block";
             }
 
-            // Cuando se hace clic en la X, cerrar el modal
             span.onclick = function () {
                 modal.style.display = "none";
             }
 
-            // Cuando se hace clic fuera del modal, cerrarlo
             window.onclick = function (event) {
                 if (event.target == modal) {
                     modal.style.display = "none";
                 }
             }
         });
-        // Script para manejar rutas en GitHub Pages
-    document.addEventListener('DOMContentLoaded', function() {
-      // Verificar si estamos en GitHub Pages
-      if(window.location.hostname.includes('github.io')) {
-        // Actualizar todas las rutas que comiencen con /
-        document.querySelectorAll('a[href^="/"]').forEach(link => {
-          const href = link.getAttribute('href');
-          if(!href.startsWith('/FlorentIA/')) {
-            link.setAttribute('href', '/FlorentIA' + href);
-          }
-        });
-        
-        // Actualizar rutas de imágenes
-        document.querySelectorAll('img[src^="/"]').forEach(img => {
-          const src = img.getAttribute('src');
-          if(!src.startsWith('/FlorentIA/')) {
-            img.setAttribute('src', '/FlorentIA' + src);
-          }
-        });
-      }
-    });
 
-    </script>
-    <script
-        type="module">const s = document.getElementById("open-note"), e = document.getElementById("note-form"); s.addEventListener("click", () => { e.style.display === "none" ? e.style.display = "flex" : e.style.display = "none" }); const o = document.getElementById("send-message-button"); o.addEventListener("click", n => { n.preventDefault(); const t = document.getElementById("student-message").value; t.trim() !== "" ? (alert("Mensaje enviado: " + t), document.getElementById("student-message").value = "", e.style.display = "none") : alert("Por favor escribe un mensaje antes de enviar.") });
-        
+        // Script para manejar rutas en GitHub Pages
+        document.addEventListener('DOMContentLoaded', function() {
+            // Verificar si estamos en GitHub Pages
+            if(window.location.hostname.includes('github.io')) {
+                // Actualizar todas las rutas que comiencen con /
+                document.querySelectorAll('a[href^="/"]').forEach(link => {
+                    const href = link.getAttribute('href');
+                    if(!href.startsWith('/FlorentIA/')) {
+                        link.setAttribute('href', '/FlorentIA' + href);
+                    }
+                });
+                
+                // Actualizar rutas de imágenes
+                document.querySelectorAll('img[src^="/"]').forEach(img => {
+                    const src = img.getAttribute('src');
+                    if(!src.startsWith('/FlorentIA/')) {
+                        img.setAttribute('src', '/FlorentIA' + src);
+                    }
+                });
+            }
+        });
     </script>
 </body>
-
 </html>
