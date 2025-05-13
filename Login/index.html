@@ -655,10 +655,8 @@
         document.getElementById("login-form").addEventListener("submit", handleLogin);
     </script> -->
 
-
-    <!-- SCRIPT ÚNICO CORREGIDO -->
     <script>
-// 1. Configuración e inicialización de Firebase
+
 const firebaseConfig = {
     apiKey: "AIzaSyCgq36r1pfgHplUt7-HSIY_qNJiEybaIJc",
     authDomain: "florentia-f47b9.firebaseapp.com",
@@ -668,15 +666,12 @@ const firebaseConfig = {
     appId: "1:59886187087:web:d274071e62e43f00b5b03a"
 };
 
-// Inicialización segura de Firebase
 if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
 }
 const db = firebase.firestore();
 
-// 2. Animación de formularios y lógica de login
 document.addEventListener("DOMContentLoaded", () => {
-    // Animación para cambiar entre login y registro
     const sign_in_btn = document.querySelector("#sign-in-btn");
     const sign_up_btn = document.querySelector("#sign-up-btn");
     const container = document.querySelector(".container");
@@ -730,7 +725,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 localStorage.setItem("codigoEstudiante", userData.code);
                 localStorage.setItem("userRole", userData.role);
 
-                // Redirección compatible con GitHub Pages y estructura dist/
                 const baseUrl = window.location.origin;
                 const isGitHubPages = window.location.host.includes('github.io');
                 const pathPrefix = isGitHubPages ? '/FlorentIA' : '';
