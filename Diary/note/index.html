@@ -293,15 +293,15 @@
                 <div class="diary-footer" data-astro-cid-4ey3fm5y> <button type="button" class="boton-guardar"
                         onclick="saveDiaryEntry()" data-astro-cid-4ey3fm5y>Guardar mi entrada</button> </div>
                 <!-- Volver a leer -->
-                <div class="diary-footer mt" data-astro-cid-4ey3fm5y> <a href="/Diary" class="link-entradas"
+                <div class="diary-footer mt" data-astro-cid-4ey3fm5y> <a href="/Diary/" class="link-entradas"
                         data-astro-cid-4ey3fm5y>
                         📚 Ver entradas anteriores
                     </a> </div>
             </div>
         </div>
     </div>
-    <script type="module" src="/src/scripts/firebaseConfig.js"></script>
-    <script type="module" src="/src/scripts/saveNote.js"></script>
+    <script type="module" src="/js/firebaseConfig.js"></script>
+    <script type="module" src="/js/saveNote.js"></script>
     <script
         type="module">const t = new Date, n = t.getDate(), o = t.toLocaleString("es-ES", { month: "long" }), a = t.getFullYear(), c = `${n} de ${o} de ${a}`, e = document.getElementById("fecha"); e && (e.textContent = c);</script>
 </body>
