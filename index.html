@@ -33,10 +33,26 @@
             display: flex;
         }
 
-        login-bot:hover{
-            transition: all ease-in-out .5s;
-            background-color: coral;
-        }
+        .login-bot {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 50px;
+        width: 100px;
+        background-color: #184D6D;
+        border-radius: 8px;
+        font-size: 15px;
+        /* Transición aplicada al background-color */
+        transition: background-color 0.3s ease-in-out; /* Duración y timing-function */
+    }
+    .login-bot:hover {
+        background-color: coral; /* Nuevo color al hacer hover */
+    }
+    /* Opcional: Quitar subrayado del enlace */
+    .login-bot a {
+        text-decoration: none;
+    }
     </style>
     <link rel="stylesheet" href="/FlorentIA/_astro/index.DJNvHvkb.css">
 </head>
@@ -69,17 +85,17 @@
                             </span> 
                         </a> 
                     </div>
-                    <div style="display: flex; gap: 5px; justify-content: center; align-items: center; background-color: #B5D9EC; width: 40%;" data-astro-cid-sckkx6r4>
-                        <div class="login-bot" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 50px; width: 100px; background-color: #184D6D; transition: background-color 0.3s; border-radius: 8px; font-size: 15px;">
+                    <div style="display: flex; gap: 5px; justify-content: center; align-items: center; background-color: #B5D9EC; width: 40%; :hover{background-color: coral; transition: all ease-in-out .5s;}" data-astro-cid-sckkx6r4>
+                        <div class="login-bot">
                             <a href="./Login/index.html" data-astro-cid-sckkx6r4> 
                                 <span style="color: #FEFEE2; cursor: pointer;" data-astro-cid-sckkx6r4>Iniciar</span>
                                 <span style="color: #FEFEE2; cursor: pointer;" data-astro-cid-sckkx6r4>Sesión</span> 
                             </a> 
                         </div>
-                        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 50px; width: 100px; background-color: #184D6D; transition: background-color 0.3s; border-radius: 8px; font-size: 15px;">
+                        <!-- <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 50px; width: 100px; background-color: #184D6D; transition: background-color 0.3s; border-radius: 8px; font-size: 15px;">
                             <span style="color: #FEFEE2; cursor: pointer;" data-astro-cid-sckkx6r4>Crear</span> 
                             <span style="color: #FEFEE2; cursor: pointer;" data-astro-cid-sckkx6r4>Cuenta</span> 
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
