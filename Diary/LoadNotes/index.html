@@ -1,4 +1,31 @@
-<!DOCTYPE html><script type="module">
+<!DOCTYPE html>
+<base href="/FlorentIA/">
+<script>
+        // Script para ajustar rutas si estás en GitHub Pages
+        document.addEventListener('DOMContentLoaded', function () {
+            if (window.location.hostname.includes('github.io')) {
+                document.querySelectorAll('a[href^="/"]').forEach(link => {
+                    const href = link.getAttribute('href');
+                    if (!href.startsWith('/FlorentIA/')) {
+                        link.setAttribute('href', '/FlorentIA' + href);
+                    }
+                });
+
+                document.querySelectorAll('img[src^="/"]').forEach(img => {
+                    const src = img.getAttribute('src');
+                    if (!src.startsWith('/FlorentIA/')) {
+                        img.setAttribute('src', '/FlorentIA' + src);
+                    }
+                });
+
+                const favicon = document.querySelector('link[rel="icon"]');
+                if (favicon && favicon.getAttribute('href').startsWith('/')) {
+                    favicon.setAttribute('href', '/FlorentIA' + favicon.getAttribute('href'));
+                }
+            }
+        });
+    </script>
+<script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
     import {
         getFirestore,
